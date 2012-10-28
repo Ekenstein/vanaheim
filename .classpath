@@ -13,5 +13,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="vanaheim/libs/lwjgl/native/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/sqljet-1.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
