@@ -1,0 +1,43 @@
+#################################
+#   Anteckningar från möte #1   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson: Sekreterare
+- Daniel Jonsson
+
+§ Syftet med spelet
+Vi hoppas kunna skapa ett litet 2D spel som både ska vara roligt att spela samt lärorikt ur den synpunkt att man
+lär sig skriva snabbare, använda fler fingrar samt inte titta ner i tangentbordet när man skriver.
+
+§ Några första use cases
+- Navigera runt i en 2D värld med hjälp av piltangenterna.
+- Uppdatera fönsret om man försöker ta sig utanför kanten (dvs uppdatera inte världen allt eftersom man förflyttar
+sig).
+- Trigga random event allt eftersom man utforskar världen. Ett event kan vara allt från att man sprungit på ett
+monster till att man hittat något spännande. Beslut om exakt vad ett event är fattades inte under detta mötet.
+- Utföra uppdrag (t.ex. döda 10 spindlar).
+- Interagera med NPCs. Kan innebära allt från att acceptera ett uppdrag till att bara fråga efter information.
+- Slåss mot monster.
+- Utföra allting med hjälp av kommandon som skrivs.
+- Utöka svårighetsgraden ju längre in i spelet man kommer. Utökningen kan vara t.ex att man måste skriva snabbare
+eller att det man skriver blir krångligare.
+
+§ Brainstorming gällande den grafiska uppbyggnaden
+Som en första idé tänker vi oss att varje fönster som visas på skärmen får ha en separat matris av Tile objekt.
+Varje Tile får sen innehålla information om vad den är (träd, gräs sten osv). Förflyttning av spelaren på
+skärmen ska dock vara mjuk, dvs man ska inte hoppa från Tile till Tile. Det ska sedan vara helt random om man
+träffar på ett mönster när man rör sig över en Tile. Monster ute i vildmarken ska inte ha en fix position, dvs det 
+ska inte vara förutbestämt var man träffar på monster.
+
+§ Arbetsfördelning
+Vi har beslutat om följande arbetsfördelning:
+- Gabriel Ekblad: Spellogik
+- Richard Karlsson: Grafisk utforming
+- Daniel Jonsson: Grafisk utformning
+
+§ Till nästa möte
+Ett måste inför nästa möte är att vi alla tittar på vilka typer av grafiska bibliotek som finns att välja på 
+samt väljer det som verkar bäst för just vårt projekt.
+Förutom detta ska även ett repository sättas upp och allt som hör där till. 
