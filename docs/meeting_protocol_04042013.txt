@@ -1,0 +1,34 @@
+#################################
+#   Anteckningar från möte #2   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Sekreterare
+- Richard Karlsson: 
+- Daniel Jonsson: Mötesledare
+
+§ Uppföljning från tidigare möte
+Vi har alla tittat på olika grafiska bibliotek. Richard visar upp ett exempel på hur Swings JLayeredPane klass
+kan användas för att på ett snålt sätt animera över en bakgrund utan att varje gång behöva rita om den samma.
+Daniel visar upp ett exempel på hur biblioteket Slick2D kan användas för den grafiska biten av ett spel genom att
+demonstrera ett litet körbart exempel. Gabriel har kollat runt på nätet och hittat att state machines kan komma
+att bli intressanta för implementeringen av spelets logik.
+
+§ Grafiskt bibliotek
+Vi beslutade oss för att använda biblioteket Slick2D.
+
+§ Tile maps
+Under första mötet diskuterade vi hur en karta skulle kunna implementeras. Det verkar dock som att Slick2D har en
+klass TiledMap som direkt kan implementera en karta utifrån en .tmx fil. Det ska sedan finnas program för att
+tillverka tile baserade kartor och sedan spara dessa som just .tmx filer. Vi beslutade att titta närmare på
+denna möjlighet och följa upp resultaten under kommande möte.
+
+§ Texturer, spelare/NPC bilder
+Då projektet handlar om programmering vill vi inte lägga mycket tid på att skapa bilder för alla texturer och
+bilder på spelare/NPCer. Daniel har hittat en hemsida där man kan söka igenom en rad bilder anpassade för 2D spel.
+Bilderna är ej skyddade av copyright. Vi beslutade att titta närmare på detta.
+
+§ Till nästa möte
+- Kolla på möjligheter till att skapa tiled maps.
+- Kolla igenom texturer och andra bilder och kanske välja ut några man tycker verkar bra.
+- Börja skissa på UML.
