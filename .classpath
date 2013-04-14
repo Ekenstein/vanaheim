@@ -2,17 +2,17 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="libs/ini4j-0.5.2.jar"/>
-	<classpathentry kind="lib" path="libs/lwjgl/lwjgl_util.jar">
+	<classpathentry kind="lib" path="libs/slick.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="vanaheim/libs/lwjgl/native/windows"/>
+			<attribute name="javadoc_location" value="http://www.slick2d.org/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/lwjgl/lwjgl.jar">
+	<classpathentry kind="lib" path="libs/lwjgl-2.8.5/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-2.8.5/jar/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-2.8.5/jar/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="vanaheim/libs/lwjgl/native/windows"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="vanaheim/libs/lwjgl-2.8.5/native/linux"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/sqljet-1.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
