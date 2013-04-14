@@ -2,7 +2,7 @@ package edu.cth.tmnd.vanaheim.init;
 
 import java.awt.EventQueue;
 
-import edu.cth.tmnd.vanaheim.view.Container;
+import edu.cth.tmnd.vanaheim.view.DisplayContainer;
 
 /**
  * Initialization of the game.<br />
@@ -17,7 +17,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new Container("Vanaheim");
+				new DisplayContainer("Vanaheim");
 			}
 		});
 	}

@@ -1,6 +1,9 @@
 package edu.cth.tmnd.vanaheim.view.states;
 
-import edu.cth.tmnd.vanaheim.view.impl.IContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+
+import edu.cth.tmnd.vanaheim.view.impl.IDisplayContainer;
 import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
 
 /**
@@ -11,9 +14,9 @@ import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
  * @author Gabriel Ekblad
  *
  */
-public final class MenuViewState extends ViewState implements IContainer {
+public final class MenuViewState extends ViewState implements IDisplayContainer {
 
-	public MenuViewState(final IContainer parent) {
+	public MenuViewState(final IDisplayContainer parent) {
 		super(parent);
 	}
 
@@ -30,7 +33,20 @@ public final class MenuViewState extends ViewState implements IContainer {
 	}
 
 	@Override
-	public void render() {
+	public void render(final GameContainer container, final Graphics context) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void init(final GameContainer container) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(final GameContainer container, final int delta) {
+		// TODO Auto-generated method stub
 
 	}
 

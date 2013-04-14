@@ -7,7 +7,7 @@ package edu.cth.tmnd.vanaheim.view.impl;
  * @author Gabriel Ekblad
  *
  */
-public interface IContainer {
+public interface IDisplayContainer {
 	/**
 	 * Triggers the container to switch
 	 * to the next state, providing that
