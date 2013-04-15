@@ -1,6 +1,6 @@
 package edu.cth.tmnd.vanaheim.model;
 
-import edu.cth.tmnd.vanaheim.model.creatures.NPC;
+import edu.cth.tmnd.vanaheim.model.creatures.NPC.NPC;
 
 public class World {
 

@@ -1,4 +1,7 @@
-package edu.cth.tmnd.vanaheim.model.creatures;
+package edu.cth.tmnd.vanaheim.model.creatures.NPC;
+
+import edu.cth.tmnd.vanaheim.model.creatures.Human;
+import edu.cth.tmnd.vanaheim.model.creatures.State;
 
 public class NPC {
 
