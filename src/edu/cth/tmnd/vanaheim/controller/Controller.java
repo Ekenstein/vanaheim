@@ -1,11 +1,33 @@
 package edu.cth.tmnd.vanaheim.controller;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 
-public final class Controller {
-	public void render(final GameContainer container, final Graphics context) throws SlickException {
+import edu.cth.tmnd.vanaheim.model.Trie;
 
+
+
+public class Controller {
+	
+	Player player;
+	Trie lexicon;
+	GameState world;
+	World[] worlds;
+	
+	public Controller(){
+		
+	}
+
+	
+	public void command(String command, Point location){
+		
+	}
+	public void render(){
+		
+	}
+	
+	public Point getPlayerPosition(){
+		return null;
+		
 	}
 }
+
