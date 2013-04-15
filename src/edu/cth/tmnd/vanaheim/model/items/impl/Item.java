@@ -4,11 +4,18 @@ public abstract class Item {
 	protected String itemName;
 	protected String itemDescription;
 	protected int weight;
+	protected boolean isQuestItem;
 
-	public Item(final String itemName, final String itemDescription, final int weight) {
+
+	public Item(final String itemName, final String itemDescription, final int weight, boolean isQuestItem) {
 		this.itemName = itemName;
 		this.itemDescription = itemDescription;
 		this.weight = weight;
+		this.isQuestItem = isQuestItem;
+	}
+	
+	public boolean isQuestItem() {
+		return isQuestItem;
 	}
 
 	public String getItemName() {

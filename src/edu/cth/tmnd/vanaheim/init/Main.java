@@ -8,14 +8,6 @@ import org.newdawn.slick.SlickException;
 import edu.cth.tmnd.vanaheim.view.Container;
 import edu.cth.tmnd.vanaheim.view.Container;
 
-/**
- * Initialization of the game.<br />
- * Creates a new thread for the game itself
- * to run in. Will initiate the view framework.
- *
- * @author Gabriel Ekblad
- *
- */
 public class Main {
 	public static void main(final String[] args) {
 		try{
