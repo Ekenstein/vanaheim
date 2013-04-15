@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.model.creatures;
+package edu.cth.tmnd.vanaheim.model.creatures.player;
 
 import edu.cth.tmnd.vanaheim.model.QuestBook;
 

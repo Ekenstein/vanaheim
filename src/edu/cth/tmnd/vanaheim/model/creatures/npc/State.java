@@ -1,4 +1,6 @@
-package edu.cth.tmnd.vanaheim.model.creatures;
+package edu.cth.tmnd.vanaheim.model.creatures.npc;
+
+import edu.cth.tmnd.vanaheim.model.creatures.Human;
 
 public class State {
 

@@ -1,14 +1,17 @@
-package edu.cth.tmnd.vanaheim.model.creatures.NPC;
+package edu.cth.tmnd.vanaheim.model.creatures.npc;
 
 import edu.cth.tmnd.vanaheim.model.creatures.Human;
 
-public class NPCStateWaiting {
+public class NPCStateStart {
 
-	public NPCStateWaiting(){
+
+	public NPCStateStart(){
 		
 	}
 	
 	public void talk(Human human){
 		
 	}
+
 }
+

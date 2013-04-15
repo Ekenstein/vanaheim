@@ -4,7 +4,7 @@ import org.newdawn.slick.geom.Point;
 
 import edu.cth.tmnd.vanaheim.model.Trie;
 import edu.cth.tmnd.vanaheim.model.World;
-import edu.cth.tmnd.vanaheim.model.creatures.Player;
+import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.view.states.impl.GameState;
 
 
