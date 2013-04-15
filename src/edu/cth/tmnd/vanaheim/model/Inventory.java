@@ -125,6 +125,19 @@ final public class Inventory {
 	}
 
 	/**
+	 * Will retrieve the given item from inventory,
+	 * that is, it will remove the item from the inventory
+	 * but the owner of the item will still be the same.
+	 * More formally, will return an item if there exist
+	 * an item i such that item.equals(i)
+	 * @param item
+	 * @return
+	 */
+	public Item retrieveItem(final Item item) {
+		return null;
+	}
+
+	/**
 	 * Returns the number of slots left in the
 	 * inventory.
 	 * @return	number of slots left.
