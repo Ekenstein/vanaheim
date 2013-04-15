@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 public class ExitState extends ViewState {
 
 	public ExitState(){
-		
+		super(null);
 	}
 
 	@Override

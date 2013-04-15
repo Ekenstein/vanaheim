@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 public class MenuSettingsState extends ViewState {
 
 	public MenuSettingsState(){
-		
+		super(null);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 public class GameState extends ViewState {
 
 	public GameState(){
-		
+		super(null);
 	}
 
 	@Override

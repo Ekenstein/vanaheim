@@ -4,11 +4,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import edu.cth.tmnd.vanaheim.view.impl.IContainer;
+
 public class MenuState extends ViewState implements IContainer{
 
 	MenuSettingsState menuSettings;
 	
 	public MenuState(){
+		super(null);
 		menuSettings = new MenuSettingsState();
 	}
 
