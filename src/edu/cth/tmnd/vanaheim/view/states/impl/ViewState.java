@@ -4,10 +4,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import edu.cth.tmnd.vanaheim.view.impl.IContainer;
 import edu.cth.tmnd.vanaheim.view.impl.IDisplayContainer;
 
 public abstract class ViewState {
-	protected IDisplayContainer parent;
+	protected IContainer parent;
 
 	public ViewState(final IDisplayContainer containerParent) {
 		this.parent = containerParent;

@@ -8,6 +8,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import edu.cth.tmnd.vanaheim.view.impl.IContainer;
+import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
+
 public class Container extends BasicGame implements IContainer  {
 	
 	private ViewState[] states;
