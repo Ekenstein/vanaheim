@@ -1,6 +1,7 @@
 package edu.cth.tmnd.vanaheim.view;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -13,6 +14,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -82,7 +84,11 @@ public class Container extends BasicGame implements IContainer {
 	public void render(final GameContainer container, final Graphics context) throws SlickException {
 		//this.currentViewState.render(container, context);
 		
-		controller.render(container, context);
+		map.render(0, 0);
+		
+		Point p = controller.getPlayerLoc();
+		sprite.draw((float)p.x, (float)p.y);
+
 		inputField.render(container, context);
 		
 		/*
@@ -104,7 +110,26 @@ public class Container extends BasicGame implements IContainer {
 	@Override
 	public void init(final GameContainer container) throws SlickException {
 		
-		controller.init(container);
+		try {
+			map = new TiledMap("data/map.tmx");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
+		controller.initTiles(map);
+		
+		Image [] movementUp = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementDown = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementLeft = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementRight = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		int [] duration = {300, 300};
+
+		up = new Animation(movementUp, duration, false);
+		down = new Animation(movementDown, duration, false);
+		left = new Animation(movementLeft, duration, false);
+		right = new Animation(movementRight, duration, false);
+
+		sprite = right;
 		
 		inputField = new TextField(container, 
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
@@ -147,6 +172,9 @@ public class Container extends BasicGame implements IContainer {
 			}
 		});
 		inputField.setFocus(true);
+		
+		
+		
 		/*
 		//Init the tiled map
 		try {
@@ -217,7 +245,34 @@ public class Container extends BasicGame implements IContainer {
 
 	@Override
 	public void update(final GameContainer container, final int delta) throws SlickException {
-		controller.update(container, delta);
+		Input input = container.getInput();
+		if (input.isKeyDown(Input.KEY_UP))
+		{
+			sprite = up;
+			sprite.update(delta);
+			// The lower the delta the slowest the sprite will animate.
+			y -= delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN))
+		{
+			sprite = down;
+			sprite.update(delta);
+			y += delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT))
+		{
+			sprite = left;
+			sprite.update(delta);
+			x -= delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_RIGHT))
+		{
+			sprite = right;
+			sprite.update(delta);
+			x += delta * 0.1f;
+		}
+		controller.setPlayerLoc(new Point((int)x, (int)y));
+		controller.checkTile((int)x, (int)y);
 	}
 
 }

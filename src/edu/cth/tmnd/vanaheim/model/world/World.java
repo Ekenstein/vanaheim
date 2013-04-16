@@ -20,30 +20,8 @@ public class World {
 		tiles = new Tile[32][24];
 	}
 	
-	public void render(GameContainer container, Graphics context) throws SlickException {
-		map.render(0, 0);
-	}
-	
-
-	public void update(GameContainer container) throws SlickException {
-		
-	}
-	
-	public Tile getTile(int x, int y) {
-		return this.tiles[y][x];
-	}
-	
-	public void checkTile(int x, int y) {
-		boolean bool = tiles[x][y].hasMonster();
-	}
-	
-	public void init(GameContainer container) {
-		try {
-			map = new TiledMap("data/map.tmx");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		
+	public void initTiles(TiledMap map) {
+		this.map = map;
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
 				//System.out.println(map.getTileId(j, i, 1));
@@ -52,5 +30,11 @@ public class World {
 				}
 			}
 		}
+	}
+	
+	public void checkTile(int x, int y) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		boolean bool = tiles[xPos][yPos].hasMonster();
 	}
 }

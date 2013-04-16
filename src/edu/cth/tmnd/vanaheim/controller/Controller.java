@@ -5,6 +5,7 @@ import java.awt.Point;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.model.Trie.Trie;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
@@ -22,23 +23,20 @@ public class Controller {
 		player = new Player();
 	}
 	
-	public void init(final GameContainer container) throws SlickException {
-		world.init(container);
-		player.init(container);
+	public Point getPlayerLoc() {
+		return player.getLoc();
 	}
 	
-	public void render(GameContainer container, Graphics context) throws SlickException {
-		//this.player.render(container, context);
-		world.render(container, context);
-		player.render(container, context);
+	public void setPlayerLoc(Point p) {
+		player.setPlayerLoc(p);
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
-		player.update(container, delta);
-		Point p = player.getLoc();
-		int xPos = (int) Math.floor(p.x / 32);
-		int yPos = (int) Math.floor(p.y / 32);
-		world.checkTile(xPos, yPos);
+	public void initTiles(TiledMap map) {
+		world.initTiles(map);
+	}
+	
+	public void checkTile(int x, int y) {
+		world.checkTile(x, y);
 	}
 }
 
