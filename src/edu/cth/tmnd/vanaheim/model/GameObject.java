@@ -4,31 +4,41 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public abstract class GameObject {
+/**
+ * Anything that will be drawn should extend this class.<br />
+ * Tunnel all rendering to these classes.
+ * @author Gabriel Ekblad & Daniel Jonsson
+ *
+ */
+public interface GameObject {
 
-	protected float x;
-	protected float y;
-
-	public GameObject(final float x, final float y) {
-		this.x = x;
-		this.y = y;
-	}
-
+	/**
+	 * Renders the game object. All rendering logic here for this particular object.
+	 * @param container	If necessary, tunnel the GameContainer here.
+	 * @param context	If necessary, tunnel the Graphics context here.
+	 * @throws SlickException	In case of explosion.
+	 */
 	public abstract void render(GameContainer container, Graphics context) throws SlickException;
-
-	public float getX() {
-		return this.x;
-	}
-
-	public float getY() {
-		return this.y;
-	}
-
-	public void setX(final float x) {
-		this.x = x;
-	}
-
-	public void setY(final float y) {
-		this.y = y;
-	}
+	
+	/**
+	 * Update logic here. Like input and stuff.
+	 * @param container
+	 * @throws SlickException
+	 */
+	public abstract void update(GameContainer container) throws SlickException;
+	
+	/**
+	 * Init the object here.
+	 * @param container
+	 * @throws SlickException
+	 */
+	public abstract void init(GameContainer container) throws SlickException;
+	
+	public abstract float getX();
+	
+	public abstract float getY();
+	
+	public abstract void setX(float x);
+	
+	public abstract void setY(float y);
 }

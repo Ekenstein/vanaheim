@@ -1,8 +1,9 @@
-package edu.cth.tmnd.vanaheim.model;
+package edu.cth.tmnd.vanaheim.model.quests.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
 
 /*
  * Still implementing this class

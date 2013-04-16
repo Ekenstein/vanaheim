@@ -1,19 +1,25 @@
-package edu.cth.tmnd.vanaheim.view.states.impl;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class MenuSettingsState extends ViewState {
+import edu.cth.tmnd.vanaheim.controller.Controller;
+import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
 
-	public MenuSettingsState(){
+public class GameState extends ViewState {
+
+	private Controller ctrl;
+	
+	public GameState(){
 		super(null);
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics context)
 			throws SlickException {
-		// TODO Auto-generated method stub
+		
+		this.ctrl.render(container, context);
 		
 	}
 
@@ -26,7 +32,6 @@ public class MenuSettingsState extends ViewState {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		this.ctrl.update(container);
 	}
 }

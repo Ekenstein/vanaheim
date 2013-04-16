@@ -1,76 +1,27 @@
 package edu.cth.tmnd.vanaheim.controller;
 
-import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
-import edu.cth.tmnd.vanaheim.model.Trie;
-import edu.cth.tmnd.vanaheim.model.World;
+import edu.cth.tmnd.vanaheim.model.Trie.Trie;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
-import edu.cth.tmnd.vanaheim.view.states.impl.GameState;
+import edu.cth.tmnd.vanaheim.model.world.World;
 
 
 
 public class Controller {
-	
 	private Player player;
 	private Trie lexicon;
-	private GameState world;
+	private World currentWorld;
 	private World[] worlds;
 	
-	public Controller(){
-		
-	}
-
-	
-	public Player getPlayer() {
-		return player;
-	}
-
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-
-
-	public Trie getLexicon() {
-		return lexicon;
-	}
-
-
-	public void setLexicon(Trie lexicon) {
-		this.lexicon = lexicon;
-	}
-
-
-	public GameState getWorld() {
-		return world;
-	}
-
-
-	public void setWorld(GameState world) {
-		this.world = world;
-	}
-
-
-	public World[] getWorlds() {
-		return worlds;
-	}
-
-
-	public void setWorlds(World[] worlds) {
-		this.worlds = worlds;
-	}
-
-
-	public void command(String command, Point location){
-		
-	}
-	public void render(){
-		
+	public void render(GameContainer container, Graphics context) throws SlickException {
+		this.player.render(container, context);
 	}
 	
-	public Point getPlayerPosition(){
-		return null;
-		
+	public void update(GameContainer container) throws SlickException {
+		this.player.update(container);
 	}
 }
 

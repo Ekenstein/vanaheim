@@ -1,12 +1,14 @@
-package edu.cth.tmnd.vanaheim.view.states.impl;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class ExitState extends ViewState {
+import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
 
-	public ExitState(){
+public class MenuSettingsState extends ViewState {
+
+	public MenuSettingsState(){
 		super(null);
 	}
 

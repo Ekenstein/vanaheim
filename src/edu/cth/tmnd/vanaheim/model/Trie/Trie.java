@@ -1,10 +1,10 @@
-package edu.cth.tmnd.vanaheim.model;
+package edu.cth.tmnd.vanaheim.model.Trie;
 
 import java.io.File;
 
-public class Trie {
+import edu.cth.tmnd.vanaheim.model.GameObject;
 
-	Trienode parent;
+public class Trie {
 	
 	public Trie(){
 		
@@ -15,6 +15,10 @@ public class Trie {
 	}
 	
 	public void init(File command){
+		
+	}
+	
+	private class TrieNode {
 		
 	}
 }
