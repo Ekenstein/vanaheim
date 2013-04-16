@@ -1,8 +1,15 @@
 package edu.cth.tmnd.vanaheim.model.world.tiles.impl;
 
+import org.newdawn.slick.Animation;
+
 import edu.cth.tmnd.vanaheim.model.Battle;
+import edu.cth.tmnd.vanaheim.model.Inventory;
+import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 public class Tile {
+	
+	protected Inventory items;
+	protected Animation[] animation;
 	
 	public Tile(){
 		
@@ -14,5 +21,17 @@ public class Tile {
 	
 	public Battle generateBattle(){
 		return new Battle();
+	}
+	
+	public boolean addItem(Item item) {
+		return this.items.addItem(item);
+	}
+	
+	public Animation[] getAnimation() {
+		return this.animation;
+	}
+	
+	public void setAnimation(Animation[] animation) {
+		this.animation = animation;
 	}
 }
