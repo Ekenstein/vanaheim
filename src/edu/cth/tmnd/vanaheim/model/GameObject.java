@@ -1,44 +1,39 @@
 package edu.cth.tmnd.vanaheim.model;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Animation;
 
-/**
- * Anything that will be drawn should extend this class.<br />
- * Tunnel all rendering to these classes.
- * @author Gabriel Ekblad & Daniel Jonsson
- *
- */
-public interface GameObject {
-
-	/**
-	 * Renders the game object. All rendering logic here for this particular object.
-	 * @param container	If necessary, tunnel the GameContainer here.
-	 * @param context	If necessary, tunnel the Graphics context here.
-	 * @throws SlickException	In case of explosion.
-	 */
-	public abstract void render(GameContainer container, Graphics context) throws SlickException;
+public abstract class GameObject {
 	
-	/**
-	 * Update logic here. Like input and stuff.
-	 * @param container
-	 * @throws SlickException
-	 */
-	public abstract void update(GameContainer container, int delta) throws SlickException;
+	protected float x, y;
+	protected Animation[] animation;
 	
-	/**
-	 * Init the object here.
-	 * @param container
-	 * @throws SlickException
-	 */
-	public abstract void init(GameContainer container) throws SlickException;
+	public GameObject(float x, float y, Animation[] animation) {
+		this.x = x;
+		this.y = y;
+		this.animation = animation;
+	}
 	
-	public abstract float getX();
+	public Animation[] getAnimation() {
+		return this.animation;
+	}
 	
-	public abstract float getY();
+	public void setAnimation(Animation[] animation) {
+		this.animation = animation;
+	}
 	
-	public abstract void setX(float x);
+	public float getX() {
+		return this.x;
+	}
 	
-	public abstract void setY(float y);
+	public float getY() {
+		return this.y;
+	}
+	
+	public void setX(float x) {
+		this.x = x;
+	}
+	
+	public void setY(float y) {
+		this.y = y;
+	}
 }

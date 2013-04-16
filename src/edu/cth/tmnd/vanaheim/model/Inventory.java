@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+import edu.cth.tmnd.vanaheim.model.world.World;
 
 final public class Inventory {
 	private final int slots;
@@ -86,23 +87,19 @@ final public class Inventory {
 	 * 			if it didn't exist or if the given
 	 * 			item was null.
 	 */
-	public Item dropItem(final Item item) {
-		if(item == null) {
-			return null;
-		}
-
-		if(this.isEmpty()) {
-			return null;
-		}
-
-		final int index = this.items.indexOf(item);
+	public Item dropItem(final Item item, World target, float x, float y) {
+		final int index = this.getItemIndex(item);
 
 		if(index == -1) {
 			return null;
 		}
 
-		// TODO remove the owner of the item
-		return this.items.remove(index);
+		Item i = this.items.remove(index);
+		i.setOwner(null);
+	
+		// TODO lägg till item på tile
+		
+		return i;
 	}
 
 	/**
@@ -134,7 +131,25 @@ final public class Inventory {
 	 * @return
 	 */
 	public Item retrieveItem(final Item item) {
-		return null;
+		int index = this.getItemIndex(item);
+		
+		if(index == -1) {
+			return null;
+		}
+		
+		return this.items.get(index);
+	}
+	
+	private int getItemIndex(Item item) {
+		if(item == null) {
+			return -1;
+		}
+		
+		if(this.isEmpty()) {
+			return -1;
+		}
+		
+		return this.items.indexOf(item);
 	}
 
 	/**
