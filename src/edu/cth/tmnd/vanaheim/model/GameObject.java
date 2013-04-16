@@ -25,7 +25,7 @@ public interface GameObject {
 	 * @param container
 	 * @throws SlickException
 	 */
-	public abstract void update(GameContainer container) throws SlickException;
+	public abstract void update(GameContainer container, int delta) throws SlickException;
 	
 	/**
 	 * Init the object here.

@@ -1,7 +1,11 @@
 package edu.cth.tmnd.vanaheim.model.creatures.player;
 
+import java.awt.Point;
+
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -12,13 +16,21 @@ import edu.cth.tmnd.vanaheim.model.quests.impl.QuestBook;
 public class Player implements Human {
 
 	QuestBook log;
-	
+
+	private Animation sprite, up, down, left, right;
+
+	private float x = 34f, y = 34f;
+
 	public Player(){
-		
+
+	}
+
+	public void showQuestBook(){
+
 	}
 	
-	public void showQuestBook(){
-		
+	public Point getLoc() {
+		return new Point((int)x, (int)y);
 	}
 
 	@Override
@@ -48,24 +60,59 @@ public class Player implements Human {
 	@Override
 	public void addItem(Item item) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics context)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		sprite.draw((int)x, (int)y);
 	}
 
 	@Override
-	public void update(GameContainer container) throws SlickException {	
+	public void update(GameContainer container, int delta) throws SlickException {	
+		Input input = container.getInput();
+		if (input.isKeyDown(Input.KEY_UP))
+		{
+			sprite = up;
+			sprite.update(delta);
+			// The lower the delta the slowest the sprite will animate.
+			y -= delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN))
+		{
+			sprite = down;
+			sprite.update(delta);
+			y += delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT))
+		{
+			sprite = left;
+			sprite.update(delta);
+			x -= delta * 0.1f;
+		}
+		else if (input.isKeyDown(Input.KEY_RIGHT))
+		{
+			sprite = right;
+			sprite.update(delta);
+			x += delta * 0.1f;
+		}
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
-		
+		Image [] movementUp = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementDown = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementLeft = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementRight = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		int [] duration = {300, 300};
+
+		up = new Animation(movementUp, duration, false);
+		down = new Animation(movementDown, duration, false);
+		left = new Animation(movementLeft, duration, false);
+		right = new Animation(movementRight, duration, false);
+
+		sprite = right;
 	}
 
 	@Override
@@ -83,7 +130,7 @@ public class Player implements Human {
 	@Override
 	public void setX(float x) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -94,7 +141,7 @@ public class Player implements Human {
 	@Override
 	public void talk(Human human) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

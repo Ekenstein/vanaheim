@@ -19,8 +19,4 @@ public class Tile {
 	public Battle generateBattle(){
 		return new Battle();
 	}
-	
-	public void render(GameContainer container, Graphics context) throws SlickException {
-		// TODO rendrera tilen här
-	}
 }

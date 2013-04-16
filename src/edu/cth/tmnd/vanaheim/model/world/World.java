@@ -6,24 +6,22 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
+import edu.cth.tmnd.vanaheim.model.world.tiles.GrassTile;
 import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 
 public class World {
 
 	private NPC[] npcs;
-	private Tile[][] tiles;
 	private TiledMap map;
 	
+	private Tile[][] tiles;
+	
 	public World(){
-		
+		tiles = new Tile[32][24];
 	}
 	
 	public void render(GameContainer container, Graphics context) throws SlickException {
-		for(Tile[] tiles : this.tiles) {
-			for(Tile tile : tiles) {
-				tile.render(container, context);
-			}
-		}
+		map.render(0, 0);
 	}
 	
 
@@ -31,13 +29,24 @@ public class World {
 		
 	}
 	
+	public void checkTile(int x, int y) {
+		boolean bool = tiles[x][y].hasMonster();
+	}
+	
 	public void init(GameContainer container) {
-		// TODO hämta hem alla tiles från TiledMap.
-		// TODO skapa Tile objekt efter vilket grupp id det är.
-		// TODO populera objekten med deras respektive bilder
-		// TODO map.getObjectImage(groupID, objectID); här är en sådan metod.
-		// TODO populera objekten med deras respektive properties
-		// TODO map.getTileProperty(tileID, propertyName, def);
-		// TODO etc
+		try {
+			map = new TiledMap("data/map.tmx");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < map.getHeight(); i++) {
+			for (int j = 0; j < map.getWidth(); j++) {
+				//System.out.println(map.getTileId(j, i, 1));
+				if (map.getTileId(j, i, 0) == 178) {
+					tiles[j][i] = new GrassTile();
+				}
+			}
+		}
 	}
 }

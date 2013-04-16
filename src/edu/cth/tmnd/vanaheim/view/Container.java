@@ -20,6 +20,7 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.cth.tmnd.vanaheim.controller.Controller;
 import edu.cth.tmnd.vanaheim.view.impl.IContainer;
 import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
 
@@ -30,6 +31,8 @@ import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
  *
  */
 public class Container extends BasicGame implements IContainer {
+	
+	private Controller controller;
 
 	private TiledMap map = null;
 
@@ -58,6 +61,7 @@ public class Container extends BasicGame implements IContainer {
 
 	public Container(final String title) {
 		super(title);
+		controller = new Controller();
 	}
 
 	@Override
@@ -77,6 +81,11 @@ public class Container extends BasicGame implements IContainer {
 	@Override
 	public void render(final GameContainer container, final Graphics context) throws SlickException {
 		//this.currentViewState.render(container, context);
+		
+		controller.render(container, context);
+		inputField.render(container, context);
+		
+		/*
 		map.render(0, 0);
 		if (showInventory == true) {
 			context.drawImage(inventory_bg, 256, 350);
@@ -89,11 +98,56 @@ public class Container extends BasicGame implements IContainer {
 			}
 		}
 		inputField.render(container, context);
+		*/
 	}
 
 	@Override
 	public void init(final GameContainer container) throws SlickException {
-
+		
+		controller.init(container);
+		
+		inputField = new TextField(container, 
+				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
+				384, 704, 256, 64, new ComponentListener() {
+			
+			//Listen for different messages. Message is supposed to be sent to a controller and actions are
+			//supposed to be performed whenever the GUI receives new information.
+			public void componentActivated(AbstractComponent source) {
+				message = inputField.getText();
+				if (message.equals("show inventory")) {
+					showInventory = true;
+				} else if (message.equals("hide inventory")) {
+					showInventory = false;
+				} else if (message.equals("drop item")) {
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 6; j++) {
+							int item = inventory[i][j];
+							if (item == 1 || item == 2 || item == 3) {
+								inventory[i][j] = 0;
+								inputField.setText("");
+								return;
+							}
+						}
+					}
+				} else if (message.equals("loot")) {
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 6; j++) {
+							int item = inventory[i][j];
+							if (item == 0) {
+								Random rand = new Random();
+								int a = rand.nextInt(4);
+								inventory[i][j] = a;
+								inputField.setText("");
+								return;
+							}
+						}
+					}
+				}
+				inputField.setText("");
+			}
+		});
+		inputField.setFocus(true);
+		/*
 		//Init the tiled map
 		try {
 			map = new TiledMap("data/map.tmx");
@@ -158,11 +212,12 @@ public class Container extends BasicGame implements IContainer {
 			}
 		});
 		inputField.setFocus(true);
+		*/
 	}
 
 	@Override
 	public void update(final GameContainer container, final int delta) throws SlickException {
-		//System.out.println("Åke");
+		controller.update(container, delta);
 	}
 
 }
