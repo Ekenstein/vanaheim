@@ -97,7 +97,7 @@ final public class Inventory {
 		Item i = this.items.remove(index);
 		i.setOwner(null);
 	
-		// TODO lägg till item på tile
+		target.getTile((int)x, (int)y).addItem(i);
 		
 		return i;
 	}
@@ -137,7 +137,7 @@ final public class Inventory {
 			return null;
 		}
 		
-		return this.items.get(index);
+		return this.items.remove(index);
 	}
 	
 	private int getItemIndex(Item item) {

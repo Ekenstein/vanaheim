@@ -27,6 +27,10 @@ public class Tile {
 		return this.items.addItem(item);
 	}
 	
+	public Item getItem(Item item) {
+		return this.items.retrieveItem(item);
+	}
+	
 	public Animation[] getAnimation() {
 		return this.animation;
 	}

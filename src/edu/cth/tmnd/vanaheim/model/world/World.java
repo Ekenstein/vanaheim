@@ -29,6 +29,10 @@ public class World {
 		
 	}
 	
+	public Tile getTile(int x, int y) {
+		return this.tiles[y][x];
+	}
+	
 	public void checkTile(int x, int y) {
 		boolean bool = tiles[x][y].hasMonster();
 	}
