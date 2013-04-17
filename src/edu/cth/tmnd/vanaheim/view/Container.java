@@ -24,7 +24,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
 import edu.cth.tmnd.vanaheim.view.impl.IContainer;
-import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
 
 /**
  * The main container that will draw all the
@@ -32,7 +31,7 @@ import edu.cth.tmnd.vanaheim.view.states.impl.ViewState;
  * @author eken
  *
  */
-public class Container extends BasicGame implements IContainer {
+public class Container extends BasicGame {
 	
 	private Controller controller;
 
@@ -61,25 +60,9 @@ public class Container extends BasicGame implements IContainer {
 
 	private AppGameContainer app;
 
-	private ViewState currentViewState;
-
 	public Container(final String title) {
 		super(title);
 		controller = new Controller();
-	}
-
-	@Override
-	public ViewState nextState() {
-		return currentViewState;
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ViewState prevState() {
-		return currentViewState;
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -122,10 +105,10 @@ public class Container extends BasicGame implements IContainer {
 		
 		controller.initMap(map);
 		
-		Image [] movementUp = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
-		Image [] movementDown = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
-		Image [] movementLeft = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
-		Image [] movementRight = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
+		Image [] movementUp = {new Image("data/wizUp1.png"), new Image("data/wizUp2.png")};
+		Image [] movementDown = {new Image("data/wizDown1.png"), new Image("data/wizDown2.png")};
+		Image [] movementLeft = {new Image("data/wizLeft1.png"), new Image("data/wizLeft2.png")};
+		Image [] movementRight = {new Image("data/wizRight1.png"), new Image("data/wizRight2.png")};
 		int [] duration = {300, 300};
 
 		up = new Animation(movementUp, duration, false);

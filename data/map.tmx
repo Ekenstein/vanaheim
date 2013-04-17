@@ -6,9 +6,30 @@
  <tileset firstgid="257" name="lootCoins" tilewidth="32" tileheight="32">
   <image source="coins_gold.png" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="258" name="houses" tilewidth="32" tileheight="32">
+  <image source="town.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="514" name="landscape2" tilewidth="32" tileheight="32">
+  <image source="wood_tileset_3.png" width="512" height="512"/>
+ </tileset>
  <layer name="background" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3DAQ0AAAzDoPqXM4UXckhYNVVV9cUDyUNXyAAMAAA=
+   H4sIAAAAAAAAC92W0Q3CMAxEo7ABbEAmr8oE3aDJBKQLUam15BqHnJPCBx8nBFz6ro5jZXLOTX+muKtl7dUfv1+8bX1alXfNjRnuKzP49ywIe1n12PU0Zrj5TYF9BkMGzuYZWveRcqB+ySb18C3+UWEPHXxr78kMPewe9dYdlfeb+G+J8VvPH8rlov/k+fsVnzLI/ju7BiU28eUZsM6gVjbfA20GnZFBskp8bQ5YeqH2nrLnNbXMQYSL8mUNSrMoGtjaHiA1+DQHM/D+PCf3ofyap9abdKeYv8SvnY/FHXsY6QlkDkeHndFRPKvWI8g9iGqqzYkolAAP95buQXPFQ74sJL2ap+TV1nHPC1NYdqwADAAA
+  </data>
+ </layer>
+ <layer name="mapDetails" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2UYQqAIAyFxYtVJ7BOoN6gblA3z2CDsE2EZSPwg/31vTefGtPp/JfBGjNZPX2XtBdFfZ+0o4K+9t61cudo7OHSHGHWNNvHHq7Oz9lIPGAeihHOzTPn+oegD5iHArNRmqgbhF2k9lk7b+AhAzc7k7sF93vGPnnCR6s/1xU0PHiQdE2ijx4ivAcOyV9w70IpI9fZlrvhfIZKz50nJyqPZUsADAAA
+  </data>
+ </layer>
+ <layer name="houses" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglHAxMjAwIyEWRjpa78S0D5lJKxCZ/uNgPY5I2ETOtsfBLQvGAmH0Nn+JKB9yVBcDMQpdLafVICeXumdZoXQ0isIi9DR/iagXZPRcAsd7V8EtGsxGl5CR/s3Ae3ajIa3DPI0OwoGFwAA6Kc8MQAMAAA=
+  </data>
+ </layer>
+ <layer name="houseDetails" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEAAxqMA2u/xQDbP5CgG+j3DCDOBOIsIF5A57CYDbSvAogrgbhqBMfDUAO9jBBMLzAfLZ3OhWJ6gtF0OgooBQCMhY0JAAwAAA==
   </data>
  </layer>
  <layer name="trees" width="32" height="24">
@@ -18,7 +39,17 @@
  </layer>
  <layer name="objects" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3NoQ0AAAzDsPb/pwd3wMiALQUngd/azR8A4GYAJGBbZwAMAAA=
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAALwaEyeZnAAwAAA==
+  </data>
+ </layer>
+ <layer name="blockItems" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WzQ7BQBSFp6w8pOfjDVigrNGfrdCfhB3aJuxInaa5yY1UR6dmunGSLxMm5tw7c0YrRKl9T4gDmIE5G3WLfM/gAjZgy0bdIt8HeBrwe1dXvqSqc7bxeWmoJjpnqsMBLvCAb3BfqI4AhCACsSF/ugOFrhgTkILMkD/dATqDvPDtl3M8H3W54D00Fd2BqjtP38lyQT00laxumpflQvUey+qmeV25kNXN53kuSEdLiJP1u3qqtK5Z/4a5u0b/YcO1VZ6bPIML+NlgCVYKfak8N3kGHXi6wAO+4r423QOesQCeIYhADHYfaqjLRNt3hwRrpyBT7H/QMo958fsO3wkKjVDD+Ms+6s5CVROsOdX8v/KXEC98D9s3AAwAAA==
+  </data>
+ </layer>
+ <layer name="nonBlockItems" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMgqENrjEOrP3PaGw/If99o7H9tPYfIUBr/4HAYE5D9HAbvjAeCfE/CkbBSAMAlV6vawAMAAA=
   </data>
  </layer>
 </map>

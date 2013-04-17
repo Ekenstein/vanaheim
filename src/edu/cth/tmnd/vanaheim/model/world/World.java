@@ -17,7 +17,8 @@ public class World {
 	private Tile[][] tiles;
 
 	public void initMap(TiledMap map) {
-		this.tiles = new Tile[map.getHeight()][map.getWidth()];
+		System.out.println(map.getHeight());
+		this.tiles = new Tile[map.getWidth()][map.getHeight()];
 		this.map = map;
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
@@ -36,7 +37,9 @@ public class World {
 	public void checkTile(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
-		boolean bool = tiles[xPos][yPos].hasMonster();
+		if (tiles[xPos][yPos] != null) {
+			boolean bool = tiles[xPos][yPos].hasMonster();
+		}
 	}
 
 	public void changeTile(int x, int y) {
