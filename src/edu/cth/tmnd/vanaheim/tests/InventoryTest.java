@@ -25,7 +25,7 @@ public class InventoryTest {
 	public void setUp() {
 		this.slots = 2;
 		this.inventory = new Inventory(this.slots);
-		this.owner = new Player((float)4, (float)4, new Animation[4], (float)5, this.inventory, 5);
+		this.owner = new Player((float)4, (float)4, 5, this.inventory, 5);
 		this.item1 = new Axe(this.owner);
 		this.item2 = new HealthPotion(this.owner);
 	}
