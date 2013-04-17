@@ -7,10 +7,12 @@ import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 final public class Axe implements EquipableItem, UseableItem {
 	private int damage;
 	private Creature owner;
+	private int durability;
 	
 	public Axe(Creature owner) {
 		this.damage = 10;
 		this.owner = owner;
+		this.durability = this.getDurability();
 	}
 	
 	@Override
@@ -59,10 +61,21 @@ final public class Axe implements EquipableItem, UseableItem {
 
 	@Override
 	public void use(Creature target) {
-		if(target != null) {
+		if(target != null && this.durability != 0) {
 			target.damage(this.damage);
+			this.durability--;
 		}
 		
+	}
+
+	@Override
+	public int getDurability() {
+		return 5;
+	}
+
+	@Override
+	public void repair() {
+		this.durability = this.getDurability();
 	}
 
 }

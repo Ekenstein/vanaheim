@@ -8,4 +8,6 @@ public interface Item {
 	public abstract String getItemDescription();
 	public abstract void setOwner(Creature human);
 	public abstract Creature getOwner();
+	public abstract int getDurability();
+	public abstract void repair();
 }

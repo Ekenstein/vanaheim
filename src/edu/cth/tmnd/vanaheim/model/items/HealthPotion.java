@@ -11,7 +11,7 @@ final public class HealthPotion implements UseableItem {
 	
 	public HealthPotion(Creature owner) {
 		this.owner = owner;
-		this.healing = 5;
+		this.healing = this.getDurability();
 		
 	}
 
@@ -42,7 +42,7 @@ final public class HealthPotion implements UseableItem {
 
 	@Override
 	public void use() {
-		if(this.owner != null) {
+		if(this.owner != null && this.healing != 0) {
 			this.healing = this.owner.heal(this.healing);
 		}
 	}
@@ -50,6 +50,16 @@ final public class HealthPotion implements UseableItem {
 	@Override
 	public void use(Creature target) {
 		target.heal(this.healing);
+	}
+
+	@Override
+	public int getDurability() {
+		return 5;
+	}
+
+	@Override
+	public void repair() {
+		this.healing = this.getDurability();
 	}
 	
 	
