@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
-  <image source="objects.png" width="512" height="512"/>
+  <image source="../../../Desktop/objects.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="257" name="trees" tilewidth="32" tileheight="32">
-  <image source="trees.png" width="250" height="141"/>
+  <image source="../../../Desktop/trees.png" width="250" height="141"/>
+ </tileset>
+ <tileset firstgid="285" name="LootCoins" tilewidth="32" tileheight="32">
+  <image source="../../../Desktop/coins_gold.png" width="32" height="32"/>
  </tileset>
  <layer name="background" width="32" height="24">
   <data encoding="base64" compression="gzip">
@@ -14,6 +17,11 @@
  <layer name="trees" width="32" height="24">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3WIQ4AMAgEQRD8/8tVOPTtil5SPQ05Eqar5nipkPblp0PaJp8Kaa9vmL/Bp/eP9KlY/N8/3idi6R/t0/M39M/g0/dn+h8Pooyt/QAMAAA=
+  </data>
+ </layer>
+ <layer name="objects" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjgDggy4jAo/aPglEwCkbBKBgFo2AUDE0AAOhAURkADAAA
   </data>
  </layer>
 </map>
