@@ -31,6 +31,10 @@ public class Tile {
 		return this.items.retrieveItem(item);
 	}
 	
+	public boolean hasItem() {
+		return !this.items.isEmpty();
+	}
+	
 	public Animation[] getAnimation() {
 		return this.animation;
 	}

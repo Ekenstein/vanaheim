@@ -1,11 +1,9 @@
 package edu.cth.tmnd.vanaheim.model.world;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
+import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.world.tiles.GrassTile;
 import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 
@@ -36,5 +34,13 @@ public class World {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
 		boolean bool = tiles[xPos][yPos].hasMonster();
+	}
+	
+	public void addItemToTile(float x, float y, Item item) {
+		this.tiles[(int)x][(int)y].addItem(item);
+	}
+	
+	public boolean hasTileItems(float x, float y) {
+		return this.tiles[(int)x][(int)y].hasItem();
 	}
 }

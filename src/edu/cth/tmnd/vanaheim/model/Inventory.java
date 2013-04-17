@@ -96,9 +96,7 @@ final public class Inventory {
 
 		Item i = this.items.remove(index);
 		i.setOwner(null);
-	
-		target.getTile((int)x, (int)y).addItem(i);
-		
+		target.addItemToTile(x, y, i);
 		return i;
 	}
 

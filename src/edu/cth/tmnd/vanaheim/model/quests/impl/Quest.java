@@ -24,11 +24,11 @@ public class Quest {
 	private Map<String,Integer> itemsCount;
 	
 	
-	public Quest(String name, String description, Creature owner){
+	public Quest(String name, String description, Creature owner, Map<String, Integer> requiredItems){
 		this.name = name;
 		this.owner = owner;
 		this.description = description;
-		itemsCount = new HashMap<String, Integer>();
+		itemsCount = requiredItems;
 	}
 	
 	/*
@@ -82,20 +82,5 @@ public class Quest {
 	
 	
 	public void process(Item item){
-		String itemName = item.getItemName();
-		boolean allComplete = true;
-		
-		if(item.isQuestItem() && !isComplete()){
-			if(itemsCount.containsKey(itemName) && itemsCount.get(itemName) > 0){
-				itemsCount.put(itemName, itemsCount.get(itemName) - 1);
-				for(Entry<String,Integer> items: itemsCount.entrySet()){
-					if(items.getValue() > 0){
-						allComplete = false;
-					}
-				}
-				isComplete = allComplete;
-			}
-			
-		}
 	}
 }
