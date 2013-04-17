@@ -9,19 +9,22 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.QuestBook;
 
-public class Player implements Human {
+public class Player extends Human {
+
+	public Player(float x, float y, Animation[] animation, float velocity,
+			Inventory inventory, int maxHP) {
+		super(x, y, animation, velocity, inventory, maxHP);
+		// TODO Auto-generated constructor stub
+	}
 
 	QuestBook log;
 
 	private float x = 34f, y = 34f;
-
-	public Player(){
-
-	}
 
 	public void showQuestBook(){
 

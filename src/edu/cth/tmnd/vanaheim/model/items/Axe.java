@@ -52,4 +52,17 @@ final public class Axe implements EquipableItem, UseableItem {
 		}
 	}
 
+	@Override
+	public Creature getOwner() {
+		return this.owner;
+	}
+
+	@Override
+	public void use(Creature target) {
+		if(target != null) {
+			target.damage(this.damage);
+		}
+		
+	}
+
 }

@@ -7,4 +7,5 @@ public interface Item {
 	public abstract double getItemWeight();
 	public abstract String getItemDescription();
 	public abstract void setOwner(Creature human);
+	public abstract Creature getOwner();
 }

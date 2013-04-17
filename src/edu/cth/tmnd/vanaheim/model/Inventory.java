@@ -97,6 +97,7 @@ final public class Inventory {
 		Item i = this.items.remove(index);
 		i.setOwner(null);
 		target.addItemToTile(x, y, i);
+		this.slotsLeft++;
 		return i;
 	}
 
@@ -135,6 +136,7 @@ final public class Inventory {
 			return null;
 		}
 		
+		this.slotsLeft++;
 		return this.items.remove(index);
 	}
 	
