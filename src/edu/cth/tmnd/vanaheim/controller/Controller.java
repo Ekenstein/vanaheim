@@ -10,6 +10,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.Trie.Trie;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
+import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 
@@ -50,6 +51,31 @@ public class Controller {
 	
 	public void lootAll(int x, int y) {
 		world.lootAll(x, y);
+	}
+	
+	public void dropItem(Item item) {
+		Item i = this.player.getItem(item);
+		
+		if(i != null) {
+			float x = this.player.getX();
+			float y = this.player.getY();
+			
+			if(this.world.addItemToTile(x, y, i)) {
+				this.player.removeItem(i);
+			}
+		}
+	}
+	
+	public boolean hasTileItems(float x, float y) {
+		return this.world.hasTileItems(x, y);
+	}
+	
+	public Inventory getTileItems(float x, float y) {
+		if(this.hasTileItems(x, y)) {
+			return this.world.getTileInventory(x, y);
+		}
+		
+		return null;
 	}
 }
 

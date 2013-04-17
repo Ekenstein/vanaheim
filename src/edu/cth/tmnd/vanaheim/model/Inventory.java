@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
-import edu.cth.tmnd.vanaheim.model.world.World;
 
 final public class Inventory {
 	private final int slots;
@@ -73,34 +72,6 @@ final public class Inventory {
 		return false;
 	}
 
-	public boolean destroyItem(final String itemName) {
-		return true;
-	}
-
-	/**
-	 * Will drop an item.<br />
-	 * More formally, if there exist an item i
-	 * such that item.equals(i), it will set the
-	 * item's owner to null and remove the item i
-	 * from the inventory and return the item.
-	 * @return	the item that was dropped or null
-	 * 			if it didn't exist or if the given
-	 * 			item was null.
-	 */
-	public Item dropItem(final Item item, World target, float x, float y) {
-		final int index = this.getItemIndex(item);
-
-		if(index == -1) {
-			return null;
-		}
-
-		Item i = this.items.remove(index);
-		i.setOwner(null);
-		target.addItemToTile(x, y, i);
-		this.slotsLeft++;
-		return i;
-	}
-
 	/**
 	 * Checks if there are any slots left in the
 	 * inventory
@@ -150,6 +121,29 @@ final public class Inventory {
 		}
 		
 		return this.items.indexOf(item);
+	}
+	
+	public Item removeItem(Item item) {
+		int index = this.getItemIndex(item);
+		
+		if(index == -1) {
+			return null;
+		}
+		
+		Item i = this.items.remove(index);
+		i.setOwner(null);
+		
+		return i;
+	}
+	
+	public Item getItem(Item item) {
+		int index = this.getItemIndex(item);
+		
+		if(index == -1) {
+			return null;
+		}
+		
+		return this.getItem(item);
 	}
 
 	/**

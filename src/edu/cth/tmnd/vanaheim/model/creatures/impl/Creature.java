@@ -1,7 +1,5 @@
 package edu.cth.tmnd.vanaheim.model.creatures.impl;
 
-import org.newdawn.slick.Animation;
-
 import edu.cth.tmnd.vanaheim.model.GameObject;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
@@ -70,5 +68,13 @@ public abstract class Creature extends GameObject {
 
 	public boolean destroyItem(Item item) {
 		return this.inventory.destroyItem(item);
+	}
+	
+	public Item removeItem(Item item) {
+		return this.inventory.removeItem(item);
+	}
+	
+	public Item getItem(Item item) {
+		return this.inventory.getItem(item);
 	}
 }

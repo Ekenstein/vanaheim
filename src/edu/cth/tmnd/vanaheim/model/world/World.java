@@ -2,23 +2,22 @@ package edu.cth.tmnd.vanaheim.model.world;
 
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.world.tiles.GrassTile;
 import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 
 public class World {
-
+	private final static int TILE_WIDTH = 32;
+	private final static int TILE_HEIGHT = 32;
 	private NPC[] npcs;
 	private TiledMap map;
 
 	private Tile[][] tiles;
 
-	public World(){
-		tiles = new Tile[32][24];
-	}
-
 	public void initMap(TiledMap map) {
+		this.tiles = new Tile[map.getHeight()][map.getWidth()];
 		this.map = map;
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
@@ -56,11 +55,41 @@ public class World {
 		}
 	}
 
-	public void addItemToTile(float x, float y, Item item) {
-		this.tiles[(int)x][(int)y].addItem(item);
+	private int getX(float x) {
+		return (int)Math.floor(x / TILE_WIDTH);
+	}
+	
+	private int getY(float y) {
+		return (int)Math.floor(y / TILE_HEIGHT);
+	}
+	
+	public boolean addItemToTile(float x, float y, Item item) {
+		if(!this.withinBounds(x, y)) {
+			return false;
+		}
+		
+		return this.tiles[this.getX(x)][this.getY(y)].addItem(item);
+	}
+	
+	private boolean withinBounds(float x, float y) {
+		int xPos = this.getX(x);
+		int yPos = this.getY(y);
+		
+		return xPos >= 0 && xPos < this.tiles[0].length && yPos >= 0 && xPos < this.tiles.length;
 	}
 
 	public boolean hasTileItems(float x, float y) {
-		return this.tiles[(int)x][(int)y].hasItem();
+		if(!this.withinBounds(x, y)) {
+			return false;
+		}
+		return this.tiles[this.getX(x)][this.getY(y)].hasItem();
+	}
+	
+	public Inventory getTileInventory(float x, float y) { 
+		if(!this.withinBounds(x,y)) {
+			return null;
+		}
+		
+		return this.tiles[this.getX(x)][this.getY(y)].getInventory();
 	}
 }

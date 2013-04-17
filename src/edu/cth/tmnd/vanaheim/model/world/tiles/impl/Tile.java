@@ -1,19 +1,12 @@
 package edu.cth.tmnd.vanaheim.model.world.tiles.impl;
 
-import org.newdawn.slick.Animation;
-
 import edu.cth.tmnd.vanaheim.model.Battle;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
-public class Tile {
+public abstract class Tile {
 	
 	protected Inventory items;
-	protected Animation[] animation;
-	
-	public Tile(){
-		
-	}
 	
 	public boolean hasMonster(){
 		return false;
@@ -24,22 +17,30 @@ public class Tile {
 	}
 	
 	public boolean addItem(Item item) {
-		return this.items.addItem(item);
+		if(this.canContainItems()) {
+			return this.items.addItem(item);
+		}
+		return false;
 	}
 	
+	protected abstract boolean canContainItems();
+	
 	public Item getItem(Item item) {
-		return this.items.retrieveItem(item);
+		if(this.canContainItems()) {
+			return this.items.retrieveItem(item);
+		}
+		return null;
 	}
 	
 	public boolean hasItem() {
 		return !this.items.isEmpty();
 	}
 	
-	public Animation[] getAnimation() {
-		return this.animation;
-	}
-	
-	public void setAnimation(Animation[] animation) {
-		this.animation = animation;
+	public Inventory getInventory() {
+		if(this.canContainItems()) {
+			return this.items;
+		}
+		
+		return null;
 	}
 }
