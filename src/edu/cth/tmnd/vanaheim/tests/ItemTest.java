@@ -36,20 +36,32 @@ public class ItemTest {
 		this.owner = new Player(32f, 32f, 300, new Inventory(2), 100);
 		this.target = new Spider(40f, 40f, 300, new Inventory(0), 100);
 	}
-
+	
 	@Test
 	public void HealthPotionTest() {
 		this.owner.damage(5);
 		Assert.assertEquals(95, this.owner.getHP());
 		this.potion.use();
 		Assert.assertEquals(100, this.owner.getHP());
+		Assert.assertEquals(0, this.potion.getCurrentDurability());
 		
-		this.potion = new HealthPotion(this.owner);
+		this.potion.repair();
+		Assert.assertEquals(this.potion.getDurability(), this.potion.getCurrentDurability());
 		
 		this.target.damage(6);
 		Assert.assertEquals(94, this.target.getHP());
 		this.potion.use(target);
 		Assert.assertEquals(99, this.target.getHP());
+	}
+	
+	@Test
+	public void AxeTest() {
+		this.weapon.use(this.target);
+		
+		Assert.assertEquals(90, this.target.getHP());
+		Assert.assertEquals(this.weapon.getDurability()-1, this.weapon.getCurrentDurability());
+		this.weapon.repair();
+		Assert.assertEquals(this.weapon.getDurability(), this.weapon.getCurrentDurability());
 	}
 
 }

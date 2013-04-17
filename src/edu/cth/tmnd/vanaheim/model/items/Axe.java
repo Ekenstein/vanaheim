@@ -78,4 +78,9 @@ final public class Axe implements EquipableItem, UseableItem {
 		this.durability = this.getDurability();
 	}
 
+	@Override
+	public int getCurrentDurability() {
+		return this.durability;
+	}
+
 }

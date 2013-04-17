@@ -9,5 +9,6 @@ public interface Item {
 	public abstract void setOwner(Creature human);
 	public abstract Creature getOwner();
 	public abstract int getDurability();
+	public abstract int getCurrentDurability();
 	public abstract void repair();
 }

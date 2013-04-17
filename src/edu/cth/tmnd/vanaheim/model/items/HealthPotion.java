@@ -23,10 +23,6 @@ final public class HealthPotion implements UseableItem {
 		return "A brew made for Gods";
 	}
 
-	public int getHealing() {
-		return healing;
-	}
-
 	public Creature getOwner() {
 		return owner;
 	}
@@ -60,6 +56,11 @@ final public class HealthPotion implements UseableItem {
 	@Override
 	public void repair() {
 		this.healing = this.getDurability();
+	}
+
+	@Override
+	public int getCurrentDurability() {
+		return this.healing;
 	}
 	
 	
