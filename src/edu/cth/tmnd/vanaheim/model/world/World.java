@@ -18,7 +18,7 @@ public class World {
 		tiles = new Tile[32][24];
 	}
 
-	public void initTiles(TiledMap map) {
+	public void initMap(TiledMap map) {
 		this.map = map;
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
@@ -28,6 +28,10 @@ public class World {
 				}
 			}
 		}
+	}
+	
+	public TiledMap getMap() {
+		return this.map;
 	}
 
 	public void checkTile(int x, int y) {

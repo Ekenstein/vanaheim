@@ -31,12 +31,24 @@ public class Controller {
 		player.setPlayerLoc(p);
 	}
 	
-	public void initTiles(TiledMap map) {
-		world.initTiles(map);
+	public TiledMap getMap() {
+		return world.getMap();
+	}
+	
+	public void initMap(TiledMap map) {
+		world.initMap(map);
 	}
 	
 	public void checkTile(int x, int y) {
 		world.checkTile(x, y);
+	}
+	
+	public void changeTile(int x, int y) {
+		world.changeTile(x, y);
+	}
+	
+	public void lootAll(int x, int y) {
+		world.lootAll(x, y);
 	}
 }
 

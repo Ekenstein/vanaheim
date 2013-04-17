@@ -53,6 +53,8 @@ public class Container extends BasicGame implements IContainer {
 	private Image helmetImg;
 
 	private Map<Integer, Image> items = new HashMap<Integer, Image>();
+	
+	private Image coins;
 
 	private TextField inputField;
 	private String message = "";
@@ -84,7 +86,7 @@ public class Container extends BasicGame implements IContainer {
 	public void render(final GameContainer container, final Graphics context) throws SlickException {
 		//this.currentViewState.render(container, context);
 		
-		map.render(0, 0);
+		controller.getMap().render(0, 0);
 		
 		Point p = controller.getPlayerLoc();
 		sprite.draw((float)p.x, (float)p.y);
@@ -110,13 +112,15 @@ public class Container extends BasicGame implements IContainer {
 	@Override
 	public void init(final GameContainer container) throws SlickException {
 		
+		coins = new Image("data/coins.png");
+		
 		try {
 			map = new TiledMap("data/map.tmx");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 		
-		controller.initTiles(map);
+		controller.initMap(map);
 		
 		Image [] movementUp = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
 		Image [] movementDown = {new Image("data/wiz1.png"), new Image("data/wiz2.png")};
@@ -273,6 +277,7 @@ public class Container extends BasicGame implements IContainer {
 		}
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		controller.checkTile((int)x, (int)y);
+		controller.lootAll((int)x, (int)y);
 	}
 
 }
