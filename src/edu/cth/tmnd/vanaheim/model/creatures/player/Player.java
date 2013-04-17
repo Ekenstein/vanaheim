@@ -16,9 +16,9 @@ import edu.cth.tmnd.vanaheim.model.quests.impl.QuestBook;
 
 public class Player extends Human {
 
-	public Player(float x, float y, Animation[] animation, float velocity,
+	public Player(float x, float y, int velocity,
 			Inventory inventory, int maxHP) {
-		super(x, y, animation, velocity, inventory, maxHP);
+		super(x, y, velocity, inventory, maxHP);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.Trie.Trie;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.world.World;
@@ -20,7 +21,7 @@ public class Controller {
 	
 	public Controller() {
 		world = new World();
-		player = new Player();
+		player = new Player(32f, 32f, 300, new Inventory(20), 100);
 	}
 	
 	public Point getPlayerLoc() {

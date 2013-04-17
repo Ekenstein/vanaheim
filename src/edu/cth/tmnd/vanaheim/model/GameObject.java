@@ -5,20 +5,10 @@ import org.newdawn.slick.Animation;
 public abstract class GameObject {
 	
 	protected float x, y;
-	protected Animation[] animation;
 	
-	public GameObject(float x, float y, Animation[] animation) {
+	public GameObject(float x, float y) {
 		this.x = x;
 		this.y = y;
-		this.animation = animation;
-	}
-	
-	public Animation[] getAnimation() {
-		return this.animation;
-	}
-	
-	public void setAnimation(Animation[] animation) {
-		this.animation = animation;
 	}
 	
 	public float getX() {

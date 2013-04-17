@@ -9,19 +9,19 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 public abstract class Creature extends GameObject {
 
-	protected float velocity;
+	protected int velocity;
 	protected Inventory inventory;
 	protected int currentHP, maxHP;
 	protected EquipableItem equipment;
 	
-	public Creature(float x, float y, Animation[] animation, float velocity, Inventory inventory, int maxHP) {
-		super(x, y, animation);
+	public Creature(float x, float y, int velocity, Inventory inventory, int maxHP) {
+		super(x, y);
 		this.velocity = velocity;
 		this.inventory = inventory;
 		this.maxHP = this.currentHP = maxHP;
 	}
 	
-	public float getVelocity() {
+	public int getVelocity() {
 		return this.velocity;
 	}
 	
@@ -56,7 +56,7 @@ public abstract class Creature extends GameObject {
 		return this.currentHP == 0;
 	}
 	
-	public void setVelocity(float velocity) {
+	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
 	
