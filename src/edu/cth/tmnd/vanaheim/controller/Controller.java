@@ -33,6 +33,10 @@ public class Controller {
 		player.setPlayerLoc(p);
 	}
 	
+	public boolean isBlocked(int x, int y) {
+		return world.isBlocked(x, y);
+	}
+	
 	public TiledMap getMap() {
 		return world.getMap();
 	}

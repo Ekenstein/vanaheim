@@ -12,9 +12,12 @@
  <tileset firstgid="514" name="landscape2" tilewidth="32" tileheight="32">
   <image source="wood_tileset_3.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="770" name="mountains" tilewidth="32" tileheight="32">
+  <image source="mountain_landscape.png" width="512" height="512"/>
+ </tileset>
  <layer name="background" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC92W0Q3CMAxEo7ABbEAmr8oE3aDJBKQLUam15BqHnJPCBx8nBFz6ro5jZXLOTX+muKtl7dUfv1+8bX1alXfNjRnuKzP49ywIe1n12PU0Zrj5TYF9BkMGzuYZWveRcqB+ySb18C3+UWEPHXxr78kMPewe9dYdlfeb+G+J8VvPH8rlov/k+fsVnzLI/ju7BiU28eUZsM6gVjbfA20GnZFBskp8bQ5YeqH2nrLnNbXMQYSL8mUNSrMoGtjaHiA1+DQHM/D+PCf3ofyap9abdKeYv8SvnY/FHXsY6QlkDkeHndFRPKvWI8g9iGqqzYkolAAP95buQXPFQ74sJL2ap+TV1nHPC1NYdqwADAAA
+   H4sIAAAAAAAAC7VW0VHDMAz1ucAAFBgghQ4AnQA6AbBgr0yQDZxO0HQhlMPveBWyrXDw8c6X5FnvWZZ06UMIveAxhvAk2MSv57/AtSMWdJ8FL4KtY8+FcC4FVwXukLGU76v47QNafFbovgreBO8q5sLQuJF3t4I749tBMGak7EGfdUNntXQ75VvjXt4/CNbxp/ZJ8JFxzB4WOR7n2Drr5BU5w7qaUQ+szR66HK+U4xLgw3PnvaENxEourZpgfc+dA3tDe9foA9wJVvbBtVe6c+ZP2CvtGM9rUAN3gnVOH7L/Le2BPmq4a8TiGLpGanMpKv6EA+mnzGnVcK0u2Rt8RAXer/tvWak9Dzg2fGh9wOqBFOb1cE0fa01f9wBmkO7jVi9bKOmyvpUDeOA+bvVyS9/yU5sDxxn6rXNGh29rDvIcsWaJR9err3OwK/CGmWf+TQ5K2hNGx/nZJ/O8+i1OanDwT5H+Sf/Y8HAK5zXsqQk9h0t3b/VorZZSRR8eSv9BVk6tOTEoHBwc5pb+g1KDA96ooLkWp8S19jHnE8XKTTkADAAA
   </data>
  </layer>
  <layer name="mapDetails" width="32" height="24">
@@ -34,7 +37,7 @@
  </layer>
  <layer name="trees" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAALwaEyeZnAAwAAA==
+   H4sIAAAAAAAAC2NgoA+4w8TAcBeI9wDxXiSaXuAN0K63QHwGiM8i0fQCf4B2/YXaBwsLSgEsDIk1D6YOFhaUAlgYEmseTB1yWFADEGsete2FAXqnZXRA77SMDEay30fBKBgFwwOMlmOjYCQCAL5aM2EADAAA
   </data>
  </layer>
  <layer name="objects" width="32" height="24">
@@ -44,7 +47,7 @@
  </layer>
  <layer name="blockItems" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WzQ7BQBSFp6w8pOfjDVigrNGfrdCfhB3aJuxInaa5yY1UR6dmunGSLxMm5tw7c0YrRKl9T4gDmIE5G3WLfM/gAjZgy0bdIt8HeBrwe1dXvqSqc7bxeWmoJjpnqsMBLvCAb3BfqI4AhCACsSF/ugOFrhgTkILMkD/dATqDvPDtl3M8H3W54D00Fd2BqjtP38lyQT00laxumpflQvUey+qmeV25kNXN53kuSEdLiJP1u3qqtK5Z/4a5u0b/YcO1VZ6bPIML+NlgCVYKfak8N3kGHXi6wAO+4r423QOesQCeIYhADHYfaqjLRNt3hwRrpyBT7H/QMo958fsO3wkKjVDD+Ms+6s5CVROsOdX8v/KXEC98D9s3AAwAAA==
+   H4sIAAAAAAAAC+2Vt04DQRCGz16C3JJpCRK0hBcg9sSKhvgG8AbwKFBCBQXBrsGBFuEkQQfYlqADm2+FV15Od7fnw4aGX/p0kse3/+zuzJxlfek+bFlpOIcL7dlsKd8neIYbiGvPZkv5vsPHL/jZ9Ve+Sr91z06KiNo9qzwSkIRUE3IS+LVAK/RBv6jFVB4ZyEIO8g3MoQOvTuiCbhiB0aq/6gGpF54FKEKpgf4DeA3CkMZw1V/1gLqDivStxvzWh74HJ42x3jhMaExWPVQPOPW8+s1UF2oPbprCaxpm4BhOYFaY81ZxU12Y+ngBr0VYgijEYFmY81bxn9bFOl4bsAk5yMOWMOetx/W6UHoIWdZjqP58pOLC/B+pa4/1X4m91eFfxnMX9iDtw3+tzr2Z+iWJ5z4caN56DV7idwVRiAU4V9N3M6v5lm39L5XAMwkpuA14r05nEBbf528btNv6XyqDZxZykIc7lxy8asLpDOzztwd6Xe6/wNpFKAXcf8ThPX3+yLkzB/Mu/hX5foO/f/r8kXNnBVY96v+QHI587t/rLpT0+SPnzjbsePifsuZZwPP/l399Alv/UGMADAAA
   </data>
  </layer>
  <layer name="nonBlockItems" width="32" height="24">

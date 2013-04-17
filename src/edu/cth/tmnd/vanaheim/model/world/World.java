@@ -15,19 +15,31 @@ public class World {
 	private TiledMap map;
 
 	private Tile[][] tiles;
+	
+	private boolean[][] blocked;
 
 	public void initMap(TiledMap map) {
 		System.out.println(map.getHeight());
 		this.tiles = new Tile[map.getWidth()][map.getHeight()];
+		this.blocked = new boolean[map.getWidth()][map.getHeight()];
 		this.map = map;
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
 				//System.out.println(map.getTileId(j, i, 2));
-				if (map.getTileId(j, i, 0) == 178) {
-					tiles[j][i] = new GrassTile();
+				
+				//Create tiles
+				
+				if (map.getTileId(j, i, 6) != 0 || map.getTileId(j, i, 2) != 0) {
+					blocked[j][i] = true;
 				}
 			}
 		}
+	}
+	
+	public boolean isBlocked(int x, int y) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		return blocked[xPos][yPos];
 	}
 	
 	public TiledMap getMap() {

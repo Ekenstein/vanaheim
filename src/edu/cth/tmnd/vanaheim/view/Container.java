@@ -32,13 +32,13 @@ import edu.cth.tmnd.vanaheim.view.impl.IContainer;
  *
  */
 public class Container extends BasicGame {
-	
+
 	private Controller controller;
 
 	private TiledMap map = null;
 
 	private Animation sprite, up, down, left, right;
-	private float x = 34f, y = 34f;
+	private float x = 100f, y = 100f;
 
 	private Image inventory_bg;
 	private boolean showInventory = false;
@@ -52,7 +52,7 @@ public class Container extends BasicGame {
 	private Image helmetImg;
 
 	private Map<Integer, Image> items = new HashMap<Integer, Image>();
-	
+
 	private Image coins;
 
 	private TextField inputField;
@@ -68,14 +68,14 @@ public class Container extends BasicGame {
 	@Override
 	public void render(final GameContainer container, final Graphics context) throws SlickException {
 		//this.currentViewState.render(container, context);
-		
+
 		controller.getMap().render(0, 0);
-		
+
 		Point p = controller.getPlayerLoc();
 		sprite.draw((float)p.x, (float)p.y);
 
 		inputField.render(container, context);
-		
+
 		/*
 		map.render(0, 0);
 		if (showInventory == true) {
@@ -89,22 +89,22 @@ public class Container extends BasicGame {
 			}
 		}
 		inputField.render(container, context);
-		*/
+		 */
 	}
 
 	@Override
 	public void init(final GameContainer container) throws SlickException {
-		
+
 		coins = new Image("data/coins.png");
-		
+
 		try {
 			map = new TiledMap("data/map.tmx");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		controller.initMap(map);
-		
+
 		Image [] movementUp = {new Image("data/wizUp1.png"), new Image("data/wizUp2.png")};
 		Image [] movementDown = {new Image("data/wizDown1.png"), new Image("data/wizDown2.png")};
 		Image [] movementLeft = {new Image("data/wizLeft1.png"), new Image("data/wizLeft2.png")};
@@ -117,11 +117,11 @@ public class Container extends BasicGame {
 		right = new Animation(movementRight, duration, false);
 
 		sprite = right;
-		
+
 		inputField = new TextField(container, 
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
 				384, 704, 256, 64, new ComponentListener() {
-			
+
 			//Listen for different messages. Message is supposed to be sent to a controller and actions are
 			//supposed to be performed whenever the GUI receives new information.
 			public void componentActivated(AbstractComponent source) {
@@ -159,9 +159,9 @@ public class Container extends BasicGame {
 			}
 		});
 		inputField.setFocus(true);
-		
-		
-		
+
+
+
 		/*
 		//Init the tiled map
 		try {
@@ -189,7 +189,7 @@ public class Container extends BasicGame {
 		inputField = new TextField(container, 
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
 				384, 704, 256, 64, new ComponentListener() {
-			
+
 			//Listen for different messages. Message is supposed to be sent to a controller and actions are
 			//supposed to be performed whenever the GUI receives new information.
 			public void componentActivated(AbstractComponent source) {
@@ -227,39 +227,51 @@ public class Container extends BasicGame {
 			}
 		});
 		inputField.setFocus(true);
-		*/
+		 */
 	}
 
 	@Override
 	public void update(final GameContainer container, final int delta) throws SlickException {
 		Input input = container.getInput();
-		if (input.isKeyDown(Input.KEY_UP))
-		{
-			sprite = up;
-			sprite.update(delta);
-			// The lower the delta the slowest the sprite will animate.
-			y -= delta * 0.1f;
-		}
-		else if (input.isKeyDown(Input.KEY_DOWN))
-		{
-			sprite = down;
-			sprite.update(delta);
-			y += delta * 0.1f;
-		}
-		else if (input.isKeyDown(Input.KEY_LEFT))
-		{
-			sprite = left;
-			sprite.update(delta);
-			x -= delta * 0.1f;
-		}
-		else if (input.isKeyDown(Input.KEY_RIGHT))
-		{
-			sprite = right;
-			sprite.update(delta);
-			x += delta * 0.1f;
-		}
+        if (input.isKeyDown(Input.KEY_UP))
+        {
+            sprite = up;
+            if (!controller.isBlocked((int)x, (int)(y - delta * 0.1f)))
+            {
+                sprite.update(delta);
+                // The lower the delta the slowest the sprite will animate.
+                y -= delta * 0.1f;
+            }
+        }
+        else if (input.isKeyDown(Input.KEY_DOWN))
+        {
+            sprite = down;
+            if (!controller.isBlocked((int)x, (int)(y + 32f + delta * 0.1f)))
+            {
+                sprite.update(delta);
+                y += delta * 0.1f;
+            }
+        }
+        else if (input.isKeyDown(Input.KEY_LEFT))
+        {
+            sprite = left;
+            if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
+            {
+                sprite.update(delta);
+                x -= delta * 0.1f;
+            }
+        }
+        else if (input.isKeyDown(Input.KEY_RIGHT))
+        {
+            sprite = right;
+            if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
+            {
+                sprite.update(delta);
+                x += delta * 0.1f;
+            }
+        }
 		controller.setPlayerLoc(new Point((int)x, (int)y));
-		controller.checkTile((int)x, (int)y);
+		//controller.checkTile((int)x, (int)y);
 		controller.lootAll((int)x, (int)y);
 	}
 
