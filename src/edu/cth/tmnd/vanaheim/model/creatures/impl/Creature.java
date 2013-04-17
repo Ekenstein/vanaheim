@@ -41,10 +41,11 @@ public abstract class Creature extends GameObject {
 		this.maxHP = hp;
 	}
 	
-	public void heal(int hp) {
+	public int heal(int hp) {
 		int healed = this.currentHP + hp;
 		
 		this.currentHP = healed > this.maxHP ? this.maxHP : healed;
+		return healed - this.currentHP;
 	}
 	
 	public void damage(int damage) {

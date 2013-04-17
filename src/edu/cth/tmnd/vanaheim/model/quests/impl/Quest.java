@@ -81,6 +81,6 @@ public class Quest {
 	}
 	
 	
-	public void process(Item item){
+	public void process(Item item) {
 	}
 }
