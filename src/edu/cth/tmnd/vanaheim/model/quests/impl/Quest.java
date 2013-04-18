@@ -13,7 +13,7 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
  * Still implementing this class
  */
 
-public class Quest {
+public abstract class Quest {
 
 	private String name;
 	private String description;
