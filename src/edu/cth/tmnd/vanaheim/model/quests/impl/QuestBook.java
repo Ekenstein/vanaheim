@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 
 public class QuestBook {
 
-	Map<String, Quest> quests;
+	private Map<String, Quest> quests;
 	
 	public QuestBook(){
 		quests = new HashMap<String, Quest>();
@@ -55,9 +55,12 @@ public class QuestBook {
 		}
 	}
 	
-	public void removeQuest(Quest q){
-		if(quests.containsKey(q.getName())){
-			quests.remove(q.getName());
-		}
+	public void removeQuest(String questName){
+			quests.remove(questName);
+		
+	}
+	
+	public Quest getQuest(String questName){
+		return quests.get(questName);
 	}
 }
