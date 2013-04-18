@@ -91,6 +91,13 @@ public abstract class Quest {
 	}
 	
 	
-	public void process(Item item) {
+	public boolean process(Item item) {
+		if(itemsCount.containsValue(item.getItemName())){
+			if(itemsCount.get(item.getItemName()) > 0){
+				itemsCount.put(item.getItemName(), itemsCount.get(item.getItemName()) - 1);
+				return true;
+			}
+		}
+		return false;
 	}
 }
