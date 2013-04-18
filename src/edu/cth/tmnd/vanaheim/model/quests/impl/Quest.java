@@ -1,9 +1,7 @@
 package edu.cth.tmnd.vanaheim.model.quests.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Map;
-import java.util.Map.Entry;
 
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
@@ -78,6 +76,18 @@ public abstract class Quest {
 		else{
 			return false;
 		}
+	}
+	
+	public Creature getOwner(){
+		return owner;
+	}
+	
+	public void setUser(Creature user){
+		this.user = user;
+	}
+	
+	public Creature getUser(){
+		return user;
 	}
 	
 	
