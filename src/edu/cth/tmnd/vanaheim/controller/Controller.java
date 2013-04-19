@@ -1,17 +1,17 @@
 package edu.cth.tmnd.vanaheim.controller;
 
 import java.awt.Point;
-import java.util.StringTokenizer;
+import java.beans.PropertyChangeListener;
 
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
+import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectFactory;
-import edu.cth.tmnd.vanaheim.model.ObjectFactory.Type;
-import edu.cth.tmnd.vanaheim.model.Trie.Trie;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+import edu.cth.tmnd.vanaheim.model.parser.Trie;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 public class Controller {
@@ -20,11 +20,17 @@ public class Controller {
 	private Trie lexicon;
 	private final World world;
 	private final ObjectFactory objectMapper;
+	private final MessageBuffer msgBuffer;
 
 	public Controller() {
 		this.world = new World();
 		this.player = new Player(32f, 32f, 300, new Inventory(20), 100, "Harald");
 		this.objectMapper = ObjectFactory.getInstance();
+		this.msgBuffer = MessageBuffer.getInstance();
+	}
+
+	public void addMessageBufferListener(final PropertyChangeListener listener) {
+		this.msgBuffer.addListener(listener);
 	}
 
 	public Point getPlayerLoc() {
@@ -97,43 +103,7 @@ public class Controller {
 
 	public void interpretCommand(final String command) {
 
-		final StringTokenizer st = new StringTokenizer(command);
-
-		final String currentNode = null;
-		final StringBuilder sb = new StringBuilder();
-		boolean nodeReached = false;
-		int wordCount = 0;
-
-		while(st.hasMoreTokens()) {
-			final String token = st.nextToken();
-			wordCount++;
-			if(!nodeReached) {
-				// if a node hasn't been reached,
-				// check if the current token is longer than
-				// NODE_WORDS_LIMIT. If it is, it is a parse error.
-				if(wordCount > NODE_WORDS_LIMIT) {
-					return;
-				}
-
-				// check if the current token is an object.
-				// if it is, it is a parse error. There shouldn't
-				// be a node that is related to an object
-				if(this.objectMapper.isRegistered(token) != Type.UNKNOWN) {
-					return;
-				}
-
-				// So we have a token that is unknown and is <= NODE_wORDS_LIMIT
-				// We need to check if there exist a node in the trie tree that contains
-				// this token.
-
-				if(this.lexicon.hasNode(token)) {
-					nodeReached = true;
-				} else {
-					// parse error.
-					return;
-				}
-			}
-		}
+		// TODO split and stuff
 	}
 }
 

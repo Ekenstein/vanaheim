@@ -1,6 +1,7 @@
-package edu.cth.tmnd.vanaheim.model.Trie;
+package edu.cth.tmnd.vanaheim.model.parser;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,10 +42,6 @@ public class Trie {
 			this.method = method;
 		}
 
-		public String getClazz() {
-			return this.clazz;
-		}
-
 		public boolean setObject(final Object o) {
 			try {
 				final Class<?> cls = Class.forName(this.clazz);
@@ -66,28 +63,46 @@ public class Trie {
 			try {
 				// we need to get all the arguments to the method from the parents.
 				final ArrayList<Class<?>> parentClazzes = new ArrayList<Class<?>>();
+				final ArrayList<Object> parentObjects = new ArrayList<Object>();
 
+				// fetch parents objects and clazzes.
 				for(TrieNode parent = this.parent; parent != null; parent = parent.parent) {
 					parentClazzes.add(parent.o.getClass());
+					parentObjects.add(parent.o);
 				}
 
-				Collections.reverse(parentClazzes);
-				final Class<?>[] methodArguments = new Class<?>[parentClazzes.size()];
-				parentClazzes.toArray(methodArguments);
-				final Method m = this.o.getClass().getMethod(this.method, methodArguments);
-				//m.invoke(this.o);
+				// If there are more than one parent, we need to reverse
+				// the list since we are invoking down to up on their objects.
+				if(parentClazzes.size() > 1) {
+					Collections.reverse(parentClazzes);
+					Collections.reverse(parentObjects);
+				}
+
+				// cast the list to arrays so we can use it when invoking
+				// and creating methods through reflection
+				final Class<?>[] methodClazzes = new Class<?>[parentClazzes.size()];
+				final Object[] methodObjects = new Object[parentObjects.size()];
+
+				parentClazzes.toArray(methodClazzes);
+				parentObjects.toArray(methodObjects);
+
+				// get the method
+				final Method m = this.o.getClass().getDeclaredMethod(this.method, methodClazzes);
+
+				// invoke the method
+				m.invoke(this.o, methodObjects);
 			} catch(final ClassCastException e) {
 				return;
 			} catch (final NoSuchMethodException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (final SecurityException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-
-			for(TrieNode parent = this.parent; parent != null; parent = parent.parent) {
-
+			} catch (final IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (final IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (final InvocationTargetException e) {
+				e.printStackTrace();
 			}
 		}
 	}
