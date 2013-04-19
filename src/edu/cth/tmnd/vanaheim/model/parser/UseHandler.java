@@ -1,5 +1,7 @@
 package edu.cth.tmnd.vanaheim.model.parser;
 
+import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
+import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
 public class UseHandler extends Handler {
@@ -12,8 +14,13 @@ public class UseHandler extends Handler {
 
 	@Override
 	protected void handleHelper(final Object[] os) {
-		// TODO Auto-generated method stub
-
+		final UseableItem item = (UseableItem) os[0];
+		if(os.length == 2) {
+			final Creature target = (Creature) os[1];
+			item.use(target);
+		} else {
+			item.use();
+		}
 	}
 
 }

@@ -6,33 +6,33 @@ import java.util.Map;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
-public final class ObjectFactory {
+public final class ObjectMapper {
 
 	public static enum Type { ITEM, CREATURE, UNKNOWN };
 
-	private static ObjectFactory theInstance = null;
+	private static ObjectMapper theInstance = null;
 	private final Map<String, Item> registeredItems;
 	private final Map<String, Creature> registeredCreatures;
 
-	public static ObjectFactory getInstance() {
-		if(ObjectFactory.theInstance == null) {
-			ObjectFactory.theInstance = new ObjectFactory();
+	public static ObjectMapper getInstance() {
+		if(ObjectMapper.theInstance == null) {
+			ObjectMapper.theInstance = new ObjectMapper();
 		}
 
-		return ObjectFactory.theInstance;
+		return ObjectMapper.theInstance;
 	}
 
-	private ObjectFactory() {
+	private ObjectMapper() {
 		this.registeredCreatures = new HashMap<String, Creature>();
 		this.registeredItems = new HashMap<String, Item>();
 	}
 
 	public void registerItem(final Item i) {
-		this.registeredItems.put(i.getItemName(), i);
+		this.registeredItems.put(i.getItemName().toLowerCase(), i);
 	}
 
 	public void registerCreature(final Creature c) {
-		this.registeredCreatures.put(c.getCreatureName(), c);
+		this.registeredCreatures.put(c.getCreatureName().toLowerCase(), c);
 	}
 
 	/**

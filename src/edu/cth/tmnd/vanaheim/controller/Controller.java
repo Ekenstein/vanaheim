@@ -2,31 +2,39 @@ package edu.cth.tmnd.vanaheim.controller;
 
 import java.awt.Point;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
-import edu.cth.tmnd.vanaheim.model.ObjectFactory;
+import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
-import edu.cth.tmnd.vanaheim.model.parser.Trie;
+import edu.cth.tmnd.vanaheim.model.parser.Parser;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 public class Controller {
-	private final static int NODE_WORDS_LIMIT = 1;
+	private final static File COMMAND_FILE = new File("data/commands");
 	private final Player player;
-	private Trie lexicon;
 	private final World world;
-	private final ObjectFactory objectMapper;
+	private final ObjectMapper objectMapper;
 	private final MessageBuffer msgBuffer;
+	private Parser parser;
 
 	public Controller() {
 		this.world = new World();
 		this.player = new Player(32f, 32f, 300, new Inventory(20), 100, "Harald");
-		this.objectMapper = ObjectFactory.getInstance();
+		this.objectMapper = ObjectMapper.getInstance();
 		this.msgBuffer = MessageBuffer.getInstance();
+
+		try {
+			this.parser = Parser.getInstance(COMMAND_FILE);
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addMessageBufferListener(final PropertyChangeListener listener) {
@@ -101,8 +109,7 @@ public class Controller {
 		this.player.setDirection(d);
 	}
 
-	public void interpretCommand(final String command) {
-
+	public void parseCommand(final String command) {
 		// TODO split and stuff
 	}
 }

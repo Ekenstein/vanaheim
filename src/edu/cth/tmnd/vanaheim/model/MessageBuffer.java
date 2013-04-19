@@ -32,6 +32,10 @@ public final class MessageBuffer {
 		}
 	}
 
+	public void unknownCommand() {
+		this.append("Unknown action.");
+	}
+
 	public void addListener(final PropertyChangeListener listener) {
 		this.listeners.addPropertyChangeListener(listener);
 	}
