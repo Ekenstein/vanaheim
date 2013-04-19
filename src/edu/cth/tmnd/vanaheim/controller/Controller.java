@@ -19,40 +19,43 @@ public class Controller {
 	private final World world;
 
 	public Controller() {
-		world = new World();
-		player = new Player(32f, 32f, 300, new Inventory(20), 100);
+		this.world = new World();
+		this.player = new Player(32f, 32f, 300, new Inventory(20), 100);
 	}
 
 	public Point getPlayerLoc() {
-		return player.getLoc();
+		final int x = (int)this.player.getX();
+		final int y = (int)this.player.getY();
+		return new Point(x, y);
 	}
 
 	public void setPlayerLoc(final Point p) {
-		player.setPlayerLoc(p);
+		this.player.setX(p.x);
+		this.player.setY(p.y);
 	}
 
 	public boolean isBlocked(final int x, final int y) {
-		return world.isBlocked(x, y);
+		return this.world.isBlocked(x, y);
 	}
 
 	public TiledMap getMap() {
-		return world.getMap();
+		return this.world.getMap();
 	}
 
 	public void initMap(final TiledMap map) {
-		world.initMap(map);
+		this.world.initMap(map);
 	}
 
 	public void checkTile(final int x, final int y) {
-		world.checkTile(x, y);
+		this.world.checkTile(x, y);
 	}
 
 	public void changeTile(final int x, final int y) {
-		world.changeTile(x, y);
+		this.world.changeTile(x, y);
 	}
 
 	public void lootAll(final int x, final int y) {
-		world.lootAll(x, y);
+		this.world.lootAll(x, y);
 	}
 
 	public void dropItem(final Item item) {
@@ -82,6 +85,10 @@ public class Controller {
 
 	public Direction getPlayerDirection() {
 		return this.player.getDirection();
+	}
+
+	public void setPlayerDirection(final Direction d) {
+		this.player.setDirection(d);
 	}
 }
 

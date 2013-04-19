@@ -108,6 +108,26 @@ public abstract class Creature extends GameObject {
 		super.y = y;
 	}
 
+	public void setY(final float y, final boolean ignoreDirection) {
+		if(ignoreDirection) {
+			super.y = y;
+		} else {
+			this.setY(y);
+		}
+	}
+
+	public void setX(final float x, final boolean ignoreDirection) {
+		if(ignoreDirection) {
+			super.x = x;
+		} else {
+			this.setX(x);
+		}
+	}
+
+	public void setDirection(final Direction d) {
+		this.currentDirection = d;
+	}
+
 	public Direction getDirection() {
 		return this.currentDirection;
 	}
