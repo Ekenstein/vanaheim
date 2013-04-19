@@ -9,14 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper.Type;
-import edu.cth.tmnd.vanaheim.model.creatures.monsters.Spider;
-import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
-import edu.cth.tmnd.vanaheim.model.items.Axe;
-import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
 /**
@@ -285,45 +280,5 @@ final public class Parser {
 
 	private boolean isPrefix(final String s) {
 		return this.prefixes.contains(s);
-	}
-
-	public static void main(final String[] args) {
-		try {
-			final Player owner = new Player(32f, 32f, 300, new Inventory(20), 100, "Harald");
-			final Spider target = new Spider(32f, 32f, 300, new Inventory(2), 100, "Spider");
-			final Axe axe = new Axe(owner);
-			final HealthPotion pot = new HealthPotion(owner);
-
-			final ObjectMapper om = ObjectMapper.getInstance();
-			om.registerCreature(target);
-			om.registerItem(axe);
-			om.registerItem(pot);
-
-			String command = "use crude axe on spider";
-
-			long startTime = System.nanoTime();
-			final Parser p = Parser.getInstance(new File("data/commands"));
-			long endTime = System.nanoTime();
-
-			System.out.println("It took " + (endTime - startTime)/1000000000.0 + " seconds to initiate the Parser");
-
-			startTime = System.nanoTime();
-			p.parse(command);
-			endTime = System.nanoTime();
-
-			System.out.println("It took " + (endTime - startTime)/1000000000.0 + " seconds to parse " + command);
-
-			owner.damage(20);
-
-			command = "use healing potion";
-			startTime = System.nanoTime();
-			p.parse(command);
-			endTime = System.nanoTime();
-
-			System.out.println("It took " + (endTime - startTime)/1000000000.0 + " seconds to parse " + command);
-
-		} catch(final Exception e) {
-
-		}
 	}
 }
