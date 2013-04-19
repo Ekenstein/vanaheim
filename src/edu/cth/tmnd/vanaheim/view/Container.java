@@ -1,6 +1,5 @@
 package edu.cth.tmnd.vanaheim.view;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +7,7 @@ import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.AppletGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,7 +20,6 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
-import edu.cth.tmnd.vanaheim.view.impl.IContainer;
 
 /**
  * The main container that will draw all the
@@ -33,7 +29,7 @@ import edu.cth.tmnd.vanaheim.view.impl.IContainer;
  */
 public class Container extends BasicGame {
 
-	private Controller controller;
+	private final Controller controller;
 
 	private TiledMap map = null;
 
@@ -42,7 +38,7 @@ public class Container extends BasicGame {
 
 	private Image inventory_bg;
 	private boolean showInventory = false;
-	private int[][] inventory = new int[4][6];
+	private final int[][] inventory = new int[4][6];
 
 	private static final int POTION_GREEN = 1;
 	private static final int DAGGER = 2;
@@ -51,7 +47,7 @@ public class Container extends BasicGame {
 	private Image daggerImg;
 	private Image helmetImg;
 
-	private Map<Integer, Image> items = new HashMap<Integer, Image>();
+	private final Map<Integer, Image> items = new HashMap<Integer, Image>();
 
 	private Image coins;
 
@@ -71,8 +67,8 @@ public class Container extends BasicGame {
 
 		controller.getMap().render(0, 0);
 
-		Point p = controller.getPlayerLoc();
-		sprite.draw((float)p.x, (float)p.y);
+		final Point p = controller.getPlayerLoc();
+		sprite.draw(p.x, p.y);
 
 		inputField.render(container, context);
 
@@ -99,17 +95,17 @@ public class Container extends BasicGame {
 
 		try {
 			map = new TiledMap("data/map.tmx");
-		} catch (SlickException e) {
+		} catch (final SlickException e) {
 			e.printStackTrace();
 		}
 
 		controller.initMap(map);
 
-		Image [] movementUp = {new Image("data/wizUp1.png"), new Image("data/wizUp2.png")};
-		Image [] movementDown = {new Image("data/wizDown1.png"), new Image("data/wizDown2.png")};
-		Image [] movementLeft = {new Image("data/wizLeft1.png"), new Image("data/wizLeft2.png")};
-		Image [] movementRight = {new Image("data/wizRight1.png"), new Image("data/wizRight2.png")};
-		int [] duration = {300, 300};
+		final Image [] movementUp = {new Image("data/wizUp1.png"), new Image("data/wizUp2.png")};
+		final Image [] movementDown = {new Image("data/wizDown1.png"), new Image("data/wizDown2.png")};
+		final Image [] movementLeft = {new Image("data/wizLeft1.png"), new Image("data/wizLeft2.png")};
+		final Image [] movementRight = {new Image("data/wizRight1.png"), new Image("data/wizRight2.png")};
+		final int [] duration = {300, 300};
 
 		up = new Animation(movementUp, duration, false);
 		down = new Animation(movementDown, duration, false);
@@ -118,13 +114,14 @@ public class Container extends BasicGame {
 
 		sprite = right;
 
-		inputField = new TextField(container, 
-				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
+		inputField = new TextField(container,
+				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false),
 				384, 704, 256, 64, new ComponentListener() {
 
 			//Listen for different messages. Message is supposed to be sent to a controller and actions are
 			//supposed to be performed whenever the GUI receives new information.
-			public void componentActivated(AbstractComponent source) {
+			@Override
+			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
 				if (message.equals("show inventory")) {
 					showInventory = true;
@@ -133,7 +130,7 @@ public class Container extends BasicGame {
 				} else if (message.equals("drop item")) {
 					for (int i = 0; i < 4; i++) {
 						for (int j = 0; j < 6; j++) {
-							int item = inventory[i][j];
+							final int item = inventory[i][j];
 							if (item == 1 || item == 2 || item == 3) {
 								inventory[i][j] = 0;
 								inputField.setText("");
@@ -144,10 +141,10 @@ public class Container extends BasicGame {
 				} else if (message.equals("loot")) {
 					for (int i = 0; i < 4; i++) {
 						for (int j = 0; j < 6; j++) {
-							int item = inventory[i][j];
+							final int item = inventory[i][j];
 							if (item == 0) {
-								Random rand = new Random();
-								int a = rand.nextInt(4);
+								final Random rand = new Random();
+								final int a = rand.nextInt(4);
 								inventory[i][j] = a;
 								inputField.setText("");
 								return;
@@ -186,8 +183,8 @@ public class Container extends BasicGame {
 		inventory[0][3] = 3;
 		inventory[0][4] = 1;
 
-		inputField = new TextField(container, 
-				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false), 
+		inputField = new TextField(container,
+				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false),
 				384, 704, 256, 64, new ComponentListener() {
 
 			//Listen for different messages. Message is supposed to be sent to a controller and actions are
@@ -232,7 +229,7 @@ public class Container extends BasicGame {
 
 	@Override
 	public void update(final GameContainer container, final int delta) throws SlickException {
-		Input input = container.getInput();
+		final Input input = container.getInput();
         if (input.isKeyDown(Input.KEY_UP))
         {
             sprite = up;
