@@ -2,18 +2,17 @@ package edu.cth.tmnd.vanaheim.model.parser;
 
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
-public class EatHandler extends Handler {
+final public class EatHandler extends Handler {
 
 	@Override
-	protected int getArgumentSize() {
+	protected boolean checkArgs(final Object[] args) {
 		// TODO Auto-generated method stub
-		return 0;
+		return false;
 	}
 
 	@Override
-	protected void handleHelper(final Object[] os) {
+	protected void handleArgs(final Object[] args) {
 		// TODO Auto-generated method stub
 
 	}
-
 }

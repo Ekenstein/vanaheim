@@ -4,23 +4,39 @@ import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
-public class UseHandler extends Handler {
+final public class UseHandler extends Handler {
+
+	private final static int ITEM = 0;
+	private final static int TARGET = 1;
 
 	@Override
-	protected int getArgumentSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	protected void handleArgs(final Object[] args) {
+		final UseableItem item = (UseableItem) args[ITEM];
 
-	@Override
-	protected void handleHelper(final Object[] os) {
-		final UseableItem item = (UseableItem) os[0];
-		if(os.length == 2) {
-			final Creature target = (Creature) os[1];
+		if(args.length > 1) {
+			final Creature target = (Creature) args[TARGET];
 			item.use(target);
 		} else {
 			item.use();
 		}
 	}
 
+	@Override
+	protected boolean checkArgs(final Object[] args) {
+		if(args.length <= 0) {
+			return false;
+		}
+
+		if(!(args[ITEM] instanceof UseableItem)) {
+			return false;
+		}
+
+		if(args.length > 1) {
+			if(!(args[TARGET] instanceof Creature)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

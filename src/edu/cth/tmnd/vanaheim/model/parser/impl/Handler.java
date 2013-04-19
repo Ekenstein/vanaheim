@@ -3,18 +3,16 @@ package edu.cth.tmnd.vanaheim.model.parser.impl;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 
 public abstract class Handler {
-	protected MessageBuffer commandHandler = MessageBuffer.getInstance();
+	protected MessageBuffer msgBuffer = MessageBuffer.getInstance();
 
-	protected abstract int getArgumentSize();
-
-	public void handle(final Object[] os) {
-		if(this.getArgumentSize() > os.length) {
-			this.commandHandler.append("Unknown command.");
-			return;
+	public void handle(final Object[] args) {
+		if(!this.checkArgs(args)) {
+			this.msgBuffer.unknownCommand();
 		}
 
-		this.handleHelper(os);
+		this.handleArgs(args);
 	}
 
-	protected abstract void handleHelper(Object[] os);
+	protected abstract boolean checkArgs(Object[] args);
+	protected abstract void handleArgs(Object[] args);
 }
