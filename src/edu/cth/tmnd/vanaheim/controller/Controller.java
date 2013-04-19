@@ -20,7 +20,7 @@ public class Controller {
 
 	public Controller() {
 		this.world = new World();
-		this.player = new Player(32f, 32f, 300, new Inventory(20), 100);
+		this.player = new Player(32f, 32f, 300, new Inventory(20), 100, "Harald");
 	}
 
 	public Point getPlayerLoc() {

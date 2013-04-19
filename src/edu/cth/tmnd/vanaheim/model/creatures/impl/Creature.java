@@ -15,13 +15,20 @@ public abstract class Creature extends GameObject {
 	protected int currentHP, maxHP;
 	protected EquipableItem equipment;
 	protected Direction currentDirection;
+	protected String creatureName;
 
 
-	public Creature(final float x, final float y, final int velocity, final Inventory inventory, final int maxHP) {
+	public Creature(final float x, final float y, final int velocity, final Inventory inventory, final int maxHP,
+			final String creatureName) {
 		super(x, y);
 		this.velocity = velocity;
 		this.inventory = inventory;
 		this.maxHP = this.currentHP = maxHP;
+		this.creatureName = creatureName;
+	}
+
+	public String getCreatureName() {
+		return this.creatureName;
 	}
 
 	public int getVelocity() {

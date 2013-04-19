@@ -5,8 +5,8 @@ import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
 
 public class Spider extends Monster {
 
-	public Spider(float x, float y, int velocity, Inventory inventory, int maxHP) {
-		super(x, y, velocity, inventory, maxHP);
+	public Spider(final float x, final float y, final int velocity, final Inventory inventory, final int maxHP, final String creatureName) {
+		super(x, y, velocity, inventory, maxHP, creatureName);
 	}
 
 

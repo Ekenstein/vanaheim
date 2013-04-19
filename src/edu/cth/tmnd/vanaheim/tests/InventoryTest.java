@@ -5,10 +5,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
-import edu.cth.tmnd.vanaheim.controller.Controller;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
@@ -27,7 +24,7 @@ public class InventoryTest {
 	public void setUp() {
 		this.slots = 2;
 		this.inventory = new Inventory(this.slots);
-		this.owner = new Player((float)4, (float)4, 5, this.inventory, 5);
+		this.owner = new Player(4, 4, 5, this.inventory, 5, "Harald");
 		this.item1 = new Axe(this.owner);
 		this.item2 = new HealthPotion(this.owner);
 	}
