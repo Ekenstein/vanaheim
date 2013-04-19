@@ -110,7 +110,7 @@ public class Controller {
 	}
 
 	public void parseCommand(final String command) {
-		// TODO split and stuff
+		this.parser.parse(command);
 	}
 }
 
