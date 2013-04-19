@@ -19,7 +19,20 @@ import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
 /**
- * Handles message parsing.
+ * Singleton parser that reads a command file with the structure:<br />
+ * use * on * : Use<br />
+ * eat * : Eat<br />
+ *
+ * The stars stands for wildcards, this is where objects will match
+ * and : Use ... stands for the Handler type that the command uses. <br />
+ *
+ * E.g. if you type "use crude axe on ogre" it will pick out
+ * crude axe and ogre as the wildcards, if they exist in the
+ * object mapper that is. It will then check if there
+ * are any handlers mapped to "use * on *" and then call
+ * the handler method handle(Object[] os) where Object[] os
+ * is the wildcards.
+ *
  * @author Gabriel Ekblad
  *
  */
