@@ -26,7 +26,7 @@ public abstract class Quest {
 		this.name = name;
 		this.owner = owner;
 		this.description = description;
-		itemsCount = requiredItems;
+		this.itemsCount = requiredItems;
 	}
 	
 	/*
@@ -34,6 +34,19 @@ public abstract class Quest {
 	 */
 	public void addNeededItemCount(String itemName, Integer value) {
 		itemsCount.put(itemName, value);
+	}
+	
+	public int getNumberOfDifferentItemsNeeded(){
+		return itemsCount.size();
+	}
+	
+	public int getItemsLeft(String itemName){
+			return itemsCount.get(itemName);
+		
+	}
+	
+	public void removeItemFromQuest(String item){
+		itemsCount.remove(item);
 	}
 
 	public Map<String, Integer> getItemsCount() {
@@ -92,9 +105,16 @@ public abstract class Quest {
 	
 	
 	public boolean process(Item item) {
-		if(itemsCount.containsValue(item.getItemName())){
+		if(itemsCount.containsKey(item.getItemName())){
 			if(itemsCount.get(item.getItemName()) > 0){
 				itemsCount.put(item.getItemName(), itemsCount.get(item.getItemName()) - 1);
+				isComplete = true;
+				for(String items: itemsCount.keySet()){
+					isComplete = itemsCount.get(items) > 0 ? false : true;
+					if(!isComplete){
+						break;
+					}
+				}
 				return true;
 			}
 		}
