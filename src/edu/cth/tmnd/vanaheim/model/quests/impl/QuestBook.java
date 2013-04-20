@@ -5,9 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
-/*
- * Still implementing this class
- */
 
 public class QuestBook {
 
@@ -62,5 +59,20 @@ public class QuestBook {
 	
 	public Quest getQuest(String questName){
 		return quests.get(questName);
+	}
+	
+	public boolean hasQuest(Quest q){
+		if(quests.containsKey(q.getName())){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isEmpty(){
+		return quests.isEmpty();
+	}
+	
+	public int size(){
+		return quests.size();
 	}
 }

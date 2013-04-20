@@ -16,9 +16,6 @@ public class Player extends Human {
 
 	private final float x = 34f, y = 34f;
 
-	public void showQuestBook(){
-
-	}
 
 	@Override
 	public void talk(final Human human) {

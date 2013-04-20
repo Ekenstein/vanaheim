@@ -36,8 +36,7 @@ public class QuestTest {
 	
 	@After
 	public void tearDown() {
-		owner = null;
-		q1 = null;
+
 	}
 	
 

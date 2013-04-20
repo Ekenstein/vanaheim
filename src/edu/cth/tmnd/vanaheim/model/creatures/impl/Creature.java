@@ -138,4 +138,8 @@ public abstract class Creature extends GameObject {
 	public Direction getDirection() {
 		return this.currentDirection;
 	}
+	
+	public Inventory getInventory(){
+		return inventory;
+	}
 }
