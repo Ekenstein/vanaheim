@@ -3,16 +3,12 @@ package edu.cth.tmnd.vanaheim.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
-import edu.cth.tmnd.vanaheim.model.items.impl.Item;
-
 public final class ObjectMapper {
 
-	public static enum Type { ITEM, CREATURE, UNKNOWN };
+	public static enum Type { REGISTERED, UNKNOWN };
 
 	private static ObjectMapper theInstance = null;
-	private final Map<String, Item> registeredItems;
-	private final Map<String, Creature> registeredCreatures;
+	private final Map<String, Object> objects;
 
 	public static ObjectMapper getInstance() {
 		if(ObjectMapper.theInstance == null) {
@@ -23,16 +19,13 @@ public final class ObjectMapper {
 	}
 
 	private ObjectMapper() {
-		this.registeredCreatures = new HashMap<String, Creature>();
-		this.registeredItems = new HashMap<String, Item>();
+		this.objects = new HashMap<String, Object>();
 	}
 
-	public void registerItem(final Item i) {
-		this.registeredItems.put(i.getItemName().toLowerCase(), i);
-	}
-
-	public void registerCreature(final Creature c) {
-		this.registeredCreatures.put(c.getCreatureName().toLowerCase(), c);
+	public void registerObject(final String name, final Object o) {
+		if(name != null && o != null) {
+			this.objects.put(name.toLowerCase(), o);
+		}
 	}
 
 	/**
@@ -46,28 +39,14 @@ public final class ObjectMapper {
 			return Type.UNKNOWN;
 		}
 
-		if(this.registeredItems.containsKey(name)) {
-			return Type.ITEM;
-		} else if(this.registeredCreatures.containsKey(name)) {
-			return Type.CREATURE;
-		}
-
-		return Type.UNKNOWN;
+		return this.objects.containsKey(name.toLowerCase()) ? Type.REGISTERED : Type.UNKNOWN;
 	}
 
-	public Item getRegisteredItem(final String name) {
+	public Object getObject(final String name) {
 		if(name == null) {
 			return null;
 		}
 
-		return this.registeredItems.get(name);
-	}
-
-	public Creature getRegisteredCreature(final String name) {
-		if(name == null) {
-			return null;
-		}
-
-		return this.registeredCreatures.get(name);
+		return this.objects.get(name.toLowerCase());
 	}
 }

@@ -33,9 +33,9 @@ public class ParserTest {
 		this.item1 = new HealthPotion(this.owner);
 		this.item2 = new Axe(this.owner);
 		this.om = ObjectMapper.getInstance();
-		this.om.registerCreature(this.target);
-		this.om.registerItem(this.item1);
-		this.om.registerItem(this.item2);
+		this.om.registerObject(this.target.getCreatureName(), this.target);
+		this.om.registerObject(this.item1.getItemName(), this.item1);
+		this.om.registerObject(this.item2.getItemName(), this.item2);
 	}
 
 	@After

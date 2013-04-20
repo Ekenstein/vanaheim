@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
-import edu.cth.tmnd.vanaheim.model.ObjectMapper.Type;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
 /**
@@ -212,32 +211,22 @@ final public class Parser {
 
 		for(int i = 0; i < tokens.length; i++) {
 			final String s = tokens[i];
-			final Type t = this.objectMapper.isRegistered(s);
-			if(t == Type.UNKNOWN) {
+			final Object o = this.objectMapper.getObject(s);
+
+			if(o == null) {
 				path[i] = s;
 			} else {
 				path[i] = "*";
 
-				switch(t) {
-					case CREATURE:
-						wildcards.add(this.objectMapper.getRegisteredCreature(s));
-						break;
-					case ITEM:
-						wildcards.add(this.objectMapper.getRegisteredItem(s));
-						break;
-					default:
-						// will never happen
-				}
+				wildcards.add(o);
 			}
 		}
 
 		final Handler h = this.actionMap.get(new Segment(path));
 
-		final Object[] os = wildcards.toArray(new Object[wildcards.size()]);
-
 		if(h != null) {
-			h.handle(os);
-		} else {
+			final Object[] args = wildcards.toArray(new Object[wildcards.size()]);
+			h.handle(args);
 		}
 	}
 
