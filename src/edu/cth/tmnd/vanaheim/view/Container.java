@@ -91,6 +91,7 @@ public class Container extends BasicGame {
 	@Override
 	public void init(final GameContainer container) throws SlickException {
 
+		container.setTargetFrameRate(120);
 		coins = new Image("data/coins.png");
 
 		try {
