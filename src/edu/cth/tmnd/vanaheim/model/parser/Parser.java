@@ -185,9 +185,8 @@ final public class Parser {
 				continue;
 			}
 
-			final Segment segment = new Segment(path);
-
 			if(instance != null) {
+				final Segment segment = new Segment(path);
 				if(!this.actionMap.containsKey(segment)) {
 					this.actionMap.put(segment, instance);
 				}
@@ -234,8 +233,7 @@ final public class Parser {
 
 		final Handler h = this.actionMap.get(new Segment(path));
 
-		final Object[] os = new Object[wildcards.size()];
-		wildcards.toArray(os);
+		final Object[] os = wildcards.toArray(new Object[wildcards.size()]);
 
 		if(h != null) {
 			h.handle(os);
@@ -272,10 +270,7 @@ final public class Parser {
 			tokens.add(rest);
 		}
 
-		final String[] arraySplit = new String[tokens.size()];
-		tokens.toArray(arraySplit);
-
-		return arraySplit;
+		return tokens.toArray(new String[tokens.size()]);
 	}
 
 	private boolean isPrefix(final String s) {
