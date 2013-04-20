@@ -8,8 +8,8 @@ public class NPC extends Human {
 	State s;
 	State next;
 	
-	public NPC(float x, float y, int velocity, Inventory inventory, int maxHp){
-		super(x, y, velocity, inventory, maxHp);
+	public NPC(float x, float y, int velocity, Inventory inventory, int maxHp, String NPCName){
+		super(x, y, velocity, inventory, maxHp,NPCName);
 	}
 	
 	public void talk(Human human){

@@ -29,7 +29,7 @@ public class QuestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.owner = new NPC(0f,0f,0,new Inventory(20),20);
+		this.owner = new NPC(0f,0f,0,new Inventory(20),20,"Putte");
 		this.q1 = new GoldQuest(owner);
 		
 	}
