@@ -18,14 +18,14 @@ public class NPC extends Human {
 		this.states = states;
 	}
 	
-	public State nextState(){
+	public State getNextState(){
 		if(state < states.length)
 			return states[state + 1];
 		else 
 			return currentState;
 	}
 	
-	public State thisState(){
+	public State getCurrentState(){
 		return currentState;
 		
 	}

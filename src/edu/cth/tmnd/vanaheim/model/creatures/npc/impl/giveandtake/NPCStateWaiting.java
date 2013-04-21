@@ -12,10 +12,7 @@ public class NPCStateWaiting extends State {
 	public NPCStateWaiting(){
 		
 	}
-	
-	public void talk(Human human){
-		
-	}
+
 
 	@Override
 	public void process(Human human, NPC npc, String s, Quest q, Item item) {
@@ -24,6 +21,9 @@ public class NPCStateWaiting extends State {
 				human.talk(npc, "Well done! You have finished the quest" + q.getName() + ". Here is your reward");
 				human.getInventory().addItem(item);
 				npc.changeToNextState();
+			}
+			else{
+				human.talk(npc, "You have not finished your quest!" + q.getDescription());
 			}
 		}
 		

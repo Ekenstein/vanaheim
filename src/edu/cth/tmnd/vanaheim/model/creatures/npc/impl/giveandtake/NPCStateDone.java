@@ -14,10 +14,6 @@ public class NPCStateDone extends State {
 
 	}
 
-	public void talk(Human human){
-		
-	}
-
 	@Override
 	public void process(Human human, NPC npc, String s, Quest q, Item item) {
 		human.talk(npc, "Hello " + human.getCreatureName() + ". Are you lost?");
