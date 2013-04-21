@@ -4,6 +4,8 @@ import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 
 public class NPCStateDone {
 
+
+	
 	public NPCStateDone() {
 
 	}

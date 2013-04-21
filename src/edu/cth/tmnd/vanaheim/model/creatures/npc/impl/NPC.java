@@ -12,10 +12,6 @@ public class NPC extends Human {
 		super(x, y, velocity, inventory, maxHp,NPCName);
 	}
 	
-	public void talk(Human human){
-		
-	}
-	
 	public State nextState(){
 		return next;
 		
@@ -24,6 +20,15 @@ public class NPC extends Human {
 	public State thisState(){
 		return s;
 		
+	}
+	
+	public void changeToNextState(){
+		s = next;
+	}
+
+	@Override
+	public void talk(Human human, String talk) {
+		s.process(human,this);
 	}
 	
 }

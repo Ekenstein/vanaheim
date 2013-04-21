@@ -12,7 +12,7 @@ public abstract class Human extends Creature {
 		questBook = new QuestBook();
 	}
 
-	public abstract void talk(Human human);
+	public abstract void talk(Human human, String talk);
 	
 	public QuestBook getQuestBook(){
 		return this.questBook;

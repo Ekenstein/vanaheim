@@ -18,7 +18,7 @@ public class Player extends Human {
 
 
 	@Override
-	public void talk(final Human human) {
+	public void talk(Human human, String talk) {
 		// TODO Auto-generated method stub
 
 	}
