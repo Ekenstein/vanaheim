@@ -11,14 +11,24 @@ final public class Inventory {
 	private int slotsLeft;
 
 	private final List<Item> items;
+	
+	private boolean isToggled = true;
 
 	public Inventory(final int slots) {
 		this.slots = this.slotsLeft = slots;
 		this.items = new ArrayList<Item>(slots);
 	}
-
+	
 	public int getSlots() {
 		return this.slots;
+	}
+	
+	public boolean isToggled() {
+		return this.isToggled;
+	}
+	
+	public List<Item> getItems() {
+		return this.items;
 	}
 
 	/**

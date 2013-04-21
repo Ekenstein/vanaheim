@@ -1,5 +1,8 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
 import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
@@ -9,10 +12,13 @@ final public class Axe implements EquipableItem, UseableItem {
 	private Creature owner;
 	private int durability;
 	
+	private int itemID;
+	
 	public Axe(Creature owner) {
 		this.damage = 10;
 		this.owner = owner;
 		this.durability = this.getDurability();
+		this.itemID = 1;
 	}
 	
 	@Override
@@ -81,6 +87,11 @@ final public class Axe implements EquipableItem, UseableItem {
 	@Override
 	public int getCurrentDurability() {
 		return this.durability;
+	}
+
+	@Override
+	public int getItemID() {
+		return this.itemID;
 	}
 
 }

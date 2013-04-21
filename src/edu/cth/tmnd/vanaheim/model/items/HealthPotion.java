@@ -1,5 +1,8 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 
@@ -8,11 +11,12 @@ final public class HealthPotion implements UseableItem {
 	private int healing;
 	private Creature owner;
 	
+	private int itemID;
 	
 	public HealthPotion(Creature owner) {
 		this.owner = owner;
 		this.healing = this.getDurability();
-		
+		this.itemID = 2;
 	}
 
 	public String getItemName() {
@@ -61,6 +65,11 @@ final public class HealthPotion implements UseableItem {
 	@Override
 	public int getCurrentDurability() {
 		return this.healing;
+	}
+
+	@Override
+	public int getItemID() {
+		return this.itemID;
 	}
 	
 	

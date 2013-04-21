@@ -1,0 +1,23 @@
+#################################
+#   Anteckningar från möte #5   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson: Sekreterare
+- Daniel Jonsson: 
+
+§ Uppföljning från tidigare möte
+Richard har gjort någolunda färdigt första kartbiten samt sett till att implementationen nu följer reglerna
+för MVC. Gabriel och Daniel har skapat massvis med klasser för spelets logik.
+
+§ Vad ska vi visa på torsdagens handledningsmöte?
+Vi diskuterar om vi ska implementera något mer use case än att bara navigera runt i världen. Vi beslutar dock
+att inte satsa på det då vi redan har ett use case och mestadels av logiken för att implementera fler. Att det sen
+inte görs tills på torsdag läggs ingen stor vikt på. Richard vill dock experimentera med blockerande tiles.
+
+§ Att titta närmare på
+Gabriel vill kika på möjligheter att parse:a meddelanden på ett smart sett.
+
+§ Till nästa möte
+Har i det här protokollet täcks i föregående paragrafer.

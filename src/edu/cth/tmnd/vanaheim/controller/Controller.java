@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -14,6 +16,7 @@ import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.parser.Parser;
+import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 public class Controller {
@@ -35,6 +38,22 @@ public class Controller {
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Map<String, Quest> getQuests() {
+		return this.player.getQuests();
+	}
+	
+	public List<Item> getItems() {
+		return this.player.getItems();
+	}
+	
+	public boolean isInventoryToggled() {
+		return this.player.isInventoryToggled();
+	}
+	
+	public boolean isQuestBookToggled() {
+		return this.player.isQuestBookToggled();
 	}
 
 	public void addMessageBufferListener(final PropertyChangeListener listener) {

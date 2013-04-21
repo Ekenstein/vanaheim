@@ -1,0 +1,20 @@
+#################################
+#   Anteckningar från möte #4   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: 
+- Richard Karlsson: Mötesledare
+- Daniel Jonsson: Sekreterare
+
+§ Uppföljning från tidigare möte
+Richard visar upp en simpel värld med gräs och träd. En spelare kan flyttas runt på skärmen med hjälp av
+piltangenterna. Olika sprites visas beroende på i vilken riktning spelaren flyttar.
+
+§ Ny implementation av grafik
+Det visar sig att vår grafiska approach inte följer kraven för MVC. Vi beslutade att skriva en ny implementation
+där bara GUIt håller i all uppritning utan påverkan direkt från modellen.
+
+§ Till nästa möte
+Inga direkta arbetsuppgifter utdelas. Då vi känner att vi ligger bra i fas så beslutar vi att köra på så mycket vi 
+kan och vill.

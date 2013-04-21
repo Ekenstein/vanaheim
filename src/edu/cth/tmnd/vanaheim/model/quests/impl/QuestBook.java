@@ -10,6 +10,8 @@ public class QuestBook {
 
 	private Map<String, Quest> quests;
 	
+	private boolean isToggled = true;
+	
 	public QuestBook(){
 		quests = new HashMap<String, Quest>();
 	}
@@ -24,6 +26,14 @@ public class QuestBook {
 		}
 		return completeQuests;
 		
+	}
+	
+	public boolean isToggled() {
+		return this.isToggled;
+	}
+	
+	public Map<String, Quest> getQuests() {
+		return this.quests;
 	}
 	
 	public Map<String, Quest> showIncompleteQuests(){

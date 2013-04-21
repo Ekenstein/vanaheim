@@ -1,7 +1,10 @@
 package edu.cth.tmnd.vanaheim.view;
 
+import java.awt.Font;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -20,6 +23,8 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
+import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 /**
  * The main container that will draw all the
@@ -37,8 +42,11 @@ public class Container extends BasicGame {
 	private float x = 100f, y = 100f;
 
 	private Image inventory_bg;
+	private Image inventory_title;
 	private boolean showInventory = false;
 	private final int[][] inventory = new int[4][6];
+	
+	private Image quests_title;
 
 	private static final int POTION_GREEN = 1;
 	private static final int DAGGER = 2;
@@ -47,7 +55,7 @@ public class Container extends BasicGame {
 	private Image daggerImg;
 	private Image helmetImg;
 
-	private final Map<Integer, Image> items = new HashMap<Integer, Image>();
+	private final Map<Integer, Image> itemIDMap = new HashMap<Integer, Image>();
 
 	private Image coins;
 
@@ -71,6 +79,31 @@ public class Container extends BasicGame {
 		sprite.draw(p.x, p.y);
 
 		inputField.render(container, context);
+		
+		if (controller.isInventoryToggled()) {
+			context.drawImage(inventory_bg, 640, 496);
+			context.drawImage(inventory_title, 640, 464);
+			
+			List<Item> items = controller.getItems();
+			for (int i = 0; i < items.size(); i++) {
+				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 656 + i * 64, 512 + i / 4 * 64);
+			}
+		}
+		
+		TrueTypeFont titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 24), false);
+		if (controller.isQuestBookToggled()) {
+			context.drawImage(inventory_bg, 0, 496);
+			context.drawImage(quests_title, 0, 464);
+			
+			Map<String, Quest> quests = controller.getQuests();
+			for (String questName : quests.keySet()) {
+				String description = quests.get(questName).getDescription();
+				int titleLength = titleFont.getWidth(questName);
+				context.setFont(titleFont);
+				context.drawString(questName, (384 - titleLength) / 2, 512);
+				context.drawString(description, 16, 550);
+			}
+		}
 
 		/*
 		map.render(0, 0);
@@ -90,6 +123,17 @@ public class Container extends BasicGame {
 
 	@Override
 	public void init(final GameContainer container) throws SlickException {
+		
+		//Inventory
+		inventory_bg = new Image("data/inventory_paper.png");
+		inventory_title = new Image("data/inventory_title.png");
+		
+		itemIDMap.put(0, new Image("data/coins.png"));
+		itemIDMap.put(1, new Image("data/axe_steel.png"));
+		itemIDMap.put(2, new Image("data/potion.png"));
+		
+		//Quest log
+		quests_title = new Image("data/quests_title.png");
 
 		container.setTargetFrameRate(120);
 		coins = new Image("data/coins.png");

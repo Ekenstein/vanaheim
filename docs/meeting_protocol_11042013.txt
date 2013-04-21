@@ -1,0 +1,16 @@
+#################################
+#   Anteckningar från möte #3   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: 
+- Richard Karlsson: Sekreterare
+- Daniel Jonsson: Mötesledare
+
+§ UML diskussion
+Under mötet diskuterade vi bara hur vår UML ska se ut. Diskussion kretsade runt de use cases vi tidigare listat.
+UMLen finns i RADen.
+
+§ Till nästa möte
+Till nästa möte ska Richard börja implementera grafik. Mer bestämt, det ska finnas möjlighet att navigera runt i en
+värld.
