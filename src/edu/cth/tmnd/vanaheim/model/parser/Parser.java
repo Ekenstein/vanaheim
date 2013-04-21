@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
 
@@ -52,9 +51,7 @@ final public class Parser {
 
 	// Objects mapped to strings
 	private final ObjectMapper objectMapper;
-
-	private final MessageBuffer messageBuffer;
-
+	
 	// collects prefixes from file. This is to
 	// improve the split function.
 	private final ArrayList<String> prefixes;
@@ -63,13 +60,12 @@ final public class Parser {
 		this.actionMap = new HashMap<Segment, Handler>();
 		this.objectMapper = ObjectMapper.getInstance();
 		this.prefixes = new ArrayList<String>();
-		this.messageBuffer = MessageBuffer.getInstance();
 		this.readFile(commandFile);
 	}
 
 	// must use innerclass for String[] since HashMap doesn't
 	// use deepEquals on arrays
-	private class Segment {
+	public class Segment {
 		private final String[] path;
 
 		public Segment(final String[] path) {
@@ -164,9 +160,12 @@ final public class Parser {
 				}
 
 				if(!s.equals(WILDCARD)) {
-					this.prefixes.add(s);
-					path[i] = s;
+					if(!this.prefixes.contains(s)) {
+						this.prefixes.add(s);
+						path[i] = s;
+					}
 				} else {
+					// TODO Check if next is wildcard or not
 					path[i] = s;
 				}
 			}
@@ -243,11 +242,9 @@ final public class Parser {
 						token.setLength(0);
 						tokens.add(wildcard);
 					}
-
-					tokens.add(str);
-				} else {
-					tokens.add(str);
 				}
+				
+				tokens.add(str);
 			} else {
 				token.append(str);
 				token.append(" ");

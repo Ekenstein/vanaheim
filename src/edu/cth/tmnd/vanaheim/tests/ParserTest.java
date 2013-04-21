@@ -1,6 +1,11 @@
 package edu.cth.tmnd.vanaheim.tests;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import junit.framework.Assert;
 
@@ -15,49 +20,60 @@ import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.parser.Parser;
+import edu.cth.tmnd.vanaheim.model.parser.Parser.Segment;
 
 public class ParserTest {
 
 	private Parser p;
-	private Player owner;
-	private Spider target;
-	private ObjectMapper om;
-	private HealthPotion item1;
-	private Axe item2;
-
+	
+	private File f = new File("data/commands");
+	
 	@Before
 	public void setUp() throws Exception {
-		this.p = Parser.getInstance(new File("data/commands"));
-		this.owner = new Player(32f, 32f, 100, new Inventory(20), 100, "Harald");
-		this.target = new Spider(32f, 32f, 100, new Inventory(20), 100, "spider");
-		this.item1 = new HealthPotion(this.owner);
-		this.item2 = new Axe(this.owner);
-		this.om = ObjectMapper.getInstance();
-		this.om.registerObject(this.target.getCreatureName(), this.target);
-		this.om.registerObject(this.item1.getItemName(), this.item1);
-		this.om.registerObject(this.item2.getItemName(), this.item2);
+		this.p = Parser.getInstance(this.f);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		this.target = new Spider(32f, 32f, 100, new Inventory(20), 100, "spider");
 	}
 
 	@Test
-	public void UseCommandTest() {
-		this.p.parse("use crude axe on spider");
-
-		Assert.assertEquals(90, this.target.getHP());
-
-		this.p.parse("use healing potion on spider");
-
-		Assert.assertEquals(95, this.target.getHP());
+	public void splitTest() {
+		try {
+			Method splitMethod = Parser.class.getDeclaredMethod("split", String.class);
+			splitMethod.setAccessible(true);
+			String[] actuals = (String[])splitMethod.invoke(this.p, "use crude axe on super duper ogre");
+			String[] expected = new String[] {"use", "crude axe", "on", "super duper ogre"};
+			Assert.assertTrue(Arrays.deepEquals(actuals, expected));
+		} catch(Exception e) {
+			
+		}
 	}
-
+	
 	@Test
-	public void AttackCommandTest() {
-		this.p.parse("hit spider with crude axe");
-
-		Assert.assertEquals(90, this.target.getHP());
+	public void prefixesTest() {
+		try {
+			Field prefixesField = Parser.class.getDeclaredField("prefixes");
+			prefixesField.setAccessible(true);
+			
+			ArrayList<String> actuals = (ArrayList<String>) prefixesField.get(this.p);
+			ArrayList<String> expected = new ArrayList<String>();
+			expected.add("use");
+			expected.add("on");
+			expected.add("eat");
+			expected.add("drink");
+			expected.add("hit");
+			expected.add("with");
+			
+			Assert.assertEquals(expected.size(), actuals.size());
+			
+			for(String s : expected) {
+				Assert.assertTrue(actuals.contains(s));
+			}
+			
+			
+		} catch(Exception e) {
+			
+		}
 	}
 }
