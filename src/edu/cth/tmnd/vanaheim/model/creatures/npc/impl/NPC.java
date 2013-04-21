@@ -2,33 +2,43 @@ package edu.cth.tmnd.vanaheim.model.creatures.npc.impl;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
+import edu.cth.tmnd.vanaheim.model.quests.GoldQuest;
 
 public class NPC extends Human {
 
-	State s;
-	State next;
+	private State[] states;
+	private int state;
+	private State currentState;
 	
-	public NPC(float x, float y, int velocity, Inventory inventory, int maxHp, String NPCName){
+	
+	public NPC(float x, float y, int velocity, Inventory inventory, int maxHp, String NPCName, State[] states){
 		super(x, y, velocity, inventory, maxHp,NPCName);
+		state = 0;
+		currentState = states[state];
+		this.states = states;
 	}
 	
 	public State nextState(){
-		return next;
-		
+		if(state < states.length)
+			return states[state + 1];
+		else 
+			return currentState;
 	}
 	
 	public State thisState(){
-		return s;
+		return currentState;
 		
 	}
 	
 	public void changeToNextState(){
-		s = next;
+		if(state < states.length){
+			state += 1;
+			currentState = states[state];
+		}
 	}
 
 	@Override
 	public void talk(Human human, String talk) {
-		s.process(human,this);
 	}
 	
 }

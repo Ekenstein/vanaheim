@@ -1,10 +1,10 @@
 package edu.cth.tmnd.vanaheim.model.creatures.npc.impl;
 
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
+import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public abstract class State {
 
-	private State nextState;
 	
-	public abstract void process(Human h,Human npc);
+	public abstract void process(Human human, NPC npc, String s, Quest q);
 }
