@@ -46,6 +46,14 @@ public class QuestBook {
 		return true;
 	}
 	
+	public boolean isComplete(Quest q){
+		if(this.getQuest(q.getName()).isComplete()){
+			return true;
+		}
+		else 
+			return false;
+	}
+	
 	public void addQuest(Quest q){
 		if(!quests.containsKey(q.getName())){
 			quests.put(q.getName(), q);
