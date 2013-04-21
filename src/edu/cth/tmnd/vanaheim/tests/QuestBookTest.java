@@ -32,8 +32,8 @@ public class QuestBookTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.npc1 = new NPC(0f,0f,0,new Inventory(20),20,"Putte");
-		this.npc2 = new NPC(0f,0f,0,new Inventory(20),20,"Fnutte");
+		this.npc1 = new NPC(0f,0f,0,new Inventory(20),20,"Putte",null);
+		this.npc2 = new NPC(0f,0f,0,new Inventory(20),20,"Fnutte",null);
 		this.user = new Player(0f,0f,0,new Inventory(20),20,"Gurdi");
 		this.q1 = new GoldQuest(npc1);
 		this.q2 = new GoldQuest(npc2);

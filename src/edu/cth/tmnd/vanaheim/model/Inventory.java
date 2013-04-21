@@ -1,6 +1,7 @@
 package edu.cth.tmnd.vanaheim.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
@@ -153,5 +154,17 @@ final public class Inventory {
 	 */
 	public int getSlotsLeft() {
 		return this.slotsLeft;
+	}
+	
+	public Item getItem(String item){
+		Iterator<Item> it = items.iterator();
+		while(it.hasNext())
+		{
+			 Item i = it.next();
+			 if(i.getItemName().equals(item)){
+				 return i;
+			 }
+		}
+		return null;
 	}
 }

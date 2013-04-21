@@ -89,6 +89,10 @@ public abstract class Creature extends GameObject {
 	public Item getItem(final Item item) {
 		return this.inventory.getItem(item);
 	}
+	
+	public Item getItem(String item){
+		return this.inventory.getItem(item);
+	}
 
 	public int getHP() {
 		return this.currentHP;
