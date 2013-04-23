@@ -51,5 +51,11 @@ final public class Silver implements QuestItem {
 		durability = getDurability();
 		
 	}
+
+	@Override
+	public int getItemID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
