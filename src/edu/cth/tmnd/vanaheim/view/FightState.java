@@ -2,13 +2,18 @@ package edu.cth.tmnd.vanaheim.view;
 
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import javax.swing.Timer;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
@@ -46,21 +51,52 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	private Image inventory_bg;
 	private Image inventory_title;
 	private final int[][] inventory = new int[4][6];
+	
+	private Image barForegroundImage;
+	private Image healthBarImage;
+	private Image attackTimerBarImage;
+	private Image combatLogImage;
+	private Image playerImage;
+	private Image spiderImage;
 
 	private final Map<Integer, Image> itemIDMap = new HashMap<Integer, Image>();
 
 	private TextField inputField;
 	private String message = "";
 
-	TrueTypeFont titleFont;
-	TrueTypeFont descriptionFont;
+	private TrueTypeFont titleFont;
+	private TrueTypeFont descriptionFont;
+	
+	public static Timer enemyAttackTimer;
+	private int startTime = 10;
+	
+	private int health = 100;
+	
+	private String enemyLog = "";
 
 	private StateBasedGame game;
 
 	public FightState() {
 		controller = new Controller();
 		this.controller.addMessageBufferListener(this);
+		enemyAttackTimer = new Timer(1000, new CountdownTimerListener());
 	}
+	
+	class CountdownTimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	startTime--;
+            if (startTime == 0) {
+                //TODO Opponent is attacking. Call some method!
+            	enemyLog += "Spider hits you for 20 damage!\n";
+            	health -= 20;
+            	if (health <= 0) {
+            		enemyLog += "You died :(";
+            		enemyAttackTimer.stop();
+            	}
+                startTime = 10;
+            }
+        }
+    }
 
 	public int getID() {
 		return ID;
@@ -73,7 +109,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
 
 		//Inventory
-		inventory_bg = new Image("data/inventory_paper.png");
+		inventory_bg = new Image("data/inventory_paper2.png");
 		inventory_title = new Image("data/inventory_title.png");
 		
 		itemIDMap.put(0, new Image("data/coins.png"));
@@ -83,10 +119,17 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		container.setTargetFrameRate(120);
 
 		fightScreenBg = new Image("data/fightScreenBg.png");
+		
+		barForegroundImage = new Image("data/barForeground.png");
+		healthBarImage = new Image("data/healthBar.png");
+		attackTimerBarImage = new Image("data/attackTimerBar.png");
+		combatLogImage = new Image("data/combatLogBg.png");
+		playerImage = new Image("data/female_wizard.png");
+		spiderImage = new Image("data/ugly_spider.png");
 
 		inputField = new TextField(container,
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false),
-				384, 704, 256, 64, new ComponentListener() {
+				384, 736, 256, 32, new ComponentListener() {
 
 			@Override
 			public void componentActivated(final AbstractComponent source) {
@@ -100,16 +143,30 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(fightScreenBg, 0, 0);
+		
+		context.drawImage(playerImage, 100, 200);
+		context.drawImage(spiderImage, 732, 350);
+		
+		healthBarImage.draw(130, 458, 2*health, 16);
+		context.drawImage(barForegroundImage, 100, 450);
+		healthBarImage.draw(698, 458, 196, 16);
+		context.drawImage(barForegroundImage, 668, 450);
+		attackTimerBarImage.draw(698, 490, 20*startTime, 16);
+		context.drawImage(barForegroundImage, 668, 482);
+		
+		context.drawImage(combatLogImage, 0, 564);
+		context.drawString(enemyLog, 16, 580);
+		context.drawImage(combatLogImage, 736, 564);
 
 		inputField.render(container, context);
-
+		
 		if (controller.isInventoryToggled()) {
-			context.drawImage(inventory_bg, 640, 496);
-			context.drawImage(inventory_title, 640, 464);
+			context.drawImage(inventory_bg, 384, 555);
+			context.drawImage(inventory_title, 320, 507);
 
 			List<Item> items = controller.getItems();
 			for (int i = 0; i < items.size(); i++) {
-				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 656 + i * 64, 512 + i / 4 * 64);
+				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
 			}
 		}
 	}

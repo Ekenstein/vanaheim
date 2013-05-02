@@ -280,6 +280,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		if (prevX != currX || prevY != currY) {
 			if (controller.hasMonster(currX, currY)) {
+				FightState.enemyAttackTimer.start();
 				game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}
