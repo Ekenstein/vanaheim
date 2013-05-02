@@ -27,20 +27,24 @@ public class World {
 	private boolean[][] blocked;
 	
 	private final int HOUSE_ENTRANCE = 377;
+	private final int GRASS = 178;
 	
 	private Map<Point, TiledMap> houseEntrances = new HashMap<Point, TiledMap>();
 
 	public void initMap(TiledMap map) {
 		this.worldMap = map;
 		currentMap = worldMap;
-		System.out.println(worldMap.getHeight());
 		this.tiles = new Tile[worldMap.getWidth()][worldMap.getHeight()];
 		this.blocked = new boolean[worldMap.getWidth()][worldMap.getHeight()];
 		for (int i = 0; i < worldMap.getHeight(); i++) {
 			for (int j = 0; j < worldMap.getWidth(); j++) {
 				//System.out.println(map.getTileId(j, i, 0));
 				
-				//Create tiles
+				int tileID = worldMap.getTileId(j, i, 0);
+				if (tileID == GRASS) {
+					System.out.println("På position " + j + ", " + i + " skapas en grass tile.");
+					tiles[j][i] = new GrassTile();
+				}
 				
 				if (map.getTileId(j, i, 6) != 0 || map.getTileId(j, i, 2) != 0) {
 					blocked[j][i] = true;
@@ -68,27 +72,23 @@ public class World {
 	public TiledMap getMap(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
-		System.out.println(""+xPos + ", " + yPos);
 		TiledMap houseMap = houseEntrances.get(new Point(xPos, yPos));
 		if (houseMap != null && currentMap == worldMap) {
-			System.out.println("Change to house map");
 			currentMap = houseMap;
 		} else if (currentMap != worldMap) {
 			if ((xPos == 15 && yPos == 20) || (xPos == 16 && yPos == 20)) {
-				System.out.println("Change to world map");
 				currentMap = worldMap;
 			}
 		}
 		return currentMap;
 	}
 
-	public void checkTile(int x, int y) {
-		int xPos = (int)Math.floor(x / 32);
-		int yPos = (int)Math.floor(y / 32);
-		//System.out.println("" + xPos + ", " + yPos);
-		if (tiles[xPos][yPos] != null) {
-			boolean bool = tiles[xPos][yPos].hasMonster();
+	public boolean hasMonster(int x, int y) {
+		boolean hasMonster = false;;
+		if (tiles[x][y] != null) {
+			hasMonster = tiles[x][y].hasMonster();
 		}
+		return hasMonster;
 	}
 
 	public void changeTile(int x, int y) {

@@ -87,8 +87,8 @@ public class Controller {
 		this.world.initHouse(x, y, map);
 	}
 
-	public void checkTile(final int x, final int y) {
-		this.world.checkTile(x, y);
+	public boolean hasMonster(final int x, final int y) {
+		return this.world.hasMonster(x, y);
 	}
 
 	public void changeTile(final int x, final int y) {
