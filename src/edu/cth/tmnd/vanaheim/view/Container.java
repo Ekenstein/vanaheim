@@ -1,7 +1,10 @@
 package edu.cth.tmnd.vanaheim.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +20,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.AppletGameContainer.ContainerPanel;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.TextField;
+import org.newdawn.slick.tests.xml.Entity;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
@@ -32,21 +37,24 @@ import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
  * @author eken
  *
  */
-public class Container extends BasicGame {
+public class Container extends BasicGame implements PropertyChangeListener {
 
 	private final Controller controller;
 
 	private TiledMap map = null;
+	private TiledMap questHouse = null;
 
 	private Animation sprite, up, down, left, right;
-	private float x = 100f, y = 100f;
+	private float x = 400f, y = 400f;
 
 	private Image inventory_bg;
 	private Image inventory_title;
 	private boolean showInventory = false;
 	private final int[][] inventory = new int[4][6];
-	
+	private boolean isInventoryShown = false;
+
 	private Image quests_title;
+	private boolean isQuestsShown = false;
 
 	private static final int POTION_GREEN = 1;
 	private static final int DAGGER = 2;
@@ -62,46 +70,66 @@ public class Container extends BasicGame {
 	private TextField inputField;
 	private String message = "";
 
+	TrueTypeFont titleFont;
+	TrueTypeFont descriptionFont;
+
 	private AppGameContainer app;
 
 	public Container(final String title) {
 		super(title);
 		controller = new Controller();
+		this.controller.addMessageBufferListener(this);
 	}
 
 	@Override
 	public void render(final GameContainer container, final Graphics context) throws SlickException {
 		//this.currentViewState.render(container, context);
 
-		controller.getMap().render(0, 0);
-
+		controller.getMap((int)x, (int)y).render(0, 0);
+		
 		final Point p = controller.getPlayerLoc();
 		sprite.draw(p.x, p.y);
 
 		inputField.render(container, context);
-		
+
 		if (controller.isInventoryToggled()) {
 			context.drawImage(inventory_bg, 640, 496);
 			context.drawImage(inventory_title, 640, 464);
-			
+
 			List<Item> items = controller.getItems();
 			for (int i = 0; i < items.size(); i++) {
 				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 656 + i * 64, 512 + i / 4 * 64);
 			}
 		}
-		
-		TrueTypeFont titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 24), false);
+
+		int maxWidth = 352;
+		List<String> description = new ArrayList<String>();
+		String curText = "";
+
+		context.setColor(org.newdawn.slick.Color.black);
+
 		if (controller.isQuestBookToggled()) {
 			context.drawImage(inventory_bg, 0, 496);
 			context.drawImage(quests_title, 0, 464);
-			
+
 			Map<String, Quest> quests = controller.getQuests();
 			for (String questName : quests.keySet()) {
-				String description = quests.get(questName).getDescription();
+				String str = quests.get(questName).getDescription();
+				String[] strArray = str.split(" ");
+				for (int i = 0; i < strArray.length; i++) {
+					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxWidth) {
+						description.add(curText);
+						curText = "";
+					}
+					curText += strArray[i] + " ";
+				} 
 				int titleLength = titleFont.getWidth(questName);
 				context.setFont(titleFont);
-				context.drawString(questName, (384 - titleLength) / 2, 512);
-				context.drawString(description, 16, 550);
+				context.drawString(questName, (384 - titleLength) / 2, 528);
+				context.setFont(descriptionFont);
+				for (int i = 0; i < description.size(); i++) {
+					context.drawString(description.get(i), 16, 576 + i * 16);
+				}
 			}
 		}
 
@@ -123,15 +151,18 @@ public class Container extends BasicGame {
 
 	@Override
 	public void init(final GameContainer container) throws SlickException {
-		
+
+		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 24), false);
+		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
+
 		//Inventory
 		inventory_bg = new Image("data/inventory_paper.png");
 		inventory_title = new Image("data/inventory_title.png");
-		
+
 		itemIDMap.put(0, new Image("data/coins.png"));
 		itemIDMap.put(1, new Image("data/axe_steel.png"));
 		itemIDMap.put(2, new Image("data/potion.png"));
-		
+
 		//Quest log
 		quests_title = new Image("data/quests_title.png");
 
@@ -140,11 +171,14 @@ public class Container extends BasicGame {
 
 		try {
 			map = new TiledMap("data/map.tmx");
+			questHouse = new TiledMap("data/questHouse.tmx");
 		} catch (final SlickException e) {
 			e.printStackTrace();
 		}
 
 		controller.initMap(map);
+		controller.initHouse(15, 19, questHouse);
+		controller.initHouse(16, 19, questHouse);
 
 		final Image [] movementUp = {new Image("data/wizUp1.png"), new Image("data/wizUp2.png")};
 		final Image [] movementDown = {new Image("data/wizDown1.png"), new Image("data/wizDown2.png")};
@@ -168,6 +202,7 @@ public class Container extends BasicGame {
 			@Override
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
+				Container.this.controller.parseCommand(message);
 				if (message.equals("show inventory")) {
 					showInventory = true;
 				} else if (message.equals("hide inventory")) {
@@ -274,47 +309,53 @@ public class Container extends BasicGame {
 
 	@Override
 	public void update(final GameContainer container, final int delta) throws SlickException {
+		controller.checkTile((int)x, (int)y);
 		final Input input = container.getInput();
-        if (input.isKeyDown(Input.KEY_UP))
-        {
-            sprite = up;
-            if (!controller.isBlocked((int)x, (int)(y - delta * 0.1f)))
-            {
-                sprite.update(delta);
-                // The lower the delta the slowest the sprite will animate.
-                y -= delta * 0.1f;
-            }
-        }
-        else if (input.isKeyDown(Input.KEY_DOWN))
-        {
-            sprite = down;
-            if (!controller.isBlocked((int)x, (int)(y + 32f + delta * 0.1f)))
-            {
-                sprite.update(delta);
-                y += delta * 0.1f;
-            }
-        }
-        else if (input.isKeyDown(Input.KEY_LEFT))
-        {
-            sprite = left;
-            if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
-            {
-                sprite.update(delta);
-                x -= delta * 0.1f;
-            }
-        }
-        else if (input.isKeyDown(Input.KEY_RIGHT))
-        {
-            sprite = right;
-            if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
-            {
-                sprite.update(delta);
-                x += delta * 0.1f;
-            }
-        }
+		if (input.isKeyDown(Input.KEY_UP))
+		{
+			sprite = up;
+			if (!controller.isBlocked((int)x, (int)(y - delta * 0.1f)))
+			{
+				sprite.update(delta);
+				// The lower the delta the slowest the sprite will animate.
+				y -= delta * 0.1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_DOWN))
+		{
+			sprite = down;
+			if (!controller.isBlocked((int)x, (int)(y + 32f + delta * 0.1f)))
+			{
+				sprite.update(delta);
+				y += delta * 0.1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT))
+		{
+			sprite = left;
+			if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
+			{
+				sprite.update(delta);
+				x -= delta * 0.1f;
+			}
+		}
+		else if (input.isKeyDown(Input.KEY_RIGHT))
+		{
+			sprite = right;
+			if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
+			{
+				sprite.update(delta);
+				x += delta * 0.1f;
+			}
+		}
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		//controller.checkTile((int)x, (int)y);
-		controller.lootAll((int)x, (int)y);
+		//controller.lootAll((int)x, (int)y);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent e) {
+		System.out.println(e.getNewValue());
 	}
 
 }

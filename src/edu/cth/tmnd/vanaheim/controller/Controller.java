@@ -75,12 +75,16 @@ public class Controller {
 		return this.world.isBlocked(x, y);
 	}
 
-	public TiledMap getMap() {
-		return this.world.getMap();
+	public TiledMap getMap(int x, int y) {
+		return this.world.getMap(x, y);
 	}
 
 	public void initMap(final TiledMap map) {
 		this.world.initMap(map);
+	}
+	
+	public void initHouse(int x, int y, TiledMap map) {
+		this.world.initHouse(x, y, map);
 	}
 
 	public void checkTile(final int x, final int y) {
@@ -91,9 +95,9 @@ public class Controller {
 		this.world.changeTile(x, y);
 	}
 
-	public void lootAll(final int x, final int y) {
-		this.world.lootAll(x, y);
-	}
+//	public void lootAll(final int x, final int y) {
+//		this.world.lootAll(x, y);
+//	}
 
 	public void dropItem(final Item item) {
 		final Item i = this.player.getItem(item);

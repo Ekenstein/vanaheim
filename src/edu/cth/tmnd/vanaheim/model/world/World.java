@@ -1,6 +1,13 @@
 package edu.cth.tmnd.vanaheim.model.world;
 
+import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.newdawn.slick.tiled.TiledMap;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
@@ -12,20 +19,26 @@ public class World {
 	private final static int TILE_WIDTH = 32;
 	private final static int TILE_HEIGHT = 32;
 	private NPC[] npcs;
-	private TiledMap map;
+	private TiledMap worldMap;
+	private TiledMap currentMap;
 
 	private Tile[][] tiles;
 	
 	private boolean[][] blocked;
+	
+	private final int HOUSE_ENTRANCE = 377;
+	
+	private Map<Point, TiledMap> houseEntrances = new HashMap<Point, TiledMap>();
 
 	public void initMap(TiledMap map) {
-		System.out.println(map.getHeight());
-		this.tiles = new Tile[map.getWidth()][map.getHeight()];
-		this.blocked = new boolean[map.getWidth()][map.getHeight()];
-		this.map = map;
-		for (int i = 0; i < map.getHeight(); i++) {
-			for (int j = 0; j < map.getWidth(); j++) {
-				//System.out.println(map.getTileId(j, i, 2));
+		this.worldMap = map;
+		currentMap = worldMap;
+		System.out.println(worldMap.getHeight());
+		this.tiles = new Tile[worldMap.getWidth()][worldMap.getHeight()];
+		this.blocked = new boolean[worldMap.getWidth()][worldMap.getHeight()];
+		for (int i = 0; i < worldMap.getHeight(); i++) {
+			for (int j = 0; j < worldMap.getWidth(); j++) {
+				//System.out.println(map.getTileId(j, i, 0));
 				
 				//Create tiles
 				
@@ -36,19 +49,43 @@ public class World {
 		}
 	}
 	
+	public void initHouse(int x, int y, TiledMap map) {
+		Point p = new Point(x, y);
+		Point p2 = new Point(x+1, y);
+		houseEntrances.put(p, map);
+		houseEntrances.put(p2, map);
+	}
+	
 	public boolean isBlocked(int x, int y) {
+		if (currentMap != worldMap) {
+			return false;
+		}
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
 		return blocked[xPos][yPos];
 	}
 	
-	public TiledMap getMap() {
-		return this.map;
+	public TiledMap getMap(int x, int y) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		System.out.println(""+xPos + ", " + yPos);
+		TiledMap houseMap = houseEntrances.get(new Point(xPos, yPos));
+		if (houseMap != null && currentMap == worldMap) {
+			System.out.println("Change to house map");
+			currentMap = houseMap;
+		} else if (currentMap != worldMap) {
+			if ((xPos == 15 && yPos == 20) || (xPos == 16 && yPos == 20)) {
+				System.out.println("Change to world map");
+				currentMap = worldMap;
+			}
+		}
+		return currentMap;
 	}
 
 	public void checkTile(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
+		//System.out.println("" + xPos + ", " + yPos);
 		if (tiles[xPos][yPos] != null) {
 			boolean bool = tiles[xPos][yPos].hasMonster();
 		}
@@ -57,18 +94,18 @@ public class World {
 	public void changeTile(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
-		if (map.getTileId(xPos, yPos, 2) != 257) {
-			map.setTileId(xPos, yPos, 2, 257);
+		if (worldMap.getTileId(xPos, yPos, 2) != 257) {
+			worldMap.setTileId(xPos, yPos, 2, 257);
 		}
 	}
 
-	public void lootAll(int x, int y) {
-		int xPos = (int)Math.floor(x / 32);
-		int yPos = (int)Math.floor(y / 32);
-		if (map.getTileId(xPos, yPos, 2) == 257) {
-			System.out.println("Här finns loot");
-		}
-	}
+//	public void lootAll(int x, int y) {
+//		int xPos = (int)Math.floor(x / 32);
+//		int yPos = (int)Math.floor(y / 32);
+//		if (map.getTileId(xPos, yPos, 2) == 257) {
+//			System.out.println("Här finns loot");
+//		}
+//	}
 
 	private int getX(float x) {
 		return (int)Math.floor(x / TILE_WIDTH);
