@@ -26,10 +26,20 @@ public class Controller {
 	private final ObjectMapper objectMapper;
 	private final MessageBuffer msgBuffer;
 	private Parser parser;
+	
+	private static Controller theInstance = null;
 
-	public Controller() {
+	public static Controller getInstance() throws IOException {
+		if(theInstance == null) {
+			theInstance = new Controller();
+		}
+
+		return theInstance;
+	}
+
+	private Controller() {
 		this.world = new World();
-		this.player = new Player(32f, 32f, 300, new Inventory(20), 100, "Harald");
+		this.player = new Player(400f, 400f, 300, new Inventory(20), 100, "Harald");
 		this.objectMapper = ObjectMapper.getInstance();
 		this.msgBuffer = MessageBuffer.getInstance();
 
@@ -39,19 +49,19 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Map<String, Quest> getQuests() {
 		return this.player.getQuests();
 	}
-	
+
 	public List<Item> getItems() {
 		return this.player.getItems();
 	}
-	
+
 	public boolean isInventoryToggled() {
 		return this.player.isInventoryToggled();
 	}
-	
+
 	public boolean isQuestBookToggled() {
 		return this.player.isQuestBookToggled();
 	}
@@ -66,7 +76,7 @@ public class Controller {
 		return new Point(x, y);
 	}
 
-	public void setPlayerLoc(final Point p) {
+	public void setPlayerLoc(Point p) {
 		this.player.setX(p.x);
 		this.player.setY(p.y);
 	}
@@ -82,7 +92,7 @@ public class Controller {
 	public void initMap(int mapID, TiledMap map) {
 		this.world.initMap(mapID, map);
 	}
-	
+
 	public void initHouse(int x, int y, int mapID, TiledMap map) {
 		this.world.initHouse(x, y, mapID, map);
 	}
@@ -91,13 +101,17 @@ public class Controller {
 		return this.world.hasMonster(x, y);
 	}
 
-//	public void changeTile(final int x, final int y) {
-//		this.world.changeTile(x, y);
-//	}
+	public void setLoot(int mapID) {
+		this.world.setLoot(getPlayerLoc().x, getPlayerLoc().y, mapID);
+	}
 
-//	public void lootAll(final int x, final int y) {
-//		this.world.lootAll(x, y);
-//	}
+	//	public void changeTile(final int x, final int y) {
+	//		this.world.changeTile(x, y);
+	//	}
+
+	//	public void lootAll(final int x, final int y) {
+	//		this.world.lootAll(x, y);
+	//	}
 
 	public void dropItem(final Item item) {
 		final Item i = this.player.getItem(item);

@@ -44,7 +44,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 
 	public static final int ID = 3;
 
-	private final Controller controller;
+	private Controller controller;
 
 	private Image fightScreenBg;
 
@@ -71,13 +71,17 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	private int startTime = 10;
 	
 	private int health = 100;
+	private int enemyHealth = 100;
+	
+	private boolean fightEnded = false;
 	
 	private String enemyLog = "";
+	private String playerLog = "";
 
 	private StateBasedGame game;
 
-	public FightState() {
-		controller = new Controller();
+	public FightState(Controller controller) {
+		this.controller = controller;
 		this.controller.addMessageBufferListener(this);
 		enemyAttackTimer = new Timer(1000, new CountdownTimerListener());
 	}
@@ -90,8 +94,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
             	enemyLog += "Spider hits you for 20 damage!\n";
             	health -= 20;
             	if (health <= 0) {
+            		System.out.println("You died");
             		enemyLog += "You died :(";
             		enemyAttackTimer.stop();
+            		game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
             	}
                 startTime = 10;
             }
@@ -135,6 +141,39 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
 				FightState.this.controller.parseCommand(message);
+				if (message.equals("hit")) {
+					enemyHealth -= 50;
+				} else if (message.equals("hide inventory")) {
+					//showInventory = false;
+				} else if (message.equals("drop item")) {
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 6; j++) {
+							final int item = inventory[i][j];
+							if (item == 1 || item == 2 || item == 3) {
+								inventory[i][j] = 0;
+								inputField.setText("");
+								return;
+							}
+						}
+					}
+				} else if (message.equals("loot")) {
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 6; j++) {
+							final int item = inventory[i][j];
+							if (item == 0) {
+								final Random rand = new Random();
+								final int a = rand.nextInt(4);
+								inventory[i][j] = a;
+								inputField.setText("");
+								return;
+							}
+						}
+					}
+				} else if (message.equals("talk to thalia")) {
+					//TODO Can't talk to Thalia all over the map!
+					//consoleToggled = true;
+					//reply = "Thalia: My husband got lost in a battle! Pleeeease help me find him.";
+				}
 				inputField.setText("");
 			}
 		});
@@ -147,17 +186,24 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		context.drawImage(playerImage, 100, 200);
 		context.drawImage(spiderImage, 732, 350);
 		
+		//Player health bar
 		healthBarImage.draw(130, 458, 2*health, 16);
 		context.drawImage(barForegroundImage, 100, 450);
-		healthBarImage.draw(698, 458, 196, 16);
+		
+		//Enemy health bar
+		healthBarImage.draw(698, 458, 2*enemyHealth, 16);
 		context.drawImage(barForegroundImage, 668, 450);
+		
+		//Enemy attack timer
 		attackTimerBarImage.draw(698, 490, 20*startTime, 16);
 		context.drawImage(barForegroundImage, 668, 482);
 		
 		context.drawImage(combatLogImage, 0, 564);
 		context.drawString(enemyLog, 16, 580);
 		context.drawImage(combatLogImage, 736, 564);
-
+		context.drawString(playerLog, 752, 580);
+		
+		context.setColor(Color.white);
 		inputField.render(container, context);
 		
 		if (controller.isInventoryToggled()) {
@@ -172,6 +218,12 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		if (enemyHealth <= 0) {
+			controller.setLoot(0);
+			enemyAttackTimer.stop();
+			enemyHealth = 100;
+			game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		}
 		
 	}
 

@@ -52,7 +52,6 @@ public class Menu extends BasicGameState {
 				public void init(GameState firstState, GameState secondState) {
 				}
 			};
-
 			game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 	}

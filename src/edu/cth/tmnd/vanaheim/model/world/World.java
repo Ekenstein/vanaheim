@@ -28,6 +28,7 @@ public class World {
 	
 	private final int HOUSE_ENTRANCE = 377;
 	private final int GRASS = 178;
+	private final int LOOT = 257;
 	
 	private Map<Point, Integer> houseEntrances = new HashMap<Point, Integer>();
 	
@@ -44,7 +45,6 @@ public class World {
 				
 				int tileID = map.getTileId(j, i, 0);
 				if (tileID == GRASS) {
-					System.out.println("På position " + j + ", " + i + " skapas en grass tile.");
 					tiles[j][i] = new GrassTile();
 				}
 				
@@ -72,6 +72,13 @@ public class World {
 		}
 		blockingArrays.put(mapID, blocked);
 		maps.put(mapID, map);
+	}
+	
+	public void setLoot(int x, int y, int mapID) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		TiledMap map = maps.get(mapID);
+		map.setTileId(xPos, yPos+1, 5, LOOT);
 	}
 	
 	public boolean isBlocked(int x, int y) {

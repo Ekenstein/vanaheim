@@ -39,7 +39,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	public static final int ID = 2;
 
-	private final Controller controller;
+	private Controller controller;
 
 	private TiledMap map = null;
 	private TiledMap questHouse = null;
@@ -82,8 +82,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	private StateBasedGame game;
 
-	public ExploreState() {
-		controller = new Controller();
+	public ExploreState(Controller controller) {
+		this.controller = controller;
 		this.controller.addMessageBufferListener(this);
 	}
 
@@ -189,13 +189,16 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		
+		int x = controller.getPlayerLoc().x;
+		int y = controller.getPlayerLoc().y;
 
 		if (fightActive) {
 			context.drawImage(fightScreenBg, 0, 0);
 		} else {
 			controller.getMap((int)x, (int)y).render(0, 0);
 			Point p = controller.getPlayerLoc();
-			sprite.draw(p.x, p.y);
+			sprite.draw(x, y);
 		}
 		
 		int maxReplyWidth = 376;
@@ -313,8 +316,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		if (prevX != currX || prevY != currY) {
 			if (controller.hasMonster(currX, currY)) {
-				//FightState.enemyAttackTimer.start();
-				//game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+				FightState.enemyAttackTimer.start();
+				game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}
 		//controller.lootAll((int)x, (int)y);

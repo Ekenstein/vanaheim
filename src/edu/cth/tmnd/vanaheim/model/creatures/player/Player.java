@@ -34,8 +34,6 @@ public class Player extends Human {
 		//For testing purpose
 		log.addQuest(new ExploreQuest(this));
 	}
-
-	private final float x = 34f, y = 34f;
 	
 	public Map<String, Quest> getQuests() {
 		return this.log.getQuests();
