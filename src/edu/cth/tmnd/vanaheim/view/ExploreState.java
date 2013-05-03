@@ -73,6 +73,9 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	private TextField inputField;
 	private String message = "";
+	private String reply = "";
+	private Image console;
+	private boolean consoleToggled = false;
 
 	TrueTypeFont titleFont;
 	TrueTypeFont descriptionFont;
@@ -94,11 +97,11 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 
-		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 24), false);
+		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
 		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
 
 		//Inventory
-		inventory_bg = new Image("data/inventory_paper.png");
+		inventory_bg = new Image("data/inventory_paper2.png");
 		inventory_title = new Image("data/inventory_title.png");
 
 		itemIDMap.put(0, new Image("data/coins.png"));
@@ -118,9 +121,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			e.printStackTrace();
 		}
 
-		controller.initMap(map);
-		controller.initHouse(15, 19, questHouse);
-		controller.initHouse(16, 19, questHouse);
+		controller.initMap(0, map);
+		controller.initHouse(15, 18, 1, questHouse);
 
 		fightScreenBg = new Image("data/fightScreenBg.png");
 
@@ -136,10 +138,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		right = new Animation(movementRight, duration, false);
 
 		sprite = right;
+		
+		console = new Image("data/inventory_paper.png");
 
 		inputField = new TextField(container,
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false),
-				384, 704, 256, 64, new ComponentListener() {
+				384, 736, 256, 32, new ComponentListener() {
 
 			@Override
 			public void componentActivated(final AbstractComponent source) {
@@ -173,6 +177,10 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 							}
 						}
 					}
+				} else if (message.equals("talk to thalia")) {
+					//TODO Can't talk to Thalia all over the map!
+					consoleToggled = true;
+					reply = "Thalia: My husband got lost in a battle! Pleeeease help me find him.";
 				}
 				inputField.setText("");
 			}
@@ -189,46 +197,67 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			Point p = controller.getPlayerLoc();
 			sprite.draw(p.x, p.y);
 		}
-
+		
+		int maxReplyWidth = 376;
+		List<String> consoleMessages = new ArrayList<String>();
+		String replyText = "";
+		if (consoleToggled) {
+			context.drawImage(console, 320, 464);
+			String[] strArray = reply.split(" ");
+			for (int i = 0; i < strArray.length; i++) {
+				if (descriptionFont.getWidth(replyText + " " + strArray[i]) > maxReplyWidth) {
+					consoleMessages.add(replyText);
+					replyText = "";
+				}
+				replyText += strArray[i] + " ";
+			}
+			consoleMessages.add(replyText);
+			for (int i = 0; i < consoleMessages.size(); i++) {
+				context.drawString(consoleMessages.get(i), (1024-console.getWidth())/2+8, 768-console.getHeight() - 24 + 16*i);
+			}
+		}
+		
+		context.setColor(Color.white);
 		inputField.render(container, context);
 
 		if (controller.isInventoryToggled()) {
-			context.drawImage(inventory_bg, 640, 496);
-			context.drawImage(inventory_title, 640, 464);
+			context.drawImage(inventory_bg, 1024-inventory_bg.getWidth(), 768-inventory_bg.getHeight());
+			context.drawImage(inventory_title, 1024-inventory_bg.getWidth()-64, 768-inventory_bg.getHeight() - inventory_title.getHeight()/2);
 
 			List<Item> items = controller.getItems();
 			for (int i = 0; i < items.size(); i++) {
-				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 656 + i * 64, 512 + i / 4 * 64);
+				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 1024-inventory_bg.getWidth()+16 + i * 64, 768-inventory_bg.getHeight()+16 + i / 4 * 64);
 			}
 		}
 
-		int maxWidth = 352;
+		int maxQuestWidth = 248;
 		List<String> description = new ArrayList<String>();
 		String curText = "";
 
 		context.setColor(org.newdawn.slick.Color.black);
 
 		if (controller.isQuestBookToggled()) {
-			context.drawImage(inventory_bg, 0, 496);
-			context.drawImage(quests_title, 0, 464);
+			context.drawImage(inventory_bg, 0, 768-inventory_bg.getHeight());
+			context.drawImage(quests_title, -64, 768-inventory_bg.getHeight()-quests_title.getHeight()/2);
 
 			Map<String, Quest> quests = controller.getQuests();
 			for (String questName : quests.keySet()) {
 				String str = quests.get(questName).getDescription();
 				String[] strArray = str.split(" ");
 				for (int i = 0; i < strArray.length; i++) {
-					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxWidth) {
+					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxQuestWidth) {
 						description.add(curText);
 						curText = "";
 					}
 					curText += strArray[i] + " ";
-				} 
+				}
+				description.add(curText);
 				int titleLength = titleFont.getWidth(questName);
 				context.setFont(titleFont);
-				context.drawString(questName, (384 - titleLength) / 2, 528);
+				context.drawString(questName, (256 - titleLength) / 2, 768 - inventory_bg.getHeight() + 32);
 				context.setFont(descriptionFont);
 				for (int i = 0; i < description.size(); i++) {
-					context.drawString(description.get(i), 16, 576 + i * 16);
+					context.drawString(description.get(i), 8, 768 - inventory_bg.getHeight() + 64 + i * 16);
 				}
 			}
 		}
@@ -247,6 +276,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				// The lower the delta the slowest the sprite will animate.
 				y -= delta * 0.1f;
 			}
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
@@ -256,6 +286,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				sprite.update(delta);
 				y += delta * 0.1f;
 			}
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT))
 		{
@@ -265,6 +296,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				sprite.update(delta);
 				x -= delta * 0.1f;
 			}
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_RIGHT))
 		{
@@ -274,14 +306,15 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				sprite.update(delta);
 				x += delta * 0.1f;
 			}
+			consoleToggled = false;
 		}
 		currX = (int)Math.floor(x / 32);
 		currY = (int)Math.floor(y / 32);
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		if (prevX != currX || prevY != currY) {
 			if (controller.hasMonster(currX, currY)) {
-				FightState.enemyAttackTimer.start();
-				game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+				//FightState.enemyAttackTimer.start();
+				//game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}
 		//controller.lootAll((int)x, (int)y);

@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="24" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="town" tilewidth="32" tileheight="32">
-  <image source="town.png" width="512" height="512"/>
+ <tileset firstgid="1" name="house" tilewidth="32" tileheight="32">
+  <image source="wineCellar.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="89" name="questGiver" tilewidth="32" tileheight="32">
+  <image source="questGiver.png" width="384" height="256"/>
+ </tileset>
+ <tileset firstgid="185" name="questMarks" tilewidth="32" tileheight="32">
+  <image source="questMarks.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="187" name="npcNames" tilewidth="32" tileheight="32">
+  <image source="npcName.png" width="96" height="32"/>
  </tileset>
  <layer name="background" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMAsLAnwg8av+o/aP2D0/7R8EoGAXDCwAAgjJp+gAMAAA=
+   H4sIAAAAAAAAC2NgGAWjYBSMAsoBDxY8aj997MGFR+0fWfbTA4zaP7D2o7tlIMFA2z8KKAMAlf6nXAAMAAA=
+  </data>
+ </layer>
+ <layer name="interior" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UOw6CQBRG4dkFJQ9JRCBRkASFSqlBG4VlsP+KUxogobpT4D3JVzGZPzRjjKZpe6hFhxfecCzvf/BFjwGu0I6PAAeEOCIS2lrrhBgJUpxxmZ0ZBfcz5LiiQInbz/c7KtRC+1v3P/BEI7S/df+//790jll/WzxL+65Zvi2exX1N20sT8h5FuwAMAAA=
+  </data>
+ </layer>
+ <layer name="objects" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMguEFdg20AwYY2NDYfFsam08JEIDSdjS2x4XG5o+CUTAKRgEtAQADhSySAAwAAA==
+  </data>
+ </layer>
+ <layer name="npcNames" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OQQ0AMAzEsPKntJVbj8WqyZbyTxUAvzjppn49AsBaA6fwPVYADAAA
   </data>
  </layer>
 </map>

@@ -19,28 +19,30 @@ public class World {
 	private final static int TILE_WIDTH = 32;
 	private final static int TILE_HEIGHT = 32;
 	private NPC[] npcs;
-	private TiledMap worldMap;
-	private TiledMap currentMap;
+	private final int WORLD_MAP = 0;
+	private final int QUEST_HOUSE = 1;
+	private final int SHOP = 2;
+	private int currentMap;
 
 	private Tile[][] tiles;
-	
-	private boolean[][] blocked;
 	
 	private final int HOUSE_ENTRANCE = 377;
 	private final int GRASS = 178;
 	
-	private Map<Point, TiledMap> houseEntrances = new HashMap<Point, TiledMap>();
+	private Map<Point, Integer> houseEntrances = new HashMap<Point, Integer>();
+	
+	private Map<Integer, boolean[][]> blockingArrays = new HashMap<Integer, boolean[][]>();
+	private Map<Integer, TiledMap> maps = new HashMap<Integer, TiledMap>();
 
-	public void initMap(TiledMap map) {
-		this.worldMap = map;
-		currentMap = worldMap;
-		this.tiles = new Tile[worldMap.getWidth()][worldMap.getHeight()];
-		this.blocked = new boolean[worldMap.getWidth()][worldMap.getHeight()];
-		for (int i = 0; i < worldMap.getHeight(); i++) {
-			for (int j = 0; j < worldMap.getWidth(); j++) {
+	public void initMap(int mapID, TiledMap map) {
+		currentMap = WORLD_MAP;
+		this.tiles = new Tile[map.getWidth()][map.getHeight()];
+		boolean[][] blocked = new boolean[map.getWidth()][map.getHeight()];
+		for (int i = 0; i < map.getHeight(); i++) {
+			for (int j = 0; j < map.getWidth(); j++) {
 				//System.out.println(map.getTileId(j, i, 0));
 				
-				int tileID = worldMap.getTileId(j, i, 0);
+				int tileID = map.getTileId(j, i, 0);
 				if (tileID == GRASS) {
 					System.out.println("På position " + j + ", " + i + " skapas en grass tile.");
 					tiles[j][i] = new GrassTile();
@@ -51,36 +53,46 @@ public class World {
 				}
 			}
 		}
+		blockingArrays.put(mapID, blocked);
+		maps.put(mapID, map);
 	}
 	
-	public void initHouse(int x, int y, TiledMap map) {
+	public void initHouse(int x, int y, int mapID, TiledMap map) {
 		Point p = new Point(x, y);
 		Point p2 = new Point(x+1, y);
-		houseEntrances.put(p, map);
-		houseEntrances.put(p2, map);
+		houseEntrances.put(p, mapID);
+		houseEntrances.put(p2, mapID);
+		boolean[][] blocked = new boolean[map.getWidth()][map.getHeight()];
+		for (int i = 0; i < map.getHeight(); i++) {
+			for (int j = 0; j < map.getWidth(); j++) {
+				if (map.getTileId(j, i, 0) == 0 || map.getTileId(j, i, 1) != 0) {
+					blocked[j][i] = true;
+				}
+			}
+		}
+		blockingArrays.put(mapID, blocked);
+		maps.put(mapID, map);
 	}
 	
 	public boolean isBlocked(int x, int y) {
-		if (currentMap != worldMap) {
-			return false;
-		}
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
+		boolean[][] blocked = blockingArrays.get(currentMap);
 		return blocked[xPos][yPos];
 	}
 	
 	public TiledMap getMap(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
-		TiledMap houseMap = houseEntrances.get(new Point(xPos, yPos));
-		if (houseMap != null && currentMap == worldMap) {
+		Integer houseMap = houseEntrances.get(new Point(xPos, yPos));
+		if (houseMap != null && currentMap == WORLD_MAP) {
 			currentMap = houseMap;
-		} else if (currentMap != worldMap) {
-			if ((xPos == 15 && yPos == 20) || (xPos == 16 && yPos == 20)) {
-				currentMap = worldMap;
+		} else if (currentMap != WORLD_MAP) {
+			if ((xPos == 15 && yPos == 19) || (xPos == 16 && yPos == 19)) {
+				currentMap = WORLD_MAP;
 			}
 		}
-		return currentMap;
+		return maps.get(currentMap);
 	}
 
 	public boolean hasMonster(int x, int y) {
@@ -91,13 +103,13 @@ public class World {
 		return hasMonster;
 	}
 
-	public void changeTile(int x, int y) {
-		int xPos = (int)Math.floor(x / 32);
-		int yPos = (int)Math.floor(y / 32);
-		if (worldMap.getTileId(xPos, yPos, 2) != 257) {
-			worldMap.setTileId(xPos, yPos, 2, 257);
-		}
-	}
+//	public void changeTile(int x, int y) {
+//		int xPos = (int)Math.floor(x / 32);
+//		int yPos = (int)Math.floor(y / 32);
+//		if (worldMap.getTileId(xPos, yPos, 2) != 257) {
+//			worldMap.setTileId(xPos, yPos, 2, 257);
+//		}
+//	}
 
 //	public void lootAll(int x, int y) {
 //		int xPos = (int)Math.floor(x / 32);

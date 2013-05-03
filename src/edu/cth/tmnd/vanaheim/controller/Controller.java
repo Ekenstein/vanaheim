@@ -79,21 +79,21 @@ public class Controller {
 		return this.world.getMap(x, y);
 	}
 
-	public void initMap(final TiledMap map) {
-		this.world.initMap(map);
+	public void initMap(int mapID, TiledMap map) {
+		this.world.initMap(mapID, map);
 	}
 	
-	public void initHouse(int x, int y, TiledMap map) {
-		this.world.initHouse(x, y, map);
+	public void initHouse(int x, int y, int mapID, TiledMap map) {
+		this.world.initHouse(x, y, mapID, map);
 	}
 
 	public boolean hasMonster(final int x, final int y) {
 		return this.world.hasMonster(x, y);
 	}
 
-	public void changeTile(final int x, final int y) {
-		this.world.changeTile(x, y);
-	}
+//	public void changeTile(final int x, final int y) {
+//		this.world.changeTile(x, y);
+//	}
 
 //	public void lootAll(final int x, final int y) {
 //		this.world.lootAll(x, y);
