@@ -56,7 +56,6 @@ public class InventoryTest {
 		Item item = this.inventory.retrieveItem(this.item1);
 		Assert.assertEquals(this.item1, item);
 		Assert.assertEquals(1, this.inventory.getSlotsLeft());
-		Assert.assertEquals(this.owner, item.getOwner());
 		Assert.assertFalse(this.inventory.isEmpty());
 
 		item = this.inventory.retrieveItem(this.item1);
@@ -68,7 +67,6 @@ public class InventoryTest {
 		item = this.inventory.retrieveItem(this.item2);
 		Assert.assertEquals(this.item2, item);
 		Assert.assertEquals(2, this.inventory.getSlotsLeft());
-		Assert.assertEquals(this.owner, item.getOwner());
 		Assert.assertTrue(this.inventory.isEmpty());
 	}
 

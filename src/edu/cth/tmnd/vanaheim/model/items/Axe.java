@@ -37,11 +37,6 @@ final public class Axe implements EquipableItem, UseableItem {
 	}
 
 	@Override
-	public void setOwner(Creature human) {
-		this.owner = human;
-	}
-
-	@Override
 	public void use() {
 		System.out.println("How do I shoot web?");
 	}
@@ -58,11 +53,6 @@ final public class Axe implements EquipableItem, UseableItem {
 		if(this.owner != null) {
 			this.owner.unequip();
 		}
-	}
-
-	@Override
-	public Creature getOwner() {
-		return this.owner;
 	}
 
 	@Override

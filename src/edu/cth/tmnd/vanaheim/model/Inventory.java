@@ -142,7 +142,6 @@ final public class Inventory {
 		}
 		
 		Item i = this.items.remove(index);
-		i.setOwner(null);
 		
 		return i;
 	}

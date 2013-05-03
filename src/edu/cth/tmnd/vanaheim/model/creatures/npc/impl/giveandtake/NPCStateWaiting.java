@@ -20,7 +20,6 @@ public class NPCStateWaiting extends State {
 			if(human.getQuestBook().isComplete(q)){
 				human.talk(npc, "Well done! You have finished the quest " + q.getName() + 
 								". Here is your reward. A really fine " + item.getItemName() + " if i may say so myself.");
-				item.setOwner(human);
 				human.getInventory().addItem(item);
 				npc.getInventory().removeItem(item);
 				npc.getQuestBook().removeQuest(q.getName());
