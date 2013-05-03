@@ -103,9 +103,11 @@ public class World {
 	}
 
 	public boolean hasMonster(int x, int y) {
-		boolean hasMonster = false;;
-		if (tiles[x][y] != null) {
-			hasMonster = tiles[x][y].hasMonster();
+		boolean hasMonster = false;
+		if (currentMap == WORLD_MAP) {
+			if (tiles[x][y] != null) {
+				hasMonster = tiles[x][y].hasMonster();
+			}
 		}
 		return hasMonster;
 	}
