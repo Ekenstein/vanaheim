@@ -20,14 +20,13 @@ public class World {
 	private final static int TILE_HEIGHT = 32;
 	private NPC[] npcs;
 	private final int WORLD_MAP = 0;
-	private final int QUEST_HOUSE = 1;
-	private final int SHOP = 2;
-	private int currentMap;
+	private final int HOUSES = 1;
+	private int currentMap = WORLD_MAP;
 
 	private Tile[][] tiles;
 	
 	private final int HOUSE_ENTRANCE = 377;
-	private final int GRASS = 178;
+	private final int WILDERNESS = 803;
 	private final int LOOT = 257;
 	
 	private Map<Point, Integer> houseEntrances = new HashMap<Point, Integer>();
@@ -44,7 +43,7 @@ public class World {
 				//System.out.println(map.getTileId(j, i, 0));
 				
 				int tileID = map.getTileId(j, i, 0);
-				if (tileID == GRASS) {
+				if (tileID == WILDERNESS) {
 					tiles[j][i] = new GrassTile();
 				}
 				
@@ -57,11 +56,7 @@ public class World {
 		maps.put(mapID, map);
 	}
 	
-	public void initHouse(int x, int y, int mapID, TiledMap map) {
-		Point p = new Point(x, y);
-		Point p2 = new Point(x+1, y);
-		houseEntrances.put(p, mapID);
-		houseEntrances.put(p2, mapID);
+	public void initHouse(int mapID, TiledMap map) {
 		boolean[][] blocked = new boolean[map.getWidth()][map.getHeight()];
 		for (int i = 0; i < map.getHeight(); i++) {
 			for (int j = 0; j < map.getWidth(); j++) {
@@ -72,6 +67,13 @@ public class World {
 		}
 		blockingArrays.put(mapID, blocked);
 		maps.put(mapID, map);
+	}
+	
+	public void initHouseEntrances(int x, int y) {
+		Point p = new Point(x, y);
+		Point p2 = new Point(x+1, y);
+		houseEntrances.put(p, HOUSES);
+		houseEntrances.put(p2, HOUSES);
 	}
 	
 	public void setLoot(int x, int y, int mapID) {
@@ -95,7 +97,7 @@ public class World {
 		if (houseMap != null && currentMap == WORLD_MAP) {
 			currentMap = houseMap;
 		} else if (currentMap != WORLD_MAP) {
-			if ((xPos == 15 && yPos == 19) || (xPos == 16 && yPos == 19)) {
+			if ((xPos == 15 && yPos == 19) || (xPos == 16 && yPos == 19) || xPos == 6 && yPos == 14) {
 				currentMap = WORLD_MAP;
 			}
 		}
@@ -106,6 +108,7 @@ public class World {
 		boolean hasMonster = false;
 		if (currentMap == WORLD_MAP) {
 			if (tiles[x][y] != null) {
+				System.out.println("Här finns det gräs");
 				hasMonster = tiles[x][y].hasMonster();
 			}
 		}

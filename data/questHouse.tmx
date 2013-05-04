@@ -9,17 +9,23 @@
  <tileset firstgid="185" name="questMarks" tilewidth="32" tileheight="32">
   <image source="questMarks.png" width="64" height="32"/>
  </tileset>
- <tileset firstgid="187" name="npcNames" tilewidth="32" tileheight="32">
-  <image source="npcName.png" width="96" height="32"/>
+ <tileset firstgid="187" name="floor" tilewidth="32" tileheight="32">
+  <image source="floor_tiles.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="251" name="sellers" tilewidth="32" tileheight="32">
+  <image source="sellers.png" width="384" height="256"/>
+ </tileset>
+ <tileset firstgid="347" name="namePlates" tilewidth="32" tileheight="32">
+  <image source="namePlates.png" width="96" height="1024"/>
  </tileset>
  <layer name="background" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMAsoBDxY8aj997MGFR+0fWfbTA4zaP7D2o7tlIMFA2z8KKAMAlf6nXAAMAAA=
+   H4sIAAAAAAAAC+3OsQkAMAwDQe0/VuoMld7YhR2CCPyB6pcEANIO61rJ6M/71Y+sU43+P/34pfKi10Hf249fnNx93DnGriyaAAwAAA==
   </data>
  </layer>
  <layer name="interior" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UOw6CQBRG4dkFJQ9JRCBRkASFSqlBG4VlsP+KUxogobpT4D3JVzGZPzRjjKZpe6hFhxfecCzvf/BFjwGu0I6PAAeEOCIS2lrrhBgJUpxxmZ0ZBfcz5LiiQInbz/c7KtRC+1v3P/BEI7S/df+//790jll/WzxL+65Zvi2exX1N20sT8h5FuwAMAAA=
+   H4sIAAAAAAAAC+3UyQrCMBDG8fEp2lvrvu/W9aSeFFzB5TF8/5N/zx2IDW0FyQe/S0hmJgQi4uLi8kkVNdTR+EH/LnroY2Bx/oAjTjjDS3g+whQzzC3633DHA08EFjWignlPESWUUZHs3muHvbLeRAttdER/r1cK/S+4KutDjDDGROLvtcASqxRm0GKqv8YG24R1/S/3merb3t9XZtBmyur+3ybr+qZ4ov8tYU79A4n/LWGO/V1c/iVvUsKP4gAMAAA=
   </data>
  </layer>
  <layer name="objects" width="32" height="24">
@@ -29,7 +35,7 @@
  </layer>
  <layer name="npcNames" width="32" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OQQ0AMAzEsPKntJVbj8WqyZbyTxUAvzjppn49AsBaA6fwPVYADAAA
+   H4sIAAAAAAAAC+3Ruw0AIBDDUN+cfPefgixARUHjJ7mPFJAkmAUr7fq9RC9a/utp+KMk6eIAQXD/wwAMAAA=
   </data>
  </layer>
 </map>

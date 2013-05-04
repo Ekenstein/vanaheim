@@ -16,5 +16,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/ibxm.jar"/>
+	<classpathentry kind="lib" path="libs/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="libs/jorbis-0.0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

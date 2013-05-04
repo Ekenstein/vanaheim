@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="house" tilewidth="32" tileheight="32">
+  <image source="wineCellar.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="89" name="questGiver" tilewidth="32" tileheight="32">
+  <image source="questGiver.png" width="384" height="256"/>
+ </tileset>
+ <tileset firstgid="185" name="questMarks" tilewidth="32" tileheight="32">
+  <image source="questMarks.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="187" name="floor" tilewidth="32" tileheight="32">
+  <image source="floor_tiles.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="251" name="sellers" tilewidth="32" tileheight="32">
+  <image source="sellers.png" width="384" height="256"/>
+ </tileset>
+ <tileset firstgid="347" name="namePlates" tilewidth="32" tileheight="32">
+  <image source="namePlates.png" width="96" height="1024"/>
+ </tileset>
+ <layer name="background" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OsQkAMAwDQe0/VuoMld7YhR2CCPyB6pcEANIO61rJ6M/71Y+sU43+P/34pfKi10Hf249fnNx93DnGriyaAAwAAA==
+  </data>
+ </layer>
+ <layer name="interior" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UyQrCMBDG8fEp2lvrvu/W9aSeFFzB5TF8/5N/zx2IDW0FyQe/S0hmJgQi4uLi8kkVNdTR+EH/LnroY2Bx/oAjTjjDS3g+whQzzC3633DHA08EFjWignlPESWUUZHs3muHvbLeRAttdER/r1cK/S+4KutDjDDGROLvtcASqxRm0GKqv8YG24R1/S/3merb3t9XZtBmyur+3ybr+qZ4ov8tYU79A4n/LWGO/V1c/iVvUsKP4gAMAAA=
+  </data>
+ </layer>
+ <layer name="objects" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMguEFdg20AwYY2NDYfFsam08JEIDSdjS2x4XG5o+CUTAKRgEtAQADhSySAAwAAA==
+  </data>
+ </layer>
+ <layer name="npcNames" width="32" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3P0QkAIAwD0XROrXb/KcwORUS4B/efSACAFdJ2Fa+X9Azvny4//wEAuOcAThW+MgAMAAA=
+  </data>
+ </layer>
+</map>

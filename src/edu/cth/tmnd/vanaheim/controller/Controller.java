@@ -151,8 +151,12 @@ public class Controller {
 	 * @param mapID Map id to put the house
 	 * @param map Map to put the house
 	 */
-	public void initHouse(int x, int y, int mapID, TiledMap map) {
-		this.world.initHouse(x, y, mapID, map);
+	public void initHouse(int mapID, TiledMap map) {
+		this.world.initHouse(mapID, map);
+	}
+	
+	public void initHouseEntrances(int x, int y) {
+		this.world.initHouseEntrances(x, y);
 	}
 
 	/**
