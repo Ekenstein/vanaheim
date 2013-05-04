@@ -23,6 +23,7 @@ public class Main extends StateBasedGame {
 	}
 
 	public void initStatesList(GameContainer container) {
+		addState(new LoadingState());
 		addState(new Menu());
 		addState(new ExploreState(controller));
 		addState(new FightState(controller));
