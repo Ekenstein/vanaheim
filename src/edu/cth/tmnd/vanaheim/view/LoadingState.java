@@ -24,6 +24,9 @@ public class LoadingState extends BasicGameState {
 	private DeferredResource nextResource;
 	
 	private TrueTypeFont font;
+	
+	private FadeOutTransition fadeOut;
+	private FadeInTransition fadeIn;
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
@@ -31,6 +34,9 @@ public class LoadingState extends BasicGameState {
 		LoadingList.setDeferredLoading(true);
 		
 		font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
+		
+		fadeOut = new FadeOutTransition(Color.black, 2000);
+		fadeIn = new FadeInTransition(Color.black, 1000);
 	}
 
 	@Override
@@ -79,7 +85,7 @@ public class LoadingState extends BasicGameState {
 		if (LoadingList.get().getRemainingResources() > 0) {
 			nextResource = LoadingList.get().getNext();
 		} else {
-			game.enterState(Menu.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+			game.enterState(Menu.ID, fadeOut, fadeIn);
 		}
 	}
 
