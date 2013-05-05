@@ -1,5 +1,6 @@
 package edu.cth.tmnd.vanaheim.view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -66,6 +67,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	//Logs
 	private String enemyLog = "";
 	private String playerLog = "";
+	
+	//Fonts
+	private TrueTypeFont titleFont;
+	private TrueTypeFont descriptionFont;
 
 	public FightState(Controller controller) {
 		this.controller = controller;
@@ -101,6 +106,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		container.setTargetFrameRate(120);
+		
+		//Init fonts
+		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
+		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
 
 		//Init images
 		inventory_bg = new Image("data/inventory_paper2.png");
@@ -140,6 +149,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		
+		context.setFont(descriptionFont);
+		
 		//Draw the background
 		context.drawImage(fightScreenBg, 0, 0);
 
@@ -184,6 +196,12 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		}
 		//End TEST
 	}
+	
+	public void enter(GameContainer gc , StateBasedGame sbg)
+            throws SlickException {
+		inputField.setText("");
+		inputField.setFocus(true);
+    }
 
 	public void keyReleased(int key, char c) {
 		

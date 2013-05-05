@@ -77,8 +77,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private boolean consoleToggled = false;
 
 	//Fonts
-	TrueTypeFont titleFont;
-	TrueTypeFont descriptionFont;
+	private TrueTypeFont titleFont;
+	private TrueTypeFont descriptionFont;
 
 	public ExploreState(Controller controller) {
 		this.controller = controller;
@@ -169,7 +169,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				inputField.setText("");
 			}
 		});
-		inputField.setFocus(true);
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
@@ -207,6 +206,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		//Render input field
 		context.setColor(Color.white);
 		inputField.render(container, context);
+		inputField.setFocus(true);
 
 		//Text in the inventory and quest log is black
 		context.setColor(Color.black);
@@ -346,6 +346,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		}
 		//controller.lootAll((int)x, (int)y);
 	}
+	
+	public void enter(GameContainer gc , StateBasedGame sbg)
+            throws SlickException {
+		inputField.setText("");
+		inputField.setFocus(true);
+    }
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {

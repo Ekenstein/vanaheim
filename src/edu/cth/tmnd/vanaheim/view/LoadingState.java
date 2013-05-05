@@ -80,7 +80,7 @@ public class LoadingState extends BasicGameState {
 			}
 			
 			nextResource = null;
-		} 
+		}
 		
 		if (LoadingList.get().getRemainingResources() > 0) {
 			nextResource = LoadingList.get().getNext();
