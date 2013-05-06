@@ -24,6 +24,7 @@ public class StateHolder extends StateBasedGame {
 		}
 	}
 
+	@Override
 	public void initStatesList(GameContainer container) {
 		addState(new LoadingState());
 		addState(new MenuState());

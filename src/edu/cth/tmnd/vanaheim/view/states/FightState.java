@@ -180,10 +180,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		//Draw inventory
 		context.drawImage(inventory_bg, 384, 555);
 		context.drawImage(inventory_title, 320, 507);
-		List<Item> items = controller.getItems();
-		for (int i = 0; i < items.size(); i++) {
-			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
-		}
+//		List<Item> items = controller.getItems();
+//		for (int i = 0; i < items.size(); i++) {
+//			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
+//		}
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {

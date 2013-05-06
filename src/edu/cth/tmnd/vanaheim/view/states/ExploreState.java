@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,11 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.ResourceLoader;
 
+import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.controller.Controller;
+import edu.cth.tmnd.vanaheim.model.MessageBuffer;
+import edu.cth.tmnd.vanaheim.model.StateHandler.State;
+import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
@@ -43,6 +46,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	public static final int ID = 2;
 
 	private Controller controller;
+	
+	private int npcX, npcY;
 
 	private Music song;
 	private boolean songPlaying = false;
@@ -83,6 +88,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	public ExploreState(Controller controller) {
 		this.controller = controller;
 		this.controller.addMessageBufferListener(this);
+		this.controller.addStateHandlerListener(this);
 	}
 
 	public int getID() {
@@ -151,21 +157,21 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			@Override
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
-				//TODO Handle the message
-				//TEST
-				if (message.equals("talk to thalia")) {
-					npcInteraction = "Thalia";
-					reply += "My husband Enuk got lost in a battle. Pleeease help me find him. I'll reward you greatly!";
-				}
-				if (message.equals("talk to william")) {
-					npcInteraction = "William";
-					reply += "Welcome to my store! Cheapest items in the whole Vanaheim world!";
-				}
-				if (message.equals("talk to james")) {
-					npcInteraction = "James";
-					reply += "I'm so tired of slaying spiders now. Can you please do me a favour and collect 6 spider glands?";
-				}
-				//End TEST
+				controller.parseCommand(message);
+//				//TEST
+//				if (message.equals("talk to thalia")) {
+//					npcInteraction = "Thalia";
+//					reply += "My husband Enuk got lost in a battle. Pleeease help me find him. I'll reward you greatly!";
+//				}
+//				if (message.equals("talk to william")) {
+//					npcInteraction = "William";
+//					reply += "Welcome to my store! Cheapest items in the whole Vanaheim world!";
+//				}
+//				if (message.equals("talk to james")) {
+//					npcInteraction = "James";
+//					reply += "I'm so tired of slaying spiders now. Can you please do me a favour and collect 6 spider glands?";
+//				}
+//				//End TEST
 				inputField.setText("");
 			}
 		});
@@ -226,31 +232,32 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		int maxQuestWidth = 248;
 		List<String> description = new ArrayList<String>();
 		String curText = "";
-//		if (controller.isQuestBookToggled()) {
-//			context.drawImage(inventory_bg, 0, 768-inventory_bg.getHeight());
-//			context.drawImage(quests_title, -64, 768-inventory_bg.getHeight()-quests_title.getHeight()/2);
-//
-//			Map<String, Quest> quests = controller.getQuests();
-//			for (String questName : quests.keySet()) {
-//				String str = quests.get(questName).getDescription();
-//				String[] strArray = str.split(" ");
-//				for (int i = 0; i < strArray.length; i++) {
-//					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxQuestWidth) {
-//						description.add(curText);
-//						curText = "";
-//					}
-//					curText += strArray[i] + " ";
-//				}
-//				description.add(curText);
-//				int titleLength = titleFont.getWidth(questName);
-//				context.setFont(titleFont);
-//				context.drawString(questName, (256 - titleLength) / 2, 768 - inventory_bg.getHeight() + 32);
-//				context.setFont(descriptionFont);
-//				for (int i = 0; i < description.size(); i++) {
-//					context.drawString(description.get(i), 8, 768 - inventory_bg.getHeight() + 64 + i * 16);
-//				}
-//			}
-//		}
+		if (controller.isQuestBookToggled()) {
+			context.drawImage(inventory_bg, 0, 768-inventory_bg.getHeight());
+			context.drawImage(quests_title, -64, 768-inventory_bg.getHeight()-quests_title.getHeight()/2);
+
+			Map<String, Quest> quests = controller.getQuests();
+			System.out.println(quests.size());
+			for (String questName : quests.keySet()) {
+				String str = quests.get(questName).getDescription();
+				String[] strArray = str.split(" ");
+				for (int i = 0; i < strArray.length; i++) {
+					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxQuestWidth) {
+						description.add(curText);
+						curText = "";
+					}
+					curText += strArray[i] + " ";
+				}
+				description.add(curText);
+				int titleLength = titleFont.getWidth(questName);
+				context.setFont(titleFont);
+				context.drawString(questName, (256 - titleLength) / 2, 768 - inventory_bg.getHeight() + 32);
+				context.setFont(descriptionFont);
+				for (int i = 0; i < description.size(); i++) {
+					context.drawString(description.get(i), 8, 768 - inventory_bg.getHeight() + 64 + i * 16);
+				}
+			}
+		}
 
 		if (!reply.equals("")) {
 			List<String> replyMessages = new ArrayList<String>();
@@ -267,13 +274,11 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			replyMessages.add(curMessage);
 			context.setFont(descriptionFont);
 			int rectangleHeight = replyMessages.size() * 18;
-			int xPos = npcLocations.get(npcInteraction).x;
-			int yPos = npcLocations.get(npcInteraction).y;
 			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(xPos, yPos-rectangleHeight, 224, rectangleHeight, 16);
+			context.fillRoundRect(npcX - 112, npcY - 16 -rectangleHeight, 224, rectangleHeight, 16);
 			context.setColor(Color.red);
 			for (int i = 0; i < replyMessages.size(); i++) {
-				context.drawString(replyMessages.get(i), xPos + 16, yPos - rectangleHeight + i * 16);
+				context.drawString(replyMessages.get(i), npcX - 112 + 16, npcY - 16 -rectangleHeight + i * 16);
 			}
 		}
 	}
@@ -360,8 +365,24 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void propertyChange(PropertyChangeEvent e) {
+		String name = e.getPropertyName();
+		Object o = e.getNewValue();
+		
+		if(name.equals(MessageBuffer.NEW_MESSAGE_ADDED)) {
+			reply = o.toString();
+		} else if(name.equals(Constants.STATE_CHANGED)) {
+			State s = (State) e.getOldValue();
+			
+			switch(s) {
+			case TALKING:
+				NPC npc = (NPC) e.getNewValue();
+				npcX = (int)npc.getX();
+				npcY = (int)npc.getY();
+				break;
+			case QUEST_ACCEPTED:
+				this.controller.questAccepted(npcX, npcY);
+			}
+		}
 	}
 }

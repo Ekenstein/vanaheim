@@ -1,5 +1,6 @@
 package edu.cth.tmnd.vanaheim.model.creatures.impl;
 
+import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.model.GameObject;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
@@ -18,11 +19,11 @@ public abstract class Creature extends GameObject {
 	protected String creatureName;
 
 
-	public Creature(final float x, final float y, final int velocity, final Inventory inventory, final int maxHP,
+	public Creature(final float x, final float y, final int velocity, final int maxHP,
 			final String creatureName) {
 		super(x, y);
 		this.velocity = velocity;
-		this.inventory = inventory;
+		this.inventory = new Inventory(Constants.DEFAULT_INVENTORY_SPACE);
 		this.maxHP = this.currentHP = maxHP;
 		this.creatureName = creatureName;
 	}

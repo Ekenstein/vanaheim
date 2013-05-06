@@ -1,19 +1,19 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
+import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
 import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 
 final public class Axe implements EquipableItem, UseableItem {
 	private int damage;
-	private Creature owner;
 	private int durability;
 	
 	private int itemID;
 	
-	public Axe(Creature owner) {
+	public Axe() {
+		ObjectMapper.getInstance().registerObject(this.getItemName(), this);
 		this.damage = 10;
-		this.owner = owner;
 		this.durability = this.getDurability();
 		this.itemID = 1;
 	}
@@ -40,15 +40,15 @@ final public class Axe implements EquipableItem, UseableItem {
 
 	@Override
 	public void equip(Creature by) {
-		if(this.owner != null) {
-			this.owner.equip(this);
+		if(by != null) {
+			by.equip(this);
 		}
 	}
 
 	@Override
 	public void unequip(Creature by) {
-		if(this.owner != null) {
-			this.owner.unequip();
+		if(by != null) {
+			by.unequip();
 		}
 	}
 

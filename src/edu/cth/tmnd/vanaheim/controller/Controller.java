@@ -2,17 +2,19 @@ package edu.cth.tmnd.vanaheim.controller;
 
 import java.awt.Point;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.newdawn.slick.tiled.TiledMap;
 
+import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
+import edu.cth.tmnd.vanaheim.model.StateHandler;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
+import edu.cth.tmnd.vanaheim.model.creatures.npc.Gram.Gram;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.parser.Parser;
@@ -26,14 +28,11 @@ import edu.cth.tmnd.vanaheim.model.world.World;
  *
  */
 public class Controller {
-	private final static File COMMAND_FILE = new File("data/commands");
-	private final Player player;
-	private final World world;
-	private final ObjectMapper objectMapper;
+	private Player player;
+	private World world;
+	private ObjectMapper objectMapper;
 	private final MessageBuffer msgBuffer;
 	private Parser parser;
-	
-	
 	
 	private static Controller theInstance = null;
 
@@ -55,23 +54,36 @@ public class Controller {
 	 * Controller is the intermediary part of the game.
 	 */
 	private Controller() {
-		this.world = new World();
-		this.player = new Player(400f, 400f, 300, new Inventory(20), 100, "Harald");
 		this.objectMapper = ObjectMapper.getInstance();
 		this.msgBuffer = MessageBuffer.getInstance();
-
+		
 		try {
-			this.parser = Parser.getInstance(COMMAND_FILE);
+			this.parser = Parser.getInstance(Constants.COMMAND_FILE);
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
+		
+		this.init();
+	}
+	
+	private void init() {
+		this.world = new World();
+		this.player = new Player(400f, 400f, 300, 100, "Harald");
+		this.objectMapper.registerObject("Gram", new Gram(176f, 688f));
+		this.objectMapper.registerObject(Constants.PLAYER_OBJECT_NAME, this.player);
 	}
 
 	/**Get the quests for the player. Both the accomplished and non-accomplished quests that reside in his questbook.
 	 * @return All quests for the player.
 	 */
 	public Map<String, Quest> getQuests() {
+		Map<String, Quest> dwa = this.player.getQuests();
+		
 		return this.player.getQuests();
+	}
+	
+	public void questAccepted(int x, int y) {
+		this.world.questAccepted(x, y);
 	}
 
 	/** Get the items from the players inventory.
@@ -100,6 +112,10 @@ public class Controller {
 	 */
 	public void addMessageBufferListener(final PropertyChangeListener listener) {
 		this.msgBuffer.addListener(listener);
+	}
+	
+	public void addStateHandlerListener(final PropertyChangeListener listener) {
+		StateHandler.getInstance().addListeners(listener);
 	}
 
 	/**Get the players location.

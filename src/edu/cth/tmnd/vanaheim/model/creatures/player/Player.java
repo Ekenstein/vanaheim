@@ -4,39 +4,31 @@ import java.util.List;
 import java.util.Map;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
+import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.items.Gold;
 import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
-import edu.cth.tmnd.vanaheim.model.quests.ExploreQuest;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
-import edu.cth.tmnd.vanaheim.model.quests.impl.QuestBook;
 
 public class Player extends Human {
 	
 	private Inventory inventory;
-	
-	private QuestBook log;
 
 	public Player(final float x, final float y, final int velocity,
-			final Inventory inventory, final int maxHP, final String creatureName) {
-		super(x, y, velocity, inventory, maxHP, creatureName);
-		this.inventory = inventory;
+			final int maxHP, final String creatureName) {
+		super(x, y, velocity, maxHP, creatureName);
 		
-		//For testing purpose
-		inventory.addItem(new Axe(this));
-		inventory.addItem(new HealthPotion(this));
-		inventory.addItem(new Gold(this));
-		
-		log = new QuestBook();
-		
-		//For testing purpose
-		log.addQuest(new ExploreQuest(this));
+		ObjectMapper.getInstance().registerObject("inventory", super.inventory);
+		super.inventory.addItem(new Axe());
+		super.inventory.addItem(new HealthPotion());
+		super.inventory.addItem(new Gold(this));
+		ObjectMapper.getInstance().registerObject("quest log", super.questBook);
 	}
 	
 	public Map<String, Quest> getQuests() {
-		return this.log.getQuests();
+		return super.questBook.getQuests();
 	}
 	
 	public List<Item> getItems() {
@@ -48,11 +40,11 @@ public class Player extends Human {
 	}
 	
 	public boolean isQuestBookToggled() {
-		return this.log.isToggled();
+		return super.questBook.isToggled();
 	}
 
 	@Override
-	public void talk(Human human, String talk) {
+	public void talk(Human human) {
 		// TODO Auto-generated method stub
 
 	}

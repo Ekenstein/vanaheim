@@ -1,18 +1,18 @@
 package edu.cth.tmnd.vanaheim.model.creatures.npc.impl;
 
-import edu.cth.tmnd.vanaheim.model.Inventory;
+import edu.cth.tmnd.vanaheim.constants.Constants;
+import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
-import edu.cth.tmnd.vanaheim.model.quests.GoldQuest;
 
-public class NPC extends Human {
-
+public abstract class NPC extends Human {
+	
 	private State[] states;
 	private int state;
 	private State currentState;
 	
 	
-	public NPC(float x, float y, int velocity, Inventory inventory, int maxHp, String NPCName, State[] states){
-		super(x, y, velocity, inventory, maxHp,NPCName);
+	public NPC(float x, float y, int velocity, int maxHp, String NPCName, State[] states){
+		super(x, y, velocity, maxHp,NPCName);
 		state = 0;
 		currentState = states[state];
 		this.states = states;
@@ -36,9 +36,28 @@ public class NPC extends Human {
 			currentState = states[state];
 		}
 	}
-
-	@Override
-	public void talk(Human human, String talk) {
+	
+	protected boolean withinRange(Human target) {
+		float humanX = target.getX();
+		float humanY = target.getY();
+		
+		if(!(Math.abs(super.x - humanX) <= Constants.NPC_WITHIN_RANGE_VALUE)) {
+			return false;
+		}
+		
+		if(!(Math.abs(super.y - humanY) <= Constants.NPC_WITHIN_RANGE_VALUE)) {
+			return false;
+		}
+		
+		return true;
 	}
 	
+	@Override
+	public void talk(Human human) {
+		if(this.withinRange(human)) {
+			this.talkative(human);
+		}
+	}
+	
+	protected abstract void talkative(Human human);
 }

@@ -6,13 +6,11 @@ import java.util.List;
 
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
-final public class Inventory {
+final public class Inventory extends Container {
 	private final int slots;
 	private int slotsLeft;
 
 	private final List<Item> items;
-	
-	private boolean isToggled = true;
 
 	public Inventory(final int slots) {
 		this.slots = this.slotsLeft = slots;
@@ -21,10 +19,6 @@ final public class Inventory {
 	
 	public int getSlots() {
 		return this.slots;
-	}
-	
-	public boolean isToggled() {
-		return this.isToggled;
 	}
 	
 	public List<Item> getItems() {

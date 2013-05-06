@@ -116,7 +116,7 @@ final public class Parser {
 		// the correct handler we will need the package name,
 		// and since the handlers are in the same package
 		// as the parser, just get the parsers package name.
-		final String packageName = this.getClass().getPackage().getName();
+		final String packageName = this.getClass().getPackage().getName() + ".handlers";
 
 		while(sc.hasNextLine()) {
 			final String line = sc.nextLine();

@@ -3,3 +3,5 @@ eat * : Eat
 drink * : Eat
 use * on * : Use
 use * : Use
+talk to * : Talk
+show * : Show

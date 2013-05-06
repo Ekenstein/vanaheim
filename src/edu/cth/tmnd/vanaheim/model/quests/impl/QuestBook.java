@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import edu.cth.tmnd.vanaheim.model.Container;
 
 
-public class QuestBook {
+
+public class QuestBook extends Container {
 
 	private Map<String, Quest> quests;
 	
-	private boolean isToggled = true;
-	
-	public QuestBook(){
+	public QuestBook() {
 		quests = new HashMap<String, Quest>();
 	}
 	
@@ -26,10 +26,6 @@ public class QuestBook {
 		}
 		return completeQuests;
 		
-	}
-	
-	public boolean isToggled() {
-		return this.isToggled;
 	}
 	
 	public Map<String, Quest> getQuests() {
@@ -66,6 +62,7 @@ public class QuestBook {
 	
 	public void addQuest(Quest q){
 		if(!quests.containsKey(q.getName())){
+			System.out.println("Lägger till quest");
 			quests.put(q.getName(), q);
 		}
 	}

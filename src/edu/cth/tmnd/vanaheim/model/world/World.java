@@ -28,6 +28,7 @@ public class World {
 	private final int HOUSE_ENTRANCE = 377;
 	private final int WILDERNESS = 803;
 	private final int LOOT = 257;
+	private final int QUEST_PROGRESS = 1218;
 	
 	private Map<Point, Integer> houseEntrances = new HashMap<Point, Integer>();
 	
@@ -102,6 +103,12 @@ public class World {
 			}
 		}
 		return maps.get(currentMap);
+	}
+	
+	public void questAccepted(int x, int y) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		maps.get(currentMap).setTileId(xPos, yPos-1, 7, QUEST_PROGRESS);
 	}
 
 	public boolean hasMonster(int x, int y) {
