@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.view;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import java.awt.Font;
 import java.awt.Point;
@@ -98,7 +98,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		npcLocations.put("William", new Point(32, 288));
 		npcLocations.put("James", new Point(64, 672));
 
-		song = new Music("data/Lovdeath.ogg");
+		//song = new Music("data/Lovdeath.ogg");
 
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
@@ -280,12 +280,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 
-		if (!song.playing()) {
-			song.play();
-			song.setVolume(0f);
-			song.fade(5000, 1f, false);
-			songPlaying = true;
-		}
+//		if (!song.playing()) {
+//			song.play();
+//			song.setVolume(0f);
+//			song.fade(5000, 1f, false);
+//			songPlaying = true;
+//		}
 
 		prevX = currX;
 		prevY = currY;
@@ -355,7 +355,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			game.enterState(Menu.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+			game.enterState(MenuState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 	}
 

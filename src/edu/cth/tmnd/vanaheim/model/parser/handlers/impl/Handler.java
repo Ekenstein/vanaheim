@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.model.parser.impl;
+package edu.cth.tmnd.vanaheim.model.parser.handlers.impl;
 
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 

@@ -1,6 +1,6 @@
-package edu.cth.tmnd.vanaheim.model.parser;
+package edu.cth.tmnd.vanaheim.model.parser.handlers;
 
-import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
+import edu.cth.tmnd.vanaheim.model.parser.handlers.impl.Handler;
 
 final public class EatHandler extends Handler {
 

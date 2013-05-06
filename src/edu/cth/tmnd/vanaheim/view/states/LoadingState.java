@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.view;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import java.awt.Font;
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class LoadingState extends BasicGameState {
 		if (LoadingList.get().getRemainingResources() > 0) {
 			nextResource = LoadingList.get().getNext();
 		} else {
-			game.enterState(Menu.ID, fadeOut, fadeIn);
+			game.enterState(MenuState.ID, fadeOut, fadeIn);
 		}
 	}
 

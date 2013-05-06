@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
-import edu.cth.tmnd.vanaheim.model.parser.impl.Handler;
+import edu.cth.tmnd.vanaheim.model.parser.handlers.impl.Handler;
 
 /**
  * Singleton parser that reads a command file with the structure:<br />

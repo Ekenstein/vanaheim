@@ -1,8 +1,5 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
 import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
@@ -37,26 +34,26 @@ final public class Axe implements EquipableItem, UseableItem {
 	}
 
 	@Override
-	public void use() {
+	public void use(Creature by) {
 		System.out.println("How do I shoot web?");
 	}
 
 	@Override
-	public void equip() {
+	public void equip(Creature by) {
 		if(this.owner != null) {
 			this.owner.equip(this);
 		}
 	}
 
 	@Override
-	public void unequip() {
+	public void unequip(Creature by) {
 		if(this.owner != null) {
 			this.owner.unequip();
 		}
 	}
 
 	@Override
-	public void use(Creature target) {
+	public void use(Creature by, Creature target) {
 		if(target != null && this.durability != 0) {
 			target.damage(this.damage);
 			this.durability--;

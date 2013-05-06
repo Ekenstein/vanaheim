@@ -5,7 +5,7 @@ import java.awt.EventQueue;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
-import edu.cth.tmnd.vanaheim.view.Container;
+import edu.cth.tmnd.vanaheim.view.StateHolder;
 
 /**
  * Initialization of the game.<br />
@@ -25,7 +25,7 @@ public class Main {
 			@Override
 			public void run() {
 				try {
-					AppGameContainer app = new AppGameContainer(new Container("Vanaheim"));
+					AppGameContainer app = new AppGameContainer(new StateHolder());
 					app.setDisplayMode(WIDTH, HEIGHT, false);
 					app.start();
 				} catch (SlickException e) {

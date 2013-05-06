@@ -2,18 +2,20 @@ package edu.cth.tmnd.vanaheim.view;
 
 import java.io.IOException;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
+import edu.cth.tmnd.vanaheim.view.states.ExploreState;
+import edu.cth.tmnd.vanaheim.view.states.FightState;
+import edu.cth.tmnd.vanaheim.view.states.LoadingState;
+import edu.cth.tmnd.vanaheim.view.states.MenuState;
 
-public class Main extends StateBasedGame {
+public class StateHolder extends StateBasedGame {
 	
 	private Controller controller;
 
-	public Main() {
+	public StateHolder() {
 		super("Vanaheim");
 		try {
 			this.controller = Controller.getInstance();
@@ -24,18 +26,8 @@ public class Main extends StateBasedGame {
 
 	public void initStatesList(GameContainer container) {
 		addState(new LoadingState());
-		addState(new Menu());
+		addState(new MenuState());
 		addState(new ExploreState(controller));
 		addState(new FightState(controller));
-	}
-
-	public static void main(String[] argv) {
-		try {
-			AppGameContainer container = new AppGameContainer(new Main());
-			container.setDisplayMode(1024,768,false);
-			container.start();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 }

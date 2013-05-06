@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.view;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,7 +12,7 @@ import org.newdawn.slick.state.transition.CrossStateTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class Menu extends BasicGameState {
+public class MenuState extends BasicGameState {
 	/** The ID given to this state */
 	public static final int ID = 1;
 	/** The game holding this state */

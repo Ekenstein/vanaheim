@@ -1,4 +1,4 @@
-package edu.cth.tmnd.vanaheim.view;
+package edu.cth.tmnd.vanaheim.view.states;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
