@@ -46,7 +46,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	public static final int ID = 2;
 
 	private Controller controller;
-	
+
 	private int npcX, npcY;
 
 	private Music song;
@@ -65,6 +65,10 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private Image inventory_bg;
 	private Image inventory_title;
 	private final Map<Integer, Image> itemIDMap = new HashMap<Integer, Image>();
+	private final Map<Integer, String> itemNameMap = new HashMap<Integer, String>();
+	private List<Integer> items = new ArrayList<Integer>();
+	private int lastItemRendered = 0;
+	private boolean isInventoryToggled = true;
 
 	//Quests
 	private Image quests_title;
@@ -111,7 +115,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
 
 		//Init images
-		inventory_bg = new Image("data/inventory_paper2.png");
+		inventory_bg = new Image("data/inventory2.png");
 		inventory_title = new Image("data/inventory_title.png");
 		quests_title = new Image("data/quests_title.png");
 		console = new Image("data/inventory_paper.png");
@@ -120,6 +124,14 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		itemIDMap.put(0, new Image("data/coins.png"));
 		itemIDMap.put(1, new Image("data/axe_steel.png"));
 		itemIDMap.put(2, new Image("data/potion.png"));
+
+		itemNameMap.put(0, "Gold coins");
+		itemNameMap.put(1, "Heavy steel axe");
+		itemNameMap.put(2, "Healing potion");
+
+		items.add(0);
+		items.add(1);
+		items.add(2);
 
 		//Init tiled maps
 		try {
@@ -158,20 +170,20 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
 				controller.parseCommand(message);
-//				//TEST
-//				if (message.equals("talk to thalia")) {
-//					npcInteraction = "Thalia";
-//					reply += "My husband Enuk got lost in a battle. Pleeease help me find him. I'll reward you greatly!";
-//				}
-//				if (message.equals("talk to william")) {
-//					npcInteraction = "William";
-//					reply += "Welcome to my store! Cheapest items in the whole Vanaheim world!";
-//				}
-//				if (message.equals("talk to james")) {
-//					npcInteraction = "James";
-//					reply += "I'm so tired of slaying spiders now. Can you please do me a favour and collect 6 spider glands?";
-//				}
-//				//End TEST
+				//				//TEST
+				//				if (message.equals("talk to thalia")) {
+				//					npcInteraction = "Thalia";
+				//					reply += "My husband Enuk got lost in a battle. Pleeease help me find him. I'll reward you greatly!";
+				//				}
+				//				if (message.equals("talk to william")) {
+				//					npcInteraction = "William";
+				//					reply += "Welcome to my store! Cheapest items in the whole Vanaheim world!";
+				//				}
+				//				if (message.equals("talk to james")) {
+				//					npcInteraction = "James";
+				//					reply += "I'm so tired of slaying spiders now. Can you please do me a favour and collect 6 spider glands?";
+				//				}
+				//				//End TEST
 				inputField.setText("");
 			}
 		});
@@ -218,15 +230,27 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		context.setColor(Color.black);
 
 		//Draw inventory
-//		if (controller.isInventoryToggled()) {
-//			context.drawImage(inventory_bg, 1024-inventory_bg.getWidth(), 768-inventory_bg.getHeight());
-//			context.drawImage(inventory_title, 1024-inventory_bg.getWidth()-64, 768-inventory_bg.getHeight() - inventory_title.getHeight()/2);
-//
-//			List<Item> items = controller.getItems();
-//			for (int i = 0; i < items.size(); i++) {
-//				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 1024-inventory_bg.getWidth()+16 + i * 64, 768-inventory_bg.getHeight()+16 + i / 4 * 64);
-//			}
-//		}
+		if (isInventoryToggled) {
+			context.drawImage(inventory_bg, (1024-inventory_bg.getWidth()) / 2, (768-inventory_bg.getHeight()) / 2);
+			context.setColor(new Color(0.5f, 0f, 0.5f));
+			if (lastItemRendered + 1 != items.size()) {
+				System.out.println("Last item: " + lastItemRendered);
+				System.out.println("Size of array: " + items.size());
+				context.drawImage(itemIDMap.get(lastItemRendered + 1), (1024-64) / 2, (768-32) / 2 - 72 + 80);
+				String itemName = itemNameMap.get(lastItemRendered + 1);
+				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8 + 72);
+			}
+			context.drawImage(itemIDMap.get(lastItemRendered), (1024-64) / 2, (768-32) / 2 - 72);
+			String itemName = itemNameMap.get(lastItemRendered);
+			context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8);
+		}
+		//context.drawImage(inventory_title, 1024-inventory_bg.getWidth()-64, 768-inventory_bg.getHeight() - inventory_title.getHeight()/2);
+
+		//			List<Item> items = controller.getItems();
+		//			for (int i = 0; i < items.size(); i++) {
+		//				context.drawImage(itemIDMap.get(items.get(i).getItemID()), 1024-inventory_bg.getWidth()+16 + i * 64, 768-inventory_bg.getHeight()+16 + i / 4 * 64);
+		//			}
+		//}
 
 		//Draw the quest log and its quests
 		int maxQuestWidth = 248;
@@ -285,12 +309,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 
-//		if (!song.playing()) {
-//			song.play();
-//			song.setVolume(0f);
-//			song.fade(5000, 1f, false);
-//			songPlaying = true;
-//		}
+		//		if (!song.playing()) {
+		//			song.play();
+		//			song.setVolume(0f);
+		//			song.fade(5000, 1f, false);
+		//			songPlaying = true;
+		//		}
 
 		prevX = currX;
 		prevY = currY;
@@ -318,8 +342,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			npcInteraction = "";
 			reply = "";
 		}
-		else if (input.isKeyDown(Input.KEY_LEFT))
-		{
+		else if (input.isKeyDown(Input.KEY_LEFT)) {
 			sprite = left;
 			if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
 			{
@@ -328,9 +351,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			}
 			npcInteraction = "";
 			reply = "";
-		}
-		else if (input.isKeyDown(Input.KEY_RIGHT))
-		{
+		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
 			sprite = right;
 			if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
 			{
@@ -339,6 +360,14 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			}
 			npcInteraction = "";
 			reply = "";
+		} else if (input.isKeyPressed(Input.KEY_RIGHT)) {
+			if (isInventoryToggled && (lastItemRendered + 2) <= items.size()) {
+				lastItemRendered += 2;
+			}
+		} else if (input.isKeyPressed(Input.KEY_LEFT)) {
+			if (isInventoryToggled && lastItemRendered > 1) {
+				lastItemRendered -= 2;
+			}
 		}
 		currX = (int)Math.floor(x / 32);
 		currY = (int)Math.floor(y / 32);
@@ -351,12 +380,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		}
 		//controller.lootAll((int)x, (int)y);
 	}
-	
+
 	public void enter(GameContainer gc , StateBasedGame sbg)
-            throws SlickException {
+			throws SlickException {
 		inputField.setText("");
 		inputField.setFocus(true);
-    }
+	}
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
@@ -368,12 +397,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	public void propertyChange(PropertyChangeEvent e) {
 		String name = e.getPropertyName();
 		Object o = e.getNewValue();
-		
+
 		if(name.equals(MessageBuffer.NEW_MESSAGE_ADDED)) {
 			reply = o.toString();
 		} else if(name.equals(Constants.STATE_CHANGED)) {
 			State s = (State) e.getOldValue();
-			
+
 			switch(s) {
 			case TALKING:
 				NPC npc = (NPC) e.getNewValue();
