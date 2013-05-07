@@ -208,7 +208,7 @@ public class Controller {
 			final float y = this.player.getY();
 
 			if(this.world.addItemToTile(x, y, i)) {
-				this.player.removeItem(i);
+				this.player.destroyItem(i); // TODO ska man avregistrera item här?
 			}
 		}
 	}
