@@ -22,6 +22,11 @@ public final class ObjectMapper {
 		this.objects = new HashMap<String, Object>();
 	}
 
+	/**
+	 * Maps the given object to the given name.
+	 * @param name	the name of the object
+	 * @param o		the object to map with the name.
+	 */
 	public void registerObject(final String name, final Object o) {
 		if(name != null && o != null) {
 			this.objects.put(name.toLowerCase(), o);
@@ -48,5 +53,21 @@ public final class ObjectMapper {
 		}
 
 		return this.objects.get(name.toLowerCase());
+	}
+	
+	public void removeObject(final String name) {
+		this.objects.remove(name);
+	}
+	
+	public boolean isEmpty() {
+		return this.objects.isEmpty();
+	}
+	
+	public int size() {
+		return this.objects.size();
+	}
+	
+	public void clear() { 
+		this.objects.clear();
 	}
 }

@@ -16,20 +16,13 @@ public abstract class Creature extends GameObject {
 	protected int currentHP, maxHP;
 	protected EquipableItem equipment;
 	protected Direction currentDirection;
-	protected String creatureName;
-
 
 	public Creature(final float x, final float y, final int velocity, final int maxHP,
 			final String creatureName) {
-		super(x, y);
+		super(x, y, creatureName);
 		this.velocity = velocity;
 		this.inventory = new Inventory(Constants.DEFAULT_INVENTORY_SPACE);
 		this.maxHP = this.currentHP = maxHP;
-		this.creatureName = creatureName;
-	}
-
-	public String getCreatureName() {
-		return this.creatureName;
 	}
 
 	public int getVelocity() {
@@ -52,11 +45,10 @@ public abstract class Creature extends GameObject {
 		this.maxHP = hp;
 	}
 
-	public int heal(final int hp) {
+	public void heal(final int hp) {
 		final int healed = this.currentHP + hp;
 
 		this.currentHP = healed > this.maxHP ? this.maxHP : healed;
-		return healed - this.currentHP;
 	}
 
 	public void damage(final int damage) {
@@ -83,10 +75,6 @@ public abstract class Creature extends GameObject {
 		return this.inventory.destroyItem(item);
 	}
 
-	public Item removeItem(final Item item) {
-		return this.inventory.removeItem(item);
-	}
-
 	public Item getItem(final Item item) {
 		return this.inventory.getItem(item);
 	}
@@ -95,8 +83,12 @@ public abstract class Creature extends GameObject {
 		return this.inventory.getItem(item);
 	}
 
-	public int getHP() {
+	public int getCurrentHP() {
 		return this.currentHP;
+	}
+	
+	public int getMaxHP() {
+		return this.maxHP;
 	}
 
 	@Override

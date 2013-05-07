@@ -7,16 +7,20 @@ package edu.cth.tmnd.vanaheim.model;
  */
 
 public abstract class GameObject {
-
 	protected float x, y;
+	protected String objectName;
+	protected final ObjectMapper objectMapper;
 
 	/** Create a game object on a certain position
 	 * @param x Coordinate x of the object
 	 * @param y Coordinate y of the object
 	 */
-	public GameObject(final float x, final float y) {
+	public GameObject(final float x, final float y, String objectName) {
 		this.x = x;
 		this.y = y;
+		this.objectName = objectName;
+		this.objectMapper = ObjectMapper.getInstance();
+		this.register();
 	}
 
 	/**Get the x position of the object
@@ -45,5 +49,13 @@ public abstract class GameObject {
 	 */
 	public void setY(final float y) {
 		this.y = y;
+	}
+	
+	private void register() {
+		this.objectMapper.registerObject(this.getName(), this);
+	}
+	
+	public String getName() {
+		return this.objectName;
 	}
 }

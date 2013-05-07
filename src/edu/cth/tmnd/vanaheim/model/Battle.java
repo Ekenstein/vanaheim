@@ -14,8 +14,9 @@ public class Battle {
 	Monster m;
 	Player p;
 	
-	public Battle(){
-		
+	public Battle(Player p, Monster m) {
+		this.m = m;
+		this.p = p;
 	}
 	
 	/**Check if the battle has ended

@@ -39,25 +39,25 @@ public class ItemTest {
 	@Test
 	public void HealthPotionTest() {
 		this.owner.damage(5);
-		Assert.assertEquals(95, this.owner.getHP());
+		Assert.assertEquals(95, this.owner.getCurrentHP());
 		this.potion.use();
-		Assert.assertEquals(100, this.owner.getHP());
+		Assert.assertEquals(100, this.owner.getCurrentHP());
 		Assert.assertEquals(0, this.potion.getCurrentDurability());
 
 		this.potion.repair();
 		Assert.assertEquals(this.potion.getDurability(), this.potion.getCurrentDurability());
 
 		this.target.damage(6);
-		Assert.assertEquals(94, this.target.getHP());
+		Assert.assertEquals(94, this.target.getCurrentHP());
 		this.potion.use(target);
-		Assert.assertEquals(99, this.target.getHP());
+		Assert.assertEquals(99, this.target.getCurrentHP());
 	}
 
 	@Test
 	public void AxeTest() {
 		this.weapon.use(this.target);
 
-		Assert.assertEquals(90, this.target.getHP());
+		Assert.assertEquals(90, this.target.getCurrentHP());
 		Assert.assertEquals(this.weapon.getDurability()-1, this.weapon.getCurrentDurability());
 		this.weapon.repair();
 		Assert.assertEquals(this.weapon.getDurability(), this.weapon.getCurrentDurability());

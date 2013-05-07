@@ -77,8 +77,6 @@ public class Controller {
 	 * @return All quests for the player.
 	 */
 	public Map<String, Quest> getQuests() {
-		Map<String, Quest> dwa = this.player.getQuests();
-		
 		return this.player.getQuests();
 	}
 	

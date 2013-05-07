@@ -1,11 +1,7 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
-import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
 
 final public class Gold implements QuestItem {
 	

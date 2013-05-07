@@ -3,7 +3,6 @@ package edu.cth.tmnd.vanaheim.model.creatures.player;
 import java.util.List;
 import java.util.Map;
 
-import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
@@ -13,14 +12,12 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public class Player extends Human {
-	
-	private Inventory inventory;
 
 	public Player(final float x, final float y, final int velocity,
 			final int maxHP, final String creatureName) {
 		super(x, y, velocity, maxHP, creatureName);
 		
-		ObjectMapper.getInstance().registerObject("inventory", super.inventory);
+		super.objectMapper.registerObject("inventory", super.inventory);
 		super.inventory.addItem(new Axe());
 		super.inventory.addItem(new HealthPotion());
 		super.inventory.addItem(new Gold(this));
@@ -32,11 +29,11 @@ public class Player extends Human {
 	}
 	
 	public List<Item> getItems() {
-		return this.inventory.getItems();
+		return super.inventory.getItems();
 	}
 	
 	public boolean isInventoryToggled() {
-		return this.inventory.isToggled();
+		return super.inventory.isToggled();
 	}
 	
 	public boolean isQuestBookToggled() {

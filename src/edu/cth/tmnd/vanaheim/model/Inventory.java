@@ -17,17 +17,26 @@ final public class Inventory extends Container {
 		this.items = new ArrayList<Item>(slots);
 	}
 	
+	/**
+	 * Returns the number of slots the inventory have.
+	 * @return	number of slots.
+	 */
 	public int getSlots() {
 		return this.slots;
 	}
 	
+	/**
+	 * Returns a list of items from the inventory.
+	 * @return	list of items.
+	 */
 	public List<Item> getItems() {
 		return this.items;
 	}
 
 	/**
 	 * Adds an item to the inventory if
-	 * there are any slots free.
+	 * there are any slots free and registers the item to the
+	 * Object Mapper.
 	 * @param item	the item to be added
 	 * @return	true if there was any slots free,
 	 * 			otherwise false if the item was
@@ -42,6 +51,7 @@ final public class Inventory extends Container {
 			return false;
 		}
 
+		super.objectMapper.registerObject(item.getItemName(), item);
 		this.items.add(item);
 		this.slotsLeft--;
 
@@ -54,7 +64,9 @@ final public class Inventory extends Container {
 	 * and will be removed from the inventory.<br />
 	 * More formally, returns true and removes an
 	 * item  if and only if there exist
-	 * an item i such that item.equals(i),
+	 * an item i such that item.equals(i).
+	 * If item was succesfully removed, the item will be removed from
+	 * the Object Mapper.
 	 * @param item	the item to destroy
 	 * @return	true if the item was succesfully destroyed,
 	 * 			otherwise false.
@@ -70,6 +82,7 @@ final public class Inventory extends Container {
 		final boolean itemRemoved = this.items.remove(item);
 
 		if(itemRemoved) {
+			super.objectMapper.removeObject(item.getItemName());
 			this.slotsLeft++;
 			return true;
 		}
@@ -98,8 +111,7 @@ final public class Inventory extends Container {
 
 	/**
 	 * Will retrieve the given item from inventory,
-	 * that is, it will remove the item from the inventory
-	 * but the owner of the item will still be the same.
+	 * that is, it will remove the item from the inventory.
 	 * More formally, will return an item if there exist
 	 * an item i such that item.equals(i)
 	 * @param item
@@ -128,18 +140,6 @@ final public class Inventory extends Container {
 		return this.items.indexOf(item);
 	}
 	
-	public Item removeItem(Item item) {
-		int index = this.getItemIndex(item);
-		
-		if(index == -1) {
-			return null;
-		}
-		
-		Item i = this.items.remove(index);
-		
-		return i;
-	}
-	
 	public Item getItem(Item item) {
 		int index = this.getItemIndex(item);
 		
@@ -147,7 +147,7 @@ final public class Inventory extends Container {
 			return null;
 		}
 		
-		return this.getItem(item);
+		return this.items.get(index);
 	}
 
 	/**

@@ -1,17 +1,15 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
-import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
+import edu.cth.tmnd.vanaheim.model.items.impl.DrinkableItem;
 
-final public class HealthPotion implements UseableItem {
+final public class HealthPotion implements DrinkableItem {
 	
 	private int healing;
 	
 	private int itemID;
 	
 	public HealthPotion() {
-		ObjectMapper.getInstance().registerObject(this.getItemName(), this);
 		this.healing = this.getDurability();
 		this.itemID = 2;
 	}
@@ -27,18 +25,6 @@ final public class HealthPotion implements UseableItem {
 	@Override
 	public double getItemWeight() {
 		return 0.5;
-	}
-
-	@Override
-	public void use(Creature by) {
-		if(by != null && this.healing != 0) {
-			this.healing = by.heal(this.healing);
-		}
-	}
-
-	@Override
-	public void use(Creature by, Creature target) {
-		target.heal(this.healing);
 	}
 
 	@Override
@@ -59,6 +45,29 @@ final public class HealthPotion implements UseableItem {
 	@Override
 	public int getItemID() {
 		return this.itemID;
+	}
+
+	@Override
+	public void drink(Creature by) {
+		if(by == null) {
+			return;
+		}
+		
+		// make sure that the creature has the item.
+		if(by.getItem(this) == null) {
+			return;
+		}
+		
+		// make sure that the creature doesn't have full HP first.
+		if(by.getCurrentHP() == by.getMaxHP()) {
+			return;
+		}
+		
+		// heal the creature
+		by.heal(this.healing);
+		
+		// remove the item from the creature's inventory.
+		by.destroyItem(this);
 	}
 	
 	

@@ -1,7 +1,6 @@
 hit * with * : Attack
 eat * : Eat
-drink * : Eat
-use * on * : Use
-use * : Use
+drink * : Drink
 talk to * : Talk
 show * : Show
+open * : Show

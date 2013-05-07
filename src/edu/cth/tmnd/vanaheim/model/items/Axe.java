@@ -1,18 +1,16 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
-import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
-import edu.cth.tmnd.vanaheim.model.items.impl.UseableItem;
+import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
+import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
 
-final public class Axe implements EquipableItem, UseableItem {
+final public class Axe implements WeaponItem {
 	private int damage;
 	private int durability;
 	
 	private int itemID;
 	
 	public Axe() {
-		ObjectMapper.getInstance().registerObject(this.getItemName(), this);
 		this.damage = 10;
 		this.durability = this.getDurability();
 		this.itemID = 1;
@@ -32,12 +30,7 @@ final public class Axe implements EquipableItem, UseableItem {
 	public String getItemDescription() {
 		return "YOLO";
 	}
-
-	@Override
-	public void use(Creature by) {
-		System.out.println("How do I shoot web?");
-	}
-
+	
 	@Override
 	public void equip(Creature by) {
 		if(by != null) {
@@ -53,17 +46,8 @@ final public class Axe implements EquipableItem, UseableItem {
 	}
 
 	@Override
-	public void use(Creature by, Creature target) {
-		if(target != null && this.durability != 0) {
-			target.damage(this.damage);
-			this.durability--;
-		}
-		
-	}
-
-	@Override
 	public int getDurability() {
-		return 5;
+		return 20;
 	}
 
 	@Override
@@ -81,4 +65,18 @@ final public class Axe implements EquipableItem, UseableItem {
 		return this.itemID;
 	}
 
+	@Override
+	public void attack(Creature by, Monster target) {
+		if(by == null || target == null) {
+			return;
+		}
+		
+		if(this.durability <= 0) {
+			return;
+		}
+		
+		target.damage(this.damage);
+		
+		this.durability--;
+	}
 }

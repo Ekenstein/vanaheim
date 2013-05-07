@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import junit.framework.Assert;
 
@@ -13,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.monsters.Spider;
@@ -30,6 +30,8 @@ public class ParserTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		Player p = new Player(1f, 1f, 400, 100, "Harald");
+		ObjectMapper.getInstance().registerObject(Constants.PLAYER_OBJECT_NAME, p);
 		this.p = Parser.getInstance(this.f);
 	}
 
@@ -75,5 +77,19 @@ public class ParserTest {
 		} catch(Exception e) {
 			
 		}
+	}
+	
+	@Test
+	public void testParser() {
+		// registers spider to the object mapper
+		Spider s = new Spider(1f, 1f, 400, 100);
+		
+		// registers player to the object mapper and all his items.
+		Player p = new Player(1f, 1f, 400, 100, "Harald");
+		ObjectMapper.getInstance().registerObject(Constants.PLAYER_OBJECT_NAME, p);
+		
+		this.p.parse("hit furious spider with crude axe");
+		
+		Assert.assertTrue(s.getCurrentHP() == 90);
 	}
 }

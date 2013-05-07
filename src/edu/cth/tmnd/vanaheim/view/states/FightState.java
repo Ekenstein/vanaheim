@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.Timer;
@@ -26,7 +25,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
-import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 public class FightState extends BasicGameState implements PropertyChangeListener {
 
