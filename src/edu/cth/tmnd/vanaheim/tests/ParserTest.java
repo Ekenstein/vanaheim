@@ -1,10 +1,6 @@
 package edu.cth.tmnd.vanaheim.tests;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 import junit.framework.Assert;
 
@@ -37,59 +33,29 @@ public class ParserTest {
 
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void splitTest() {
-		try {
-			Method splitMethod = Parser.class.getDeclaredMethod("split", String.class);
-			splitMethod.setAccessible(true);
-			String[] actuals = (String[])splitMethod.invoke(this.p, "use crude axe on super duper ogre");
-			String[] expected = new String[] {"use", "crude axe", "on", "super duper ogre"};
-			Assert.assertTrue(Arrays.deepEquals(actuals, expected));
-		} catch(Exception e) {
-			
-		}
+		Player p = (Player)ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
+		p.heal(p.getMaxHP());
 	}
 	
 	@Test
-	public void prefixesTest() {
-		try {
-			Field prefixesField = Parser.class.getDeclaredField("prefixes");
-			prefixesField.setAccessible(true);
-			
-			ArrayList<String> actuals = (ArrayList<String>) prefixesField.get(this.p);
-			ArrayList<String> expected = new ArrayList<String>();
-			expected.add("use");
-			expected.add("on");
-			expected.add("eat");
-			expected.add("drink");
-			expected.add("hit");
-			expected.add("with");
-			
-			Assert.assertEquals(expected.size(), actuals.size());
-			
-			for(String s : expected) {
-				Assert.assertTrue(actuals.contains(s));
-			}
-			
-			
-		} catch(Exception e) {
-			
-		}
-	}
-	
-	@Test
-	public void testParser() {
+	public void testAttack() {
 		// registers spider to the object mapper
 		Spider s = new Spider(1f, 1f, 400, 100);
-		
-		// registers player to the object mapper and all his items.
-		Player p = new Player(1f, 1f, 400, 100, "Harald");
-		ObjectMapper.getInstance().registerObject(Constants.PLAYER_OBJECT_NAME, p);
 		
 		this.p.parse("hit furious spider with crude axe");
 		
 		Assert.assertTrue(s.getCurrentHP() == 90);
+	}
+	
+	@Test
+	public void testDrinking() {
+		Player p = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
+		
+		p.damage(4);
+		Assert.assertTrue(p.getCurrentHP() == 96);
+		
+		this.p.parse("drink Healing Potion");
+		
+		Assert.assertTrue(p.getCurrentHP() == p.getMaxHP());
 	}
 }
