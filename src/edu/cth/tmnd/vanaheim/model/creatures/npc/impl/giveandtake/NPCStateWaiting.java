@@ -17,8 +17,8 @@ public class NPCStateWaiting extends State {
 				StateHandler.getInstance().push(StateHandler.State.TALKING, npc);
 				MessageBuffer.getInstance().append("Well done! You have finished the quest " + q.getName() + 
 								". Here is your reward. A really fine " + item.getItemName() + " if i may say so myself.");
-				human.getInventory().addItem(item);
-				npc.getInventory().removeItem(item);
+				human.addItem(item);
+				npc.destroyItem(item);
 				npc.getQuestBook().removeQuest(q.getName());
 				npc.changeToNextState();
 			}

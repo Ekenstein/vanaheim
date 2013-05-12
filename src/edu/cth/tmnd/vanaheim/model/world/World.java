@@ -115,8 +115,8 @@ public class World {
 		boolean hasMonster = false;
 		if (currentMap == WORLD_MAP) {
 			if (tiles[x][y] != null) {
-				System.out.println("Här finns det gräs");
-				hasMonster = tiles[x][y].hasMonster();
+				System.out.println("Hï¿½r finns det grï¿½s");
+				hasMonster = tiles[x][y].hasMonster() != null;
 			}
 		}
 		return hasMonster;
@@ -134,7 +134,7 @@ public class World {
 //		int xPos = (int)Math.floor(x / 32);
 //		int yPos = (int)Math.floor(y / 32);
 //		if (map.getTileId(xPos, yPos, 2) == 257) {
-//			System.out.println("Här finns loot");
+//			System.out.println("Hï¿½r finns loot");
 //		}
 //	}
 
