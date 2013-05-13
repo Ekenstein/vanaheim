@@ -38,7 +38,9 @@ public abstract class Creature extends GameObject {
 		this.equipment = item;
 	}
 	
-	
+	public Item getEquipedItem(){
+		return this.equipment;
+	}
 
 	public void unequip() {
 		this.equipment = this.inventory.addItem(this.equipment) ? null : this.equipment;

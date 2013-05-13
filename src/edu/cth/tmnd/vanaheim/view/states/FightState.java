@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.Timer;
@@ -27,6 +28,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
+import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 public class FightState extends BasicGameState implements PropertyChangeListener {
 
@@ -54,6 +56,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	private Image combatLogImage;
 	private Image playerImage;
 	private Image spiderImage;
+	private Image equip;
 
 	//Command field
 	private TextField inputField;
@@ -124,6 +127,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		combatLogImage = new Image("data/combatLogBg.png");
 		playerImage = new Image("data/female_wizard.png");
 		spiderImage = new Image("data/ugly_spider.png");
+		equip = new Image("data/equip.png");
 
 		//Init item map
 		itemIDMap.put(0, new Image("data/coins.png"));
@@ -161,6 +165,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		//Draw contestants
 		context.drawImage(playerImage, 100, 200);
 		context.drawImage(spiderImage, 732, 350);
+		
+		//Draw enemy name
+		context.setColor(Color.red);
+		context.drawString(controller.getMonsterName(), 760, 330);
 
 		//Draw health and attack bars
 		healthBarImage.draw(130, 458, 2*playerHealth, 16);
@@ -180,13 +188,22 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		context.setColor(Color.white);
 		inputField.render(container, context);
 		
+		
 		//Draw inventory
 		context.drawImage(inventory_bg, 384, 555);
 		context.drawImage(inventory_title, 320, 507);
-//		List<Item> items = controller.getItems();
-//		for (int i = 0; i < items.size(); i++) {
-//			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
-//		}
+		context.drawImage(equip,40,290);
+		
+		List<Item> items = controller.getItems();
+		for (int i = 0; i < items.size(); i++) {
+			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
+		}
+		
+		if(controller.getPlayerEquipedItem() != null){
+			context.drawImage(itemIDMap.get(controller.getPlayerEquipedItem().getItemID()), 50 , 300);
+			context.drawString(controller.getPlayerEquipedItem().getItemName(), 40, 270);
+		}
+		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {

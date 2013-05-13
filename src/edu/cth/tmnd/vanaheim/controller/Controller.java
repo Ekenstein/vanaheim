@@ -84,6 +84,10 @@ public class Controller {
 		return this.player.getQuests();
 	}
 	
+	public Item getPlayerEquipedItem(){
+		return this.player.getEquipedItem();
+	}
+	
 	public void questAccepted(int x, int y) {
 		this.world.questAccepted(x, y);
 	}
