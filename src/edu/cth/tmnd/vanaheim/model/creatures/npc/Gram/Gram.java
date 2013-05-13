@@ -1,5 +1,7 @@
 package edu.cth.tmnd.vanaheim.model.creatures.npc.Gram;
 
+import org.newdawn.slick.SlickException;
+
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.State;
@@ -14,7 +16,7 @@ public class Gram extends NPC {
 	
 	private static final State[] states = {new NPCStateStart(), new NPCStateWaiting(), new NPCStateDone()};
 
-	public Gram(float x, float y) {
+	public Gram(float x, float y) throws SlickException {
 		super(x, y, 0, 1, "Gram", states);
 		this.getQuestBook().addQuest(new GoldQuest(this));
 		this.getInventory().addItem(new Axe());

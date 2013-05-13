@@ -28,7 +28,7 @@ public class MenuState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		
-		titleSong = new Music("data/sfx/Title.ogg");
+		//titleSong = new Music("data/sfx/Title.ogg");
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -38,10 +38,10 @@ public class MenuState extends BasicGameState {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (!titleSong.playing()) {
-			titleSong.play();
-			titleSong.setVolume(1f);
-		}
+		//if (!titleSong.playing()) {
+			//titleSong.play();
+			//titleSong.setVolume(1f);
+		//}
 	}
 
 	public void keyReleased(int key, char c) {

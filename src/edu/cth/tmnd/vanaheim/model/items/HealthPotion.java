@@ -1,17 +1,21 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.DrinkableItem;
 
 final public class HealthPotion implements DrinkableItem {
 	
 	private int healing;
-	
+	private Image img;
 	private int itemID;
 	
-	public HealthPotion() {
+	public HealthPotion() throws SlickException {
 		this.healing = this.getDurability();
 		this.itemID = 2;
+		//img = new Image("data/potion.png");
 	}
 
 	public String getItemName() {
@@ -93,6 +97,11 @@ final public class HealthPotion implements DrinkableItem {
 		if(!this.getItemName().equals(other.getItemName()))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Image getImage() {
+		return this.img;
 	}
 	
 	

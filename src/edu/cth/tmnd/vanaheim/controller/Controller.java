@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.constants.Constants;
@@ -42,8 +43,9 @@ public class Controller {
 	 * @return If instance of class is already created then return this instance,
 	 * 	else create a new controller and return this.
 	 * @throws IOException
+	 * @throws SlickException 
 	 */
-	public static Controller getInstance() throws IOException {
+	public static Controller getInstance() throws IOException, SlickException {
 		if(theInstance == null) {
 			theInstance = new Controller();
 		}
@@ -54,15 +56,16 @@ public class Controller {
 	/**
 	 * Constructor used by getInstance() to create a new controller.
 	 * Controller is the intermediary part of the game.
+	 * @throws SlickException 
 	 */
-	private Controller() {
+	private Controller() throws SlickException {
 		this.objectMapper = ObjectMapper.getInstance();
 		this.msgBuffer = MessageBuffer.getInstance();
 		
 		this.init();
 	}
 	
-	private void init() {
+	private void init() throws SlickException {
 		this.world = new World();
 		this.player = new Player(400f, 400f, 300, 100, "Harald");
 		this.objectMapper.registerObject("Gram", new Gram(176f, 688f));
@@ -155,8 +158,9 @@ public class Controller {
 	/**Initiate the map
 	 * @param mapID Id on the map to initiate
 	 * @param map Map to initiate
+	 * @throws SlickException 
 	 */
-	public void initMap(int mapID, TiledMap map) {
+	public void initMap(int mapID, TiledMap map) throws SlickException {
 		this.world.initMap(mapID, map);
 	}
 
@@ -188,6 +192,14 @@ public class Controller {
 		}
 		
 		return false;
+	}
+	
+	public void addItemToPlayerTile(List<Item> items){
+		this.world.addItemsToTile(this.getPlayerLoc().x, this.getPlayerLoc().y, items);
+	}
+	
+	public List<Item> getBattleCurrentMonsterItem(){
+		return this.currentBattle.dropItems();
 	}
 	
 	public int getBattleCurrentMonsterHP() {
@@ -326,6 +338,10 @@ public class Controller {
 	 */
 	public void parseCommand(final String command) {
 		this.parser.parse(command);
+	}
+	
+	public String battleWinner(){
+		return this.currentBattle.getBattleWinner();
 	}
 }
 

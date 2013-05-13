@@ -7,6 +7,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.model.Inventory;
@@ -38,9 +39,9 @@ public class ParserTest {
 	}
 	
 	@Test
-	public void testAttack() {
+	public void testAttack() throws SlickException {
 		// registers spider to the object mapper
-		Spider s = new Spider(1f, 1f, 400, 100, true);
+		Spider s = new Spider(1f, 1f, 400, 100, 10, true);
 		
 		this.p.parse("hit furious spider with crude axe");
 		

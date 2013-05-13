@@ -1,5 +1,8 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
 import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
@@ -7,13 +10,14 @@ import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
 final public class Axe implements WeaponItem {
 	private int damage;
 	private int durability;
-	
+	private Image img;
 	private int itemID;
 	
-	public Axe() {
-		this.damage = 10;
+	public Axe() throws SlickException {
+		this.damage = 40;
 		this.durability = this.getDurability();
 		this.itemID = 1;
+		//img = new Image("data/axe_one.png");
 	}
 	
 	@Override
@@ -35,6 +39,7 @@ final public class Axe implements WeaponItem {
 	public void equip(Creature by) {
 		if(by != null) {
 			by.equip(this);
+			System.out.println("Item equipped");
 		}
 	}
 
@@ -76,6 +81,7 @@ final public class Axe implements WeaponItem {
 		}
 		
 		target.damage(this.damage);
+		System.out.println("Attacks");
 		
 		this.durability--;
 	}
@@ -105,5 +111,10 @@ final public class Axe implements WeaponItem {
 		if(!this.getItemName().equals(other.getItemName()))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Image getImage() {
+		return this.img;
 	}
 }

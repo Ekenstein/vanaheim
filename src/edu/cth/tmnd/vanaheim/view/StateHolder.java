@@ -3,6 +3,7 @@ package edu.cth.tmnd.vanaheim.view;
 import java.io.IOException;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.cth.tmnd.vanaheim.controller.Controller;
@@ -15,7 +16,7 @@ public class StateHolder extends StateBasedGame {
 	
 	private Controller controller;
 
-	public StateHolder() {
+	public StateHolder() throws SlickException {
 		super("Vanaheim");
 		try {
 			this.controller = Controller.getInstance();

@@ -8,15 +8,17 @@ import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.newdawn.slick.SlickException;
+
 public class GrassTile extends Tile {
 	
 	private Random rand;
 	private final List<Monster> monsters;
 	
-	public GrassTile() {
+	public GrassTile() throws SlickException {
 		this.monsters = new ArrayList<Monster>();
 		rand = new Random();
-		this.monsters.add(new Spider(1.0f,1.0f,400,100, false));
+		this.monsters.add(new Spider(1.0f,1.0f,400,100, rand.nextInt(20) + 10, false));
 	}
 
 	@Override

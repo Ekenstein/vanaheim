@@ -89,10 +89,12 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 				if (controller.hasBattleEnded()) {
 					System.out.println("Battle ended");
 					enemyAttackTimer.stop();
+					if(controller.battleWinner() == "PLAYER"){
+						controller.addItemToPlayerTile(controller.getBattleCurrentMonsterItem());
+					}
 					game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 				}
 				startTime = 10;
-				//End TEST
 			}
 		}
 	}
@@ -105,8 +107,8 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		this.game = game;
 		container.setTargetFrameRate(120);
 		
-		battleSong = new Music("data/sfx/Battle_Theme.ogg");
-		slashSound = new Sound("data/sfx/Kill_Enemy.ogg");
+		//battleSong = new Music("data/sfx/Battle_Theme.ogg");
+		//slashSound = new Sound("data/sfx/Kill_Enemy.ogg");
 		
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
@@ -137,12 +139,15 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
 				controller.parseCommand(message);
-				slashSound.play();
+				inputField.setText("");
+				//slashSound.play();
 			}
 		});
 		inputField.setFocus(true);
 	}
 
+	
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		
 		playerHealth = controller.getPlayerCurrentHP();
@@ -185,11 +190,12 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (!battleSong.playing()) {
+		/*if (!battleSong.playing()) {
 			battleSong.play();
 			battleSong.setVolume(0f);
 			battleSong.fade(1000, 1f, false);
 		}
+		*/
 	}
 	
 	public void enter(GameContainer gc , StateBasedGame sbg)

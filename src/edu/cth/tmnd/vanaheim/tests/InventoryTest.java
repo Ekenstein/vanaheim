@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
@@ -21,7 +22,7 @@ public class InventoryTest {
 	private Player owner;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws SlickException {
 		this.slots = 2;
 		this.inventory = new Inventory(this.slots);
 		this.owner = new Player(4, 4, 5, 5, "Harald");

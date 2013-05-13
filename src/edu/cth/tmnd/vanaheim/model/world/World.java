@@ -2,8 +2,10 @@ package edu.cth.tmnd.vanaheim.model.world;
 
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -36,7 +38,7 @@ public class World {
 	private Map<Integer, boolean[][]> blockingArrays = new HashMap<Integer, boolean[][]>();
 	private Map<Integer, TiledMap> maps = new HashMap<Integer, TiledMap>();
 
-	public void initMap(int mapID, TiledMap map) {
+	public void initMap(int mapID, TiledMap map) throws SlickException {
 		currentMap = WORLD_MAP;
 		this.tiles = new Tile[map.getWidth()][map.getHeight()];
 		boolean[][] blocked = new boolean[map.getWidth()][map.getHeight()];
@@ -149,6 +151,14 @@ public class World {
 	
 	private int getY(float y) {
 		return (int)Math.floor(y / TILE_HEIGHT);
+	}
+	
+	public boolean addItemsToTile(float x, float y, List<Item> item) {
+		if(!this.withinBounds(x, y)) {
+			return false;
+		}
+		
+		return this.tiles[this.getX(x)][this.getY(y)].addItems(item);
 	}
 	
 	public boolean addItemToTile(float x, float y, Item item) {

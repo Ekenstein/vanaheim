@@ -1,6 +1,10 @@
 package edu.cth.tmnd.vanaheim.model.items.impl;
 
+import org.newdawn.slick.Image;
+
 public interface Item {
+	
+	
 	public abstract int getItemID();
 	
 	/**
@@ -37,4 +41,10 @@ public interface Item {
 	 * Repairs the item to the base durability.
 	 */
 	public abstract void repair();
+	
+	
+	/**
+	 * Get the items image
+	 */
+	public abstract Image getImage();
 }

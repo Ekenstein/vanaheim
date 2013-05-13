@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
@@ -79,41 +80,41 @@ public class QuestTest {
 	}
 	
 	@Test
-	public void testProcessItem(){
+	public void testProcessItem() throws SlickException{
 		Assert.assertEquals(3, q1.getItemsLeft("Gold"));
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertEquals(2, q1.getItemsLeft("Gold"));
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertEquals(1, q1.getItemsLeft("Gold"));
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertEquals(0, q1.getItemsLeft("Gold"));
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertEquals(0, q1.getItemsLeft("Gold"));
 		
 		q1.addNeededItemCount("Gold", 1);
 		Assert.assertEquals(1, q1.getItemsLeft("Gold"));
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertEquals(0, q1.getItemsLeft("Gold"));
 
 	}
 
 	@Test
-	public void testCompleteQuest(){
+	public void testCompleteQuest() throws SlickException{
 		Assert.assertFalse(q1.isComplete());
-		q1.process(new Gold(owner));
-		Assert.assertFalse(q1.isComplete());
-		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertFalse(q1.isComplete());
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
+		Assert.assertFalse(q1.isComplete());
+		
+		q1.process(new Gold());
 		Assert.assertTrue(q1.isComplete());
 		
-		q1.process(new Gold(owner));
+		q1.process(new Gold());
 		Assert.assertTrue(q1.isComplete());
 	}
 }

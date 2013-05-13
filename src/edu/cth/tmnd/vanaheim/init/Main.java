@@ -21,7 +21,7 @@ public class Main {
 	public static void main(final String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new StateHolder());
-			app.setDisplayMode(WIDTH, HEIGHT, false);
+			app.setDisplayMode(WIDTH, HEIGHT, true);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

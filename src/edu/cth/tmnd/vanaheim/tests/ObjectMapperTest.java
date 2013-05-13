@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper.Type;
@@ -27,7 +28,7 @@ public class ObjectMapperTest {
 	}
 
 	@Test
-	public void RegisterTest() {
+	public void RegisterTest() throws SlickException {
 		Assert.assertTrue(this.objectMapper.isEmpty());
 		Assert.assertEquals(0, this.objectMapper.size());
 		Player p = new Player(1f, 1f, 400, 100, "Harald");
@@ -42,7 +43,7 @@ public class ObjectMapperTest {
 		Assert.assertTrue(this.objectMapper.isRegistered("@").equals(Type.REGISTERED));
 		Assert.assertEquals(p, this.objectMapper.getObject("@"));
 		
-		Spider s = new Spider(1f, 1f, 400, 100, true);
+		Spider s = new Spider(1f, 1f, 400, 100, 10, true);
 		
 		Assert.assertEquals(s, this.objectMapper.getObject(s.getName()));
 		

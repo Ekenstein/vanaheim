@@ -110,8 +110,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		npcLocations.put("William", new Point(32, 288));
 		npcLocations.put("James", new Point(64, 672));
 
-		exploreSong = new Music("data/sfx/Overworld.ogg");
-		houseSong = new Music("data/sfx/Shop.ogg");
+		//exploreSong = new Music("data/sfx/Overworld.ogg");
+		//houseSong = new Music("data/sfx/Shop.ogg");
 
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
@@ -173,20 +173,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
 				controller.parseCommand(message);
-				//				//TEST
-				//				if (message.equals("talk to thalia")) {
-				//					npcInteraction = "Thalia";
-				//					reply += "My husband Enuk got lost in a battle. Pleeease help me find him. I'll reward you greatly!";
-				//				}
-				//				if (message.equals("talk to william")) {
-				//					npcInteraction = "William";
-				//					reply += "Welcome to my store! Cheapest items in the whole Vanaheim world!";
-				//				}
-				//				if (message.equals("talk to james")) {
-				//					npcInteraction = "James";
-				//					reply += "I'm so tired of slaying spiders now. Can you please do me a favour and collect 6 spider glands?";
-				//				}
-				//				//End TEST
 				inputField.setText("");
 			}
 		});
@@ -311,7 +297,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (controller.getCurrentMap() == World.WORLD_MAP) {
+		/*if (controller.getCurrentMap() == World.WORLD_MAP) {
 			houseSong.stop();
 			if (!exploreSong.playing()) {
 				exploreSong.play();
@@ -328,7 +314,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				songPlaying = true;
 			}
 		}
-
+*/
 		prevX = currX;
 		prevY = currY;
 		final Input input = container.getInput();
@@ -382,14 +368,15 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				lastItemRendered -= 2;
 			}
 		}
+		
 		currX = (int)Math.floor(x / 32);
 		currY = (int)Math.floor(y / 32);
 		controller.setPlayerLoc(new Point((int)x, (int)y));
 		if (prevX != currX || prevY != currY) {
 			if (controller.hasMonster(currX, currY)) {
 				FightState.enemyAttackTimer.start();
-				exploreSong.stop();
-				houseSong.stop();
+				//exploreSong.stop();
+				//houseSong.stop();
 				game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}

@@ -14,12 +14,14 @@ public final class Battle {
 	private final Monster monster;
 	private final Player player;
 	private final Tile tile;
+	private String winner;
 	
 	public Battle(Monster m, Tile t) {
 		this.monster = m;
 		m.register();
 		this.player = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
 		this.tile = t;
+		winner = "MONSTER";
 	}
 	
 	public int getMonsterCurrentHP() {
@@ -40,10 +42,6 @@ public final class Battle {
 	
 	public void destruct() {
 		this.monster.unregister();
-		
-		for(Item i : this.monster.dropItems()) {
-			this.tile.addItem(i);
-		}
 	}
 	
 	public int getPlayerMaxHP() {
@@ -56,12 +54,19 @@ public final class Battle {
 	
 	public void hitPlayer() {
 		StateHandler.getInstance().push(State.FIGHTING, this.monster);
-		// kolla damagen
-		this.player.damage(10);
+		this.player.damage(this.monster.getDamage());
 	}
 
 	public boolean hasEnded() {
-		return this.getPlayerCurrentHP() <= 0 || this.getMonsterCurrentHP() <= 0;
+		if(this.getPlayerCurrentHP() <= 0){
+			winner = "MONSTER";
+			return true;
+		}
+		else if(this.getMonsterCurrentHP() <= 0){
+			winner = "PLAYER";
+			return true;
+		}
+		return false;
 	}
 	
 	public List<Item> dropItems() {
@@ -74,5 +79,9 @@ public final class Battle {
 	
 	public String getMonsterName() {
 		return this.monster.getName();
+	}
+	
+	public String getBattleWinner(){
+		return this.winner;
 	}
 }

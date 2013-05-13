@@ -11,11 +11,12 @@ public abstract class Creature extends GameObject {
 	public static enum Direction {
 		LEFT, RIGHT, UP, DOWN
 	};
-	protected int velocity;
+	private int velocity;
 	protected Inventory inventory;
-	protected int currentHP, maxHP;
-	protected EquipableItem equipment;
-	protected Direction currentDirection;
+	private int currentHP, maxHP;
+	private EquipableItem equipment;
+	private Direction currentDirection;
+	private int dmg;
 
 	public Creature(final float x, final float y, final int velocity, final int maxHP,
 			final String creatureName, boolean register) {
@@ -36,6 +37,8 @@ public abstract class Creature extends GameObject {
 
 		this.equipment = item;
 	}
+	
+	
 
 	public void unequip() {
 		this.equipment = this.inventory.addItem(this.equipment) ? null : this.equipment;

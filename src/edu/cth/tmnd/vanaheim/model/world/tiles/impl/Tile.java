@@ -3,6 +3,8 @@ package edu.cth.tmnd.vanaheim.model.world.tiles.impl;
 import edu.cth.tmnd.vanaheim.model.Battle;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+
+import java.util.List;
 import java.util.Stack;
 
 public abstract class Tile {
@@ -10,6 +12,10 @@ public abstract class Tile {
 	protected Inventory items;
 	protected enum FightingState { DEFENDING, FIGHTING };
 	protected Stack<FightingState> pending;
+	
+	public Tile(){
+		this.items = new Inventory(10);
+	}
 	
 	/**
 	 * Returns a battle object if there was a monster
@@ -19,12 +25,28 @@ public abstract class Tile {
 	 */
 	public abstract Battle hasMonster();
 	
-	public boolean addItem(Item item) {
+	public boolean addItems(List<Item> item) {
 		if(this.canContainItems()) {
-			return this.items.addItem(item);
+			for(Item i: item){
+				if(item != null){
+				items.addItem(i);
+				}
+			
+				
+			}
+			return true;
 		}
 		return false;
 	}
+	
+	public boolean addItem(Item item) {
+		if(this.canContainItems()) {
+				items.addItem(item);
+			return true;
+		}
+		return false;
+	}
+	
 	
 	protected abstract boolean canContainItems();
 	

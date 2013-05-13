@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.monsters.Spider;
@@ -22,18 +23,18 @@ public class ItemTest {
 	@Before
 	public void setUp() throws Exception {
 		this.owner = new Player(32f, 32f, 300, 100, "Harald");
-		this.target = new Spider(40f, 40f, 300, 100, true);
+		this.target = new Spider(40f, 40f, 300, 100, 10, true);
 		this.weapon = new Axe();
 		this.potion = new HealthPotion();
 
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws SlickException {
 		this.weapon = new Axe();
 		this.potion = new HealthPotion();
 		this.owner = new Player(32f, 32f, 300, 100, "Harald");
-		this.target = new Spider(40f, 40f, 300, 100,true);
+		this.target = new Spider(40f, 40f, 300, 100,10, true);
 	}
 
 	@Test
