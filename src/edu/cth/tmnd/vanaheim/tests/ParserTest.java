@@ -40,7 +40,7 @@ public class ParserTest {
 	@Test
 	public void testAttack() {
 		// registers spider to the object mapper
-		Spider s = new Spider(1f, 1f, 400, 100);
+		Spider s = new Spider(1f, 1f, 400, 100, true);
 		
 		this.p.parse("hit furious spider with crude axe");
 		

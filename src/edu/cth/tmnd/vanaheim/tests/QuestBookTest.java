@@ -13,6 +13,7 @@ import org.junit.Test;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
+import edu.cth.tmnd.vanaheim.model.creatures.npc.Gram.Gram;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.quests.GoldQuest;
@@ -32,9 +33,9 @@ public class QuestBookTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.npc1 = new NPC(0f,0f,0,new Inventory(20),20,"Putte",null);
-		this.npc2 = new NPC(0f,0f,0,new Inventory(20),20,"Fnutte",null);
-		this.user = new Player(0f,0f,0,new Inventory(20),20,"Gurdi");
+		this.npc1 = new Gram(0f,0f);
+		this.npc2 = new Gram(0f,0f);
+		this.user = new Player(0f,0f,0,20,"Gurdi");
 		this.q1 = new GoldQuest(npc1);
 		this.q2 = new GoldQuest(npc2);
 		this.q3 = new SilverQuest(npc2);

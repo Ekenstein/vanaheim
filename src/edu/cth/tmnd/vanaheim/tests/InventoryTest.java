@@ -24,9 +24,9 @@ public class InventoryTest {
 	public void setUp() {
 		this.slots = 2;
 		this.inventory = new Inventory(this.slots);
-		this.owner = new Player(4, 4, 5, this.inventory, 5, "Harald");
-		this.item1 = new Axe(this.owner);
-		this.item2 = new HealthPotion(this.owner);
+		this.owner = new Player(4, 4, 5, 5, "Harald");
+		this.item1 = new Axe();
+		this.item2 = new HealthPotion();
 	}
 
 	@After

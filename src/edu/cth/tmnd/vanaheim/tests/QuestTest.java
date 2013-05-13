@@ -11,6 +11,7 @@ import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 import edu.cth.tmnd.vanaheim.model.creatures.monsters.Spider;
+import edu.cth.tmnd.vanaheim.model.creatures.npc.Gram.Gram;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
@@ -29,7 +30,7 @@ public class QuestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.owner = new NPC(0f,0f,0,new Inventory(20),20,"Putte",null);
+		this.owner = new Gram(0f,0f);
 		this.q1 = new GoldQuest(owner);
 		
 	}

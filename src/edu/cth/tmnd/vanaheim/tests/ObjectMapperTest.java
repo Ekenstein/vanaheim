@@ -42,7 +42,7 @@ public class ObjectMapperTest {
 		Assert.assertTrue(this.objectMapper.isRegistered("@").equals(Type.REGISTERED));
 		Assert.assertEquals(p, this.objectMapper.getObject("@"));
 		
-		Spider s = new Spider(1f, 1f, 400, 100);
+		Spider s = new Spider(1f, 1f, 400, 100, true);
 		
 		Assert.assertEquals(s, this.objectMapper.getObject(s.getName()));
 		
