@@ -1,5 +1,6 @@
 package edu.cth.tmnd.vanaheim.model.parser.handlers;
 
+import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
 import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
 import edu.cth.tmnd.vanaheim.model.parser.handlers.impl.Handler;
@@ -13,7 +14,12 @@ final public class AttackHandler extends Handler {
 		final WeaponItem item = (WeaponItem) args[ITEM];
 		final Monster target = (Monster) args[TARGET];
 
-		item.attack(super.p, target);
+		System.out.println(super.p);
+		if(super.p.isEquipped(item)) {
+			item.attack(super.p, target);
+		} else {
+			MessageBuffer.getInstance().append(item.getItemName() + " is not equipped!");
+		}
 	}
 
 	@Override

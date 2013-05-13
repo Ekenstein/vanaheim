@@ -10,8 +10,8 @@ public abstract class Monster extends Creature {
 	protected Collection<Item> lootPool;
 	
 	public Monster(final float x, final float y, final int velocity,
-			final int maxHP, final String creatureName) {
-		super(x, y, velocity, maxHP, creatureName);
+			final int maxHP, final String creatureName, boolean register) {
+		super(x, y, velocity, maxHP, creatureName, register);
 		this.lootPool = new HashSet<Item>();
 	}
 

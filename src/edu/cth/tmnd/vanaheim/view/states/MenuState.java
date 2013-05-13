@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
@@ -17,6 +18,8 @@ public class MenuState extends BasicGameState {
 	public static final int ID = 1;
 	/** The game holding this state */
 	private StateBasedGame game;
+	
+	private Music titleSong;
 
 	public int getID() {
 		return ID;
@@ -24,6 +27,8 @@ public class MenuState extends BasicGameState {
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
+		
+		titleSong = new Music("data/sfx/Title.ogg");
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -33,6 +38,10 @@ public class MenuState extends BasicGameState {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
+		if (!titleSong.playing()) {
+			titleSong.play();
+			titleSong.setVolume(1f);
+		}
 	}
 
 	public void keyReleased(int key, char c) {

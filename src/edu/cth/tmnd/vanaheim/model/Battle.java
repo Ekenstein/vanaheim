@@ -5,16 +5,21 @@ import edu.cth.tmnd.vanaheim.model.StateHandler.State;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
+
 import java.util.List;
 
 public final class Battle {
 
 	private final Monster monster;
 	private final Player player;
+	private final Tile tile;
 	
-	public Battle(Monster m) {
+	public Battle(Monster m, Tile t) {
 		this.monster = m;
+		m.register();
 		this.player = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
+		this.tile = t;
 	}
 	
 	public int getMonsterCurrentHP() {
@@ -33,6 +38,14 @@ public final class Battle {
 		return this.player.getCurrentHP();
 	}
 	
+	public void destruct() {
+		this.monster.unregister();
+		
+		for(Item i : this.monster.dropItems()) {
+			this.tile.addItem(i);
+		}
+	}
+	
 	public int getPlayerMaxHP() {
 		return this.player.getMaxHP();
 	}
@@ -42,8 +55,9 @@ public final class Battle {
 	}
 	
 	public void hitPlayer() {
-		// TODO Gör om så att gui bara får koordinater
 		StateHandler.getInstance().push(State.FIGHTING, this.monster);
+		// kolla damagen
+		this.player.damage(10);
 	}
 
 	public boolean hasEnded() {
@@ -56,5 +70,9 @@ public final class Battle {
 		}
 		
 		return null;
+	}
+	
+	public String getMonsterName() {
+		return this.monster.getName();
 	}
 }

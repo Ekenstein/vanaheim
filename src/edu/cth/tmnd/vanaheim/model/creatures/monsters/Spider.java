@@ -6,8 +6,8 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 public class Spider extends Monster {
 
-	public Spider(final float x, final float y, final int velocity, final int maxHP) {
-		super(x, y, velocity, maxHP, "Furious Spider");
+	public Spider(final float x, final float y, final int velocity, final int maxHP, boolean register) {
+		super(x, y, velocity, maxHP, "Furious Spider", register);
 	}
 
 	@Override

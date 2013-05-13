@@ -15,12 +15,15 @@ public abstract class GameObject {
 	 * @param x Coordinate x of the object
 	 * @param y Coordinate y of the object
 	 */
-	public GameObject(final float x, final float y, String objectName) {
+	public GameObject(final float x, final float y, String objectName, boolean register) {
 		this.x = x;
 		this.y = y;
 		this.objectName = objectName;
 		this.objectMapper = ObjectMapper.getInstance();
-		this.register();
+		
+		if(register) {
+			this.register();
+		}
 	}
 
 	/**Get the x position of the object
@@ -51,8 +54,12 @@ public abstract class GameObject {
 		this.y = y;
 	}
 	
-	private void register() {
+	public void register() {
 		this.objectMapper.registerObject(this.getName(), this);
+	}
+	
+	public void unregister() {
+		this.objectMapper.removeObject(this.getName());
 	}
 	
 	public String getName() {

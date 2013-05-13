@@ -4,3 +4,5 @@ drink * : Drink
 talk to * : Talk
 show * : Show
 open * : Show
+equip * : Equip
+unequip * : Unequip

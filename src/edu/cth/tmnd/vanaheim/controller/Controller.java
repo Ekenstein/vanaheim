@@ -9,6 +9,7 @@ import java.util.Map;
 import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.constants.Constants;
+import edu.cth.tmnd.vanaheim.model.Battle;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
@@ -33,6 +34,7 @@ public class Controller {
 	private ObjectMapper objectMapper;
 	private final MessageBuffer msgBuffer;
 	private Parser parser;
+	private Battle currentBattle = null;
 	
 	private static Controller theInstance = null;
 
@@ -57,12 +59,6 @@ public class Controller {
 		this.objectMapper = ObjectMapper.getInstance();
 		this.msgBuffer = MessageBuffer.getInstance();
 		
-		try {
-			this.parser = Parser.getInstance(Constants.COMMAND_FILE);
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-		
 		this.init();
 	}
 	
@@ -71,6 +67,11 @@ public class Controller {
 		this.player = new Player(400f, 400f, 300, 100, "Harald");
 		this.objectMapper.registerObject("Gram", new Gram(176f, 688f));
 		this.objectMapper.registerObject(Constants.PLAYER_OBJECT_NAME, this.player);
+		try {
+			this.parser = Parser.getInstance(Constants.COMMAND_FILE);
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**Get the quests for the player. Both the accomplished and non-accomplished quests that reside in his questbook.
@@ -179,8 +180,75 @@ public class Controller {
 	 * @return True if the position x,y has monster on it else false
 	 */
 	public boolean hasMonster(final int x, final int y) {
-		return this.world.hasMonster(x, y);
+		Battle b = this.world.hasMonster(x, y);
+		
+		if(b != null) {
+			this.currentBattle = b;
+			return true;
+		}
+		
+		return false;
 	}
+	
+	public int getBattleCurrentMonsterHP() {
+		assert this.currentBattle != null;
+		
+		return this.currentBattle.getMonsterCurrentHP();
+	}
+	
+	public int getBattleCurrentMonsterHPPercentage() {
+		assert this.currentBattle != null;
+		
+		return this.currentBattle.getMonsterHealthPercentage();
+	}
+	
+	public int getBattleMaxMonsterHP() {
+		assert this.currentBattle != null;
+		
+		return this.currentBattle.getMonsterMaxHP();
+	}
+	
+	public int getPlayerCurrentHP() {
+		return this.player.getCurrentHP();
+	}
+	
+	public int getPlayerMaxHP() {
+		return this.player.getMaxHP();
+	}
+	
+	public void destroyBattle() {
+		assert this.currentBattle != null;
+		
+		this.currentBattle.destruct();
+		
+		this.currentBattle = null;
+	}
+	
+	public boolean isActiveBattle() {
+		return this.currentBattle != null;
+	}
+	
+	public void monsterHitPlayer() {
+		assert this.currentBattle != null;
+		
+		this.currentBattle.hitPlayer();
+	}
+	
+	public boolean hasBattleEnded() {
+		if(this.currentBattle == null) {
+			return true;
+		}
+		
+		return this.currentBattle.hasEnded();
+	}
+	
+	public String getMonsterName() {
+		assert this.currentBattle != null;
+		
+		return this.currentBattle.getMonsterName();
+	}
+	
+	
 
 	/**
 	 * @param mapID
@@ -240,6 +308,10 @@ public class Controller {
 	 */
 	public Direction getPlayerDirection() {
 		return this.player.getDirection();
+	}
+	
+	public int getCurrentMap() {
+		return this.world.getCurrentMap();
 	}
 
 	/**Set the players direction

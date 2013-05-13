@@ -38,6 +38,7 @@ import edu.cth.tmnd.vanaheim.model.StateHandler.State;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
+import edu.cth.tmnd.vanaheim.model.world.World;
 
 public class ExploreState extends BasicGameState implements PropertyChangeListener {
 
@@ -49,7 +50,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	private int npcX, npcY;
 
-	private Music song;
+	private Music exploreSong;
+	private Music houseSong;
 	private boolean songPlaying = false;
 
 	//Tiled maps
@@ -68,7 +70,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private final Map<Integer, String> itemNameMap = new HashMap<Integer, String>();
 	private List<Integer> items = new ArrayList<Integer>();
 	private int lastItemRendered = 0;
-	private boolean isInventoryToggled = true;
+	private boolean isInventoryToggled = false;
 
 	//Quests
 	private Image quests_title;
@@ -108,7 +110,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		npcLocations.put("William", new Point(32, 288));
 		npcLocations.put("James", new Point(64, 672));
 
-		//song = new Music("data/Lovdeath.ogg");
+		exploreSong = new Music("data/sfx/Overworld.ogg");
+		houseSong = new Music("data/sfx/Shop.ogg");
 
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
@@ -308,13 +311,23 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-
-		//		if (!song.playing()) {
-		//			song.play();
-		//			song.setVolume(0f);
-		//			song.fade(5000, 1f, false);
-		//			songPlaying = true;
-		//		}
+		if (controller.getCurrentMap() == World.WORLD_MAP) {
+			houseSong.stop();
+			if (!exploreSong.playing()) {
+				exploreSong.play();
+				exploreSong.setVolume(0f);
+				exploreSong.fade(5000, 1f, false);
+				songPlaying = true;
+			}
+		} else if (controller.getCurrentMap() == World.HOUSES) {
+			exploreSong.stop();
+			if (!houseSong.playing()) {
+				houseSong.play();
+				houseSong.setVolume(0f);
+				houseSong.fade(5000, 1f, false);
+				songPlaying = true;
+			}
+		}
 
 		prevX = currX;
 		prevY = currY;
@@ -375,6 +388,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		if (prevX != currX || prevY != currY) {
 			if (controller.hasMonster(currX, currY)) {
 				FightState.enemyAttackTimer.start();
+				exploreSong.stop();
+				houseSong.stop();
 				game.enterState(FightState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}

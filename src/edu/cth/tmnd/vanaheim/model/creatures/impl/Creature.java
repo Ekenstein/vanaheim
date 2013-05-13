@@ -18,8 +18,8 @@ public abstract class Creature extends GameObject {
 	protected Direction currentDirection;
 
 	public Creature(final float x, final float y, final int velocity, final int maxHP,
-			final String creatureName) {
-		super(x, y, creatureName);
+			final String creatureName, boolean register) {
+		super(x, y, creatureName, register);
 		this.velocity = velocity;
 		this.inventory = new Inventory(Constants.DEFAULT_INVENTORY_SPACE);
 		this.maxHP = this.currentHP = maxHP;
@@ -34,7 +34,7 @@ public abstract class Creature extends GameObject {
 			return;
 		}
 
-		this.equipment = (EquipableItem) this.inventory.retrieveItem(item);
+		this.equipment = item;
 	}
 
 	public void unequip() {
@@ -138,5 +138,16 @@ public abstract class Creature extends GameObject {
 	
 	public Inventory getInventory(){
 		return inventory;
+	}
+	
+	public boolean isEquipped(EquipableItem item) {
+		if(this.equipment == null) {
+			return false;
+		}
+		return this.equipment.equals(item);
+	}
+	
+	public boolean isEquipped() {
+		return this.equipment != null;
 	}
 }

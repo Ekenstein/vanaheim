@@ -9,6 +9,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import edu.cth.tmnd.vanaheim.model.Battle;
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
@@ -19,8 +20,8 @@ public class World {
 	private final static int TILE_WIDTH = 32;
 	private final static int TILE_HEIGHT = 32;
 	private NPC[] npcs;
-	private final int WORLD_MAP = 0;
-	private final int HOUSES = 1;
+	public final static int WORLD_MAP = 0;
+	public final static int HOUSES = 1;
 	private int currentMap = WORLD_MAP;
 
 	private Tile[][] tiles;
@@ -105,18 +106,22 @@ public class World {
 		return maps.get(currentMap);
 	}
 	
+	public int getCurrentMap() {
+		return this.currentMap;
+	}
+	
 	public void questAccepted(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);
 		maps.get(currentMap).setTileId(xPos, yPos-1, 7, QUEST_PROGRESS);
 	}
 
-	public boolean hasMonster(int x, int y) {
-		boolean hasMonster = false;
+	public Battle hasMonster(int x, int y) {
+		Battle hasMonster = null;
 		if (currentMap == WORLD_MAP) {
 			if (tiles[x][y] != null) {
 				System.out.println("H�r finns det gr�s");
-				hasMonster = tiles[x][y].hasMonster() != null;
+				hasMonster = tiles[x][y].hasMonster();
 			}
 		}
 		return hasMonster;

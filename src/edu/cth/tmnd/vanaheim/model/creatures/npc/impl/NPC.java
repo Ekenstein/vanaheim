@@ -1,7 +1,6 @@
 package edu.cth.tmnd.vanaheim.model.creatures.npc.impl;
 
 import edu.cth.tmnd.vanaheim.constants.Constants;
-import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Human;
 
 public abstract class NPC extends Human {
@@ -12,7 +11,7 @@ public abstract class NPC extends Human {
 	
 	
 	public NPC(float x, float y, int velocity, int maxHp, String NPCName, State[] states){
-		super(x, y, velocity, maxHp,NPCName);
+		super(x, y, velocity, maxHp,NPCName, true);
 		state = 0;
 		currentState = states[state];
 		this.states = states;

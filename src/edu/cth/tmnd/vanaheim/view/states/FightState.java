@@ -14,7 +14,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -36,6 +38,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 
 	//Background image
 	private Image fightScreenBg;
+	
+	private Music battleSong;
+	private Sound slashSound;
 
 	//Inventory
 	private Image inventory_bg;
@@ -59,8 +64,8 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	private int startTime = 10;
 
 	//Healths
-	private int health = 100;
-	private int enemyHealth = 100;
+	private int playerHealth;
+	private int enemyHealth;
 
 	//Logs
 	private String enemyLog = "";
@@ -80,14 +85,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		public void actionPerformed(ActionEvent e) {
 			startTime--;
 			if (startTime == 0) {
-				//TODO Opponent is attacking. Call some method!
-
-				//TEST
-				enemyLog += "Spider hits you for 20 damage!\n";
-				health -= 20;
-				if (health <= 0) {
-					System.out.println("You died");
-					enemyLog += "You died :(";
+				controller.monsterHitPlayer();
+				if (controller.hasBattleEnded()) {
+					System.out.println("Battle ended");
 					enemyAttackTimer.stop();
 					game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 				}
@@ -104,6 +104,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		container.setTargetFrameRate(120);
+		
+		battleSong = new Music("data/sfx/Battle_Theme.ogg");
+		slashSound = new Sound("data/sfx/Kill_Enemy.ogg");
 		
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
@@ -133,20 +136,17 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			@Override
 			public void componentActivated(final AbstractComponent source) {
 				message = inputField.getText();
-				//TODO Handle the message
-				
-				//TEST
-				if (message.equals("hit")) {
-					enemyHealth -= 50;
-				} 
-				//End TEST
-				inputField.setText("");
+				controller.parseCommand(message);
+				slashSound.play();
 			}
 		});
 		inputField.setFocus(true);
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		
+		playerHealth = controller.getPlayerCurrentHP();
+		enemyHealth = controller.getBattleCurrentMonsterHP();
 		
 		context.setFont(descriptionFont);
 		
@@ -158,7 +158,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		context.drawImage(spiderImage, 732, 350);
 
 		//Draw health and attack bars
-		healthBarImage.draw(130, 458, 2*health, 16);
+		healthBarImage.draw(130, 458, 2*playerHealth, 16);
 		context.drawImage(barForegroundImage, 100, 450);
 		healthBarImage.draw(698, 458, 2*enemyHealth, 16);
 		context.drawImage(barForegroundImage, 668, 450);
@@ -185,14 +185,11 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		//TEST
-		if (enemyHealth <= 0) {
-			controller.setLoot(0);
-			enemyAttackTimer.stop();
-			enemyHealth = 100;
-			game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		if (!battleSong.playing()) {
+			battleSong.play();
+			battleSong.setVolume(0f);
+			battleSong.fade(1000, 1f, false);
 		}
-		//End TEST
 	}
 	
 	public void enter(GameContainer gc , StateBasedGame sbg)

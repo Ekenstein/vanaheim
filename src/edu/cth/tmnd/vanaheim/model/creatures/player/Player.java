@@ -15,7 +15,7 @@ public class Player extends Human {
 
 	public Player(final float x, final float y, final int velocity,
 			final int maxHP, final String creatureName) {
-		super(x, y, velocity, maxHP, creatureName);
+		super(x, y, velocity, maxHP, creatureName, true);
 		
 		super.objectMapper.registerObject("inventory", super.inventory);
 		super.inventory.addItem(new Axe());

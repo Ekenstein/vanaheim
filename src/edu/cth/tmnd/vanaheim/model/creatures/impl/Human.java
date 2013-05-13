@@ -6,8 +6,8 @@ public abstract class Human extends Creature {
 	
 	protected QuestBook questBook;
 	
-	public Human(final float x, final float y, final int velocity, final int maxHP, final String creatureName) {
-		super(x, y, velocity, maxHP, creatureName);
+	public Human(final float x, final float y, final int velocity, final int maxHP, final String creatureName, boolean register) {
+		super(x, y, velocity, maxHP, creatureName, register);
 		questBook = new QuestBook();
 	}
 
