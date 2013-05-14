@@ -12,26 +12,32 @@ import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 
 public abstract class Handler {
 	protected MessageBuffer msgBuffer = MessageBuffer.getInstance();
-	protected final Player p;
+	protected Player p;
 	protected Controller c;
-	
-	public Handler() {
-		this.p = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
-		try {
-			this.c = Controller.getInstance();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-	}
+	private boolean initialized = false;
 	
 	public void handle(final Object[] args) {
+		if(!this.initialized) {
+			this.init();
+		}
 		if(!this.checkArgs(args)) {
 			this.msgBuffer.unknownCommand();
 		}
 
 		this.handleArgs(args);
+	}
+	
+	private void init() {
+		try {
+			this.c = Controller.getInstance();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SlickException e) {
+		}
+		
+		this.p = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
+		
+		this.initialized = true;
 	}
 
 	protected abstract boolean checkArgs(Object[] args);

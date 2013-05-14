@@ -90,11 +90,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			if (startTime == 0) {
 				controller.monsterHitPlayer();
 				if (controller.hasBattleEnded()) {
+					controller.destroyBattle();
 					System.out.println("Battle ended");
 					enemyAttackTimer.stop();
-					if(controller.battleWinner() == "PLAYER"){
-						controller.addItemToPlayerTile(controller.getBattleCurrentMonsterItem());
-					}
 					game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 				}
 				startTime = 10;

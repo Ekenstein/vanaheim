@@ -177,6 +177,7 @@ final public class Parser {
 			}
 
 			Handler instance = null;
+			System.out.println(handler.toString());
 			try {
 				instance = this.getHandlerInstance(handler.toString());
 			} catch(final Exception e) {

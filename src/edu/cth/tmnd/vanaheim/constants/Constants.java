@@ -8,4 +8,5 @@ public class Constants {
 	public final static String PLAYER_OBJECT_NAME = "@";
 	public final static int NPC_WITHIN_RANGE_VALUE = 48;
 	public final static String STATE_CHANGED = "State changed";
+	public final static String CONTROLLER_OBJECT_NAME = "@!";
 }

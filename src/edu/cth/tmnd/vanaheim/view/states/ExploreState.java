@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -249,10 +250,12 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			context.drawImage(inventory_bg, 0, 768-inventory_bg.getHeight());
 			context.drawImage(quests_title, -64, 768-inventory_bg.getHeight()-quests_title.getHeight()/2);
 
-			Map<String, Quest> quests = controller.getQuests();
+			Map<String, String> quests = controller.getQuests();
 			System.out.println(quests.size());
-			for (String questName : quests.keySet()) {
-				String str = quests.get(questName).getDescription();
+			for (Entry<String, String> quest : quests.entrySet()) {
+				String questDescription = quest.getValue();
+				// quest description
+				String str = questDescription;
 				String[] strArray = str.split(" ");
 				for (int i = 0; i < strArray.length; i++) {
 					if (descriptionFont.getWidth(curText + " " + strArray[i]) > maxQuestWidth) {
@@ -262,6 +265,9 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 					curText += strArray[i] + " ";
 				}
 				description.add(curText);
+				
+				String questName = quest.getKey();
+				
 				int titleLength = titleFont.getWidth(questName);
 				context.setFont(titleFont);
 				context.drawString(questName, (256 - titleLength) / 2, 768 - inventory_bg.getHeight() + 32);
