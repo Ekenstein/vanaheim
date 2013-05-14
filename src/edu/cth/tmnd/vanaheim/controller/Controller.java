@@ -203,7 +203,9 @@ public class Controller {
 	}
 	
 	public int getBattleCurrentMonsterHP() {
-		assert this.currentBattle != null;
+		if(this.currentBattle == null) {
+			return 0;
+		}
 		
 		return this.currentBattle.getMonsterCurrentHP();
 	}
@@ -281,14 +283,16 @@ public class Controller {
 	 * @param item Item to drop
 	 */
 	public void dropItem(final Item item) {
-		final Item i = this.player.getItem(item);
+		final Item i = this.player.retrieveItem(item);
 
 		if(i != null) {
 			final float x = this.player.getX();
 			final float y = this.player.getY();
 
-			if(this.world.addItemToTile(x, y, i)) {
-				this.player.destroyItem(i); // TODO ska man avregistrera item här?
+			if(!(this.world.addItemToTile(x, y, i))) {
+				this.player.addItem(i);
+			} else {
+				this.objectMapper.removeObject(i.getItemName());
 			}
 		}
 	}

@@ -53,7 +53,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 
 	private Music exploreSong;
 	private Music houseSong;
-	private boolean songPlaying = false;
 
 	//Tiled maps
 	private TiledMap map = null;

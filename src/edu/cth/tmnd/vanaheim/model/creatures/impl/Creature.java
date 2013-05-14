@@ -76,10 +76,6 @@ public abstract class Creature extends GameObject {
 		return this.inventory.retrieveItem(item);
 	}
 
-	public boolean destroyItem(final Item item) {
-		return this.inventory.destroyItem(item);
-	}
-
 	public Item getItem(final Item item) {
 		return this.inventory.getItem(item);
 	}

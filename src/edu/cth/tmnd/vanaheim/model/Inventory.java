@@ -57,49 +57,17 @@ final public class Inventory extends Container {
 
 		return true;
 	}
-
-	/**
-	 * Will destroy an item. That is, an item
-	 * will have no relationship with anything,
-	 * and will be removed from the inventory.<br />
-	 * More formally, returns true and removes an
-	 * item  if and only if there exist
-	 * an item i such that item.equals(i).
-	 * If item was succesfully removed, the item will be removed from
-	 * the Object Mapper.
-	 * @param item	the item to destroy
-	 * @return	true if the item was succesfully destroyed,
-	 * 			otherwise false.
-	 * 			More precisely, it will return false if
-	 * 			the inventory is empty or if the item didn't
-	 * 			exist.
-	 */
-	public boolean destroyItem(final Item item) {
-		if(this.isEmpty()) {
-			return false;
-		}
-
-		final boolean itemRemoved = this.items.remove(item);
-
-		if(itemRemoved) {
-			super.objectMapper.removeObject(item.getItemName());
-			this.slotsLeft++;
-			return true;
-		}
-
-		return false;
-	}
 	
 	/**
-	 * Will retrieve the items from the inventory.
+	 * Will retrieve all the items from the inventory.
 	 * Will remove the items from the inventory.
 	 * @return
 	 */
 	public List<Item> retreiveItems() {
-		
-		//TODO kan innehålla samma referens = fubar
-		List<Item> items = this.items;
+		List<Item> items = new ArrayList<Item>();
+		items.addAll(this.items);
 		this.items.clear();
+		this.slotsLeft = this.slots;
 		
 		return items;
 	}
@@ -121,6 +89,10 @@ final public class Inventory extends Container {
 	 */
 	public boolean isEmpty() {
 		return this.slotsLeft == this.slots;
+	}
+	
+	public int getSlotsLeft() {
+		return this.slotsLeft;
 	}
 
 	/**
@@ -162,15 +134,6 @@ final public class Inventory extends Container {
 		}
 		
 		return this.items.get(index);
-	}
-
-	/**
-	 * Returns the number of slots left in the
-	 * inventory.
-	 * @return	number of slots left.
-	 */
-	public int getSlotsLeft() {
-		return this.slotsLeft;
 	}
 	
 	public Item getItem(String item){
