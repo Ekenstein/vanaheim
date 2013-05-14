@@ -1,18 +1,14 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.DrinkableItem;
 
 final public class HealthPotion implements DrinkableItem {
 	
 	private int healing;
-	private Image img;
 	private int itemID;
 	
-	public HealthPotion() throws SlickException {
+	public HealthPotion() {
 		this.healing = this.getDurability();
 		this.itemID = 2;
 		//img = new Image("data/potion.png");
@@ -58,7 +54,7 @@ final public class HealthPotion implements DrinkableItem {
 		}
 		
 		// make sure that the creature has the item.
-		if(by.getItem(this) == null) {
+		if(by.retrieveItem(this) == null) {
 			return;
 		}
 		
@@ -69,9 +65,6 @@ final public class HealthPotion implements DrinkableItem {
 		
 		// heal the creature
 		by.heal(this.healing);
-		
-		// remove the item from the creature's inventory.
-		by.destroyItem(this);
 	}
 
 	@Override
@@ -97,11 +90,6 @@ final public class HealthPotion implements DrinkableItem {
 		if(!this.getItemName().equals(other.getItemName()))
 			return false;
 		return true;
-	}
-
-	@Override
-	public Image getImage() {
-		return this.img;
 	}
 	
 	

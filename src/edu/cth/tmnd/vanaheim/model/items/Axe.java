@@ -112,9 +112,4 @@ final public class Axe implements WeaponItem {
 			return false;
 		return true;
 	}
-
-	@Override
-	public Image getImage() {
-		return this.img;
-	}
 }

@@ -61,12 +61,7 @@ final public class Silver implements QuestItem {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public Image getImage() {
-		return this.img;
-	}
-
+	
 	@Override
 	public String questName() {
 		return "Silver mining";

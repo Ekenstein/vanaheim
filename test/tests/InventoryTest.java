@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
+import edu.cth.tmnd.vanaheim.model.items.Gold;
 import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
@@ -82,7 +83,7 @@ public class InventoryTest {
 	public void retreiveItemsTest() {
 		this.inventory.addItem(this.item1);
 		this.inventory.addItem(this.item2);
-		Assert.assertEquals(0, this.inventory.getSlotsLeft());
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
 		
 		List<Item> items = this.inventory.retreiveItems();
 		
@@ -90,6 +91,52 @@ public class InventoryTest {
 		
 		Assert.assertEquals(this.slots, this.inventory.getSlotsLeft());
 		
-		Assert.assertEquals(0, this.inventory.retreiveItems().size());
+		Assert.assertEquals(this.item1, items.get(0));
+		Assert.assertEquals(this.item2, items.get(1));
+		
+		Assert.assertEquals(this.slots-2, this.inventory.retreiveItems().size());
+	}
+	
+	@Test
+	public void retreiveItemTest() {
+		this.inventory.addItem(this.item1);
+		this.inventory.addItem(this.item2);
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(this.item1, this.inventory.retrieveItem(this.item1));
+		Assert.assertEquals(this.slots-1, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(this.item2, this.inventory.retrieveItem(this.item2));
+		Assert.assertEquals(this.slots, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(null, this.inventory.retrieveItem(this.item1));
+		Assert.assertEquals(this.slots, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(null, this.inventory.retrieveItem(null));
+	}
+	
+	@Test
+	public void getItemTest() {
+		this.inventory.addItem(this.item1);
+		this.inventory.addItem(this.item2);
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(this.item1, this.inventory.getItem(this.item1));
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(this.item2, this.inventory.getItem(this.item2));
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(null, this.inventory.getItem(new Gold()));
+		
+		Assert.assertEquals(this.item1, this.inventory.getItem(this.item1.getItemName()));
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		Assert.assertEquals(this.item2, this.inventory.getItem(this.item2.getItemName()));
+		Assert.assertEquals(this.slots-2, this.inventory.getSlotsLeft());
+		
+		this.inventory.retreiveItems();
+		
+		Assert.assertEquals(null, this.inventory.getItem(this.item1.getItemName()));
 	}
 }
