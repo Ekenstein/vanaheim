@@ -7,8 +7,6 @@ import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 
-import java.util.List;
-
 public final class Battle {
 
 	private final Monster monster;
@@ -42,6 +40,14 @@ public final class Battle {
 	
 	public void destruct() {
 		this.monster.unregister();
+		
+		// drop items on tile
+		ObjectMapper om = ObjectMapper.getInstance();
+		MessageBuffer mb = MessageBuffer.getInstance();
+		for(Item i : this.monster.dropItems()) {
+			this.tile.addItem(i);
+			mb.append(this.monster.getName() + " dropped: " + i.getItemName());
+		}
 	}
 	
 	public int getPlayerMaxHP() {
@@ -67,14 +73,6 @@ public final class Battle {
 			return true;
 		}
 		return false;
-	}
-	
-	public List<Item> dropItems() {
-		if(this.getMonsterCurrentHP() <= 0) {
-			return this.monster.dropItems();
-		}
-		
-		return null;
 	}
 	
 	public String getMonsterName() {

@@ -10,12 +10,12 @@ import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public class NPCStateStart extends State {
 	
-	public void process(Human human, NPC npc, String s, Quest q, Item item){
+	public void process(Human human, NPC npc, String s, Quest quest, Item item){
 		MessageBuffer msgBuffer = MessageBuffer.getInstance();
 		StateHandler.getInstance().push(StateHandler.State.TALKING, npc);
 		msgBuffer.append(s);
-		msgBuffer.append(q.getDescription());
-		human.getQuestBook().addQuest(q);
+		msgBuffer.append(quest.getDescription());
+		human.addQuest(quest);
 		StateHandler.getInstance().push(StateHandler.State.QUEST_ACCEPTED, npc);
 		npc.changeToNextState();
 	}

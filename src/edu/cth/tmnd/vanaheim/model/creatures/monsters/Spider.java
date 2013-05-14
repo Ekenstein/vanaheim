@@ -18,8 +18,6 @@ public class Spider extends Monster {
 		this.items = new ArrayList<Item>();
 		this.items.add(new Gold());
 	}
-
-
 	
 	@Override
 	public List<Item> dropItems() {
@@ -30,5 +28,4 @@ public class Spider extends Monster {
 	public int getDamage() {
 		return super.dmg;
 	}
-
 }

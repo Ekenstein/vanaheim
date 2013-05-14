@@ -11,19 +11,19 @@ import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 public class NPCStateWaiting extends State {
 
 	@Override
-	public void process(Human human, NPC npc, String s, Quest q, Item item) {
-		if(human.getQuestBook().hasQuest(q)){
-			if(human.getQuestBook().isComplete(q)){
+	public void process(Human human, NPC npc, String s, Quest quest, Item item) {
+		if(human.hasQuest(quest.getName())){
+			if(human.isQuestCompleted(quest.getName())){
 				StateHandler.getInstance().push(StateHandler.State.TALKING, npc);
-				MessageBuffer.getInstance().append("Well done! You have finished the quest " + q.getName() + 
+				MessageBuffer.getInstance().append("Well done! You have finished the quest " + quest.getName() + 
 								". Here is your reward. A really fine " + item.getItemName() + " if i may say so myself.");
 				human.addItem(item);
 				npc.destroyItem(item);
-				npc.getQuestBook().removeQuest(q.getName());
+				npc.removeQuest(quest.getName());
 				npc.changeToNextState();
 			}
 			else{
-				MessageBuffer.getInstance().append("You have not finished your quest! " + q.getDescription());
+				MessageBuffer.getInstance().append("You have not finished your quest! " + quest.getDescription());
 			}
 		}
 		

@@ -57,15 +57,24 @@ public abstract class Tile {
 		return null;
 	}
 	
-	public boolean hasItem() {
+	public boolean hasItems() {
 		return !this.items.isEmpty();
 	}
 	
-	public Inventory getInventory() {
-		if(this.canContainItems()) {
-			return this.items;
-		}
-		
-		return null;
+	/**
+	 * Returns a list of items which is on the tile.
+	 * @return	items located on this tile.
+	 */
+	public List<Item> getItems() {
+		return this.items.getItems();
+	}
+	
+	/**
+	 * Will loot all the items from the tile.
+	 * This will remove the items from the tile.
+	 * @return	List of items.
+	 */
+	public List<Item> lootItems() {
+		return this.items.retreiveItems();
 	}
 }

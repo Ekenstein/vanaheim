@@ -66,5 +66,10 @@ final public class Silver implements QuestItem {
 	public Image getImage() {
 		return this.img;
 	}
+
+	@Override
+	public String questName() {
+		return "Silver mining";
+	}
 	
 }

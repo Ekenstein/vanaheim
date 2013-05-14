@@ -11,7 +11,6 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.model.Battle;
-import edu.cth.tmnd.vanaheim.model.Inventory;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.StateHandler;
@@ -20,7 +19,6 @@ import edu.cth.tmnd.vanaheim.model.creatures.npc.Gram.Gram;
 import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.parser.Parser;
-import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 /**
@@ -76,11 +74,13 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-
-	/**Get the quests for the player. Both the accomplished and non-accomplished quests that reside in his questbook.
-	 * @return All quests for the player.
+	
+	/**
+	 * Returns a map of quests where the key is the quest name
+	 * and the value is the quest description.
+	 * @return	quests
 	 */
-	public Map<String, Quest> getQuests() {
+	public Map<String, String> getQuests() {
 		return this.player.getQuests();
 	}
 	
@@ -202,10 +202,6 @@ public class Controller {
 		this.world.addItemsToTile(this.getPlayerLoc().x, this.getPlayerLoc().y, items);
 	}
 	
-	public List<Item> getBattleCurrentMonsterItem(){
-		return this.currentBattle.dropItems();
-	}
-	
 	public int getBattleCurrentMonsterHP() {
 		assert this.currentBattle != null;
 		
@@ -311,12 +307,23 @@ public class Controller {
 	 * @param y Position y of tile
 	 * @return The tiles inventory if it got any items in it else return null
 	 */
-	public Inventory getTileItems(final float x, final float y) {
+	public List<Item> getTileItems(final float x, final float y) {
 		if(this.hasTileItems(x, y)) {
-			return this.world.getTileInventory(x, y);
+			return this.world.getTileItems(x, y);
 		}
 
 		return null;
+	}
+	
+	/**
+	 * Will loot the items from the given tile.
+	 * If there were no items on the tile, null will be returned.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public List<Item> lootTileItems(final float x, final float y) {
+		return this.world.retrieveTileItems(x, y);
 	}
 
 	/**Get the players direction

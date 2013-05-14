@@ -1,7 +1,6 @@
 package edu.cth.tmnd.vanaheim.model.creatures.player;
 
 import java.util.List;
-import java.util.Map;
 
 import org.newdawn.slick.SlickException;
 
@@ -11,7 +10,6 @@ import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.items.Gold;
 import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
-import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public class Player extends Human {
 
@@ -24,10 +22,6 @@ public class Player extends Human {
 		super.inventory.addItem(new HealthPotion());
 		super.inventory.addItem(new Gold());
 		ObjectMapper.getInstance().registerObject("quest log", super.questBook);
-	}
-	
-	public Map<String, Quest> getQuests() {
-		return super.questBook.getQuests();
 	}
 	
 	public List<Item> getItems() {

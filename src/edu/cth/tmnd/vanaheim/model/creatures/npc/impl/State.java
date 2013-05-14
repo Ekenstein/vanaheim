@@ -5,7 +5,5 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public abstract class State {
-
-	
-	public abstract void process(Human human, NPC npc, String s, Quest q, Item item);
+	public abstract void process(Human human, NPC npc, String s, Quest quest, Item item);
 }

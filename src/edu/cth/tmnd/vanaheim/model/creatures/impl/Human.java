@@ -1,5 +1,9 @@
 package edu.cth.tmnd.vanaheim.model.creatures.impl;
 
+import java.util.Map;
+
+import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
+import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 import edu.cth.tmnd.vanaheim.model.quests.impl.QuestBook;
 
 public abstract class Human extends Creature {
@@ -13,8 +17,31 @@ public abstract class Human extends Creature {
 
 	public abstract void talk(Human human);
 	
-	public QuestBook getQuestBook(){
-		return this.questBook;
+	public void addQuestItem(String questName, QuestItem item) {
+		this.questBook.addQuestItem(questName, item);
 	}
-
+	
+	public Map<String, String> getQuests() {
+		return this.questBook.getQuests();
+	}
+	
+	public boolean hasQuest(String questName) {
+		return this.questBook.hasQuest(questName);
+	}
+	
+	public void addQuest(Quest q) {
+		this.questBook.addQuest(q);
+	}
+	
+	public boolean isQuestCompleted(String questName) {
+		return this.questBook.isComplete(questName);
+	}
+	
+	public String getQuestDescription(String questName) {
+		return this.questBook.getQuestDescription(questName);
+	}
+	
+	public void removeQuest(String questName) {
+		this.questBook.removeQuest(questName);
+	}
 }

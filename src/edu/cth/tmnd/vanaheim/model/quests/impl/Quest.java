@@ -3,7 +3,6 @@ package edu.cth.tmnd.vanaheim.model.quests.impl;
 
 import java.util.Map;
 
-import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
 
@@ -15,16 +14,12 @@ public abstract class Quest {
 
 	private String name;
 	private String description;
-	private Quest following;
 	private boolean isComplete;
-	private Creature owner;
-	private Creature user;
 	private Map<String,Integer> itemsCount;
 	
 	
-	public Quest(String name, String description, Creature owner, Map<String, Integer> requiredItems){
+	public Quest(String name, String description, Map<String, Integer> requiredItems){
 		this.name = name;
-		this.owner = owner;
 		this.description = description;
 		this.itemsCount = requiredItems;
 	}
@@ -61,14 +56,6 @@ public abstract class Quest {
 		this.name = name;
 	}
 
-	public Quest getFollowing() {
-		return following;
-	}
-
-	public void setFollowing(Quest following) {
-		this.following = following;
-	}
-
 	public boolean isComplete() {
 		return isComplete;
 	}
@@ -81,28 +68,6 @@ public abstract class Quest {
 		return description;
 		
 	}
-	
-	public boolean hasFollowingQuest(){
-		if(following != null){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	public Creature getOwner(){
-		return owner;
-	}
-	
-	public void setUser(Creature user){
-		this.user = user;
-	}
-	
-	public Creature getUser(){
-		return user;
-	}
-	
 	
 	public boolean process(Item item) {
 		if(itemsCount.containsKey(item.getItemName())){

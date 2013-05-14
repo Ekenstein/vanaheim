@@ -89,6 +89,20 @@ final public class Inventory extends Container {
 
 		return false;
 	}
+	
+	/**
+	 * Will retrieve the items from the inventory.
+	 * Will remove the items from the inventory.
+	 * @return
+	 */
+	public List<Item> retreiveItems() {
+		
+		//TODO kan innehålla samma referens = fubar
+		List<Item> items = this.items;
+		this.items.clear();
+		
+		return items;
+	}
 
 	/**
 	 * Checks if there are any slots left in the

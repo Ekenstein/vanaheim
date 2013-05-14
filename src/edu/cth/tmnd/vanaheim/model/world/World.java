@@ -8,12 +8,7 @@ import java.util.Map;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 import edu.cth.tmnd.vanaheim.model.Battle;
-import edu.cth.tmnd.vanaheim.model.Inventory;
-import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.world.tiles.GrassTile;
 import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
@@ -21,7 +16,6 @@ import edu.cth.tmnd.vanaheim.model.world.tiles.impl.Tile;
 public class World {
 	private final static int TILE_WIDTH = 32;
 	private final static int TILE_HEIGHT = 32;
-	private NPC[] npcs;
 	public final static int WORLD_MAP = 0;
 	public final static int HOUSES = 1;
 	private int currentMap = WORLD_MAP;
@@ -122,7 +116,6 @@ public class World {
 		Battle hasMonster = null;
 		if (currentMap == WORLD_MAP) {
 			if (tiles[x][y] != null) {
-				System.out.println("H�r finns det gr�s");
 				hasMonster = tiles[x][y].hasMonster();
 			}
 		}
@@ -180,14 +173,22 @@ public class World {
 		if(!this.withinBounds(x, y)) {
 			return false;
 		}
-		return this.tiles[this.getX(x)][this.getY(y)].hasItem();
+		return this.tiles[this.getX(x)][this.getY(y)].hasItems();
 	}
 	
-	public Inventory getTileInventory(float x, float y) { 
-		if(!this.withinBounds(x,y)) {
+	public List<Item> getTileItems(float x, float y) {
+		if(!this.withinBounds(x, y)) {
 			return null;
 		}
 		
-		return this.tiles[this.getX(x)][this.getY(y)].getInventory();
+		return this.tiles[this.getX(x)][this.getY(y)].getItems();
+	}
+	
+	public List<Item> retrieveTileItems(float x, float y) {
+		if(!this.withinBounds(x, y)) {
+			return null;
+		}
+		
+		return this.tiles[this.getX(x)][this.getY(y)].lootItems();
 	}
 }

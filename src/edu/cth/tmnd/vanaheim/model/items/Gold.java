@@ -65,5 +65,10 @@ final public class Gold implements QuestItem {
 	public Image getImage() {
 		return this.img;
 	}
+
+	@Override
+	public String questName() {
+		return "Gold mining";
+	}
 	
 }

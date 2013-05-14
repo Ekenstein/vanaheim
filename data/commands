@@ -7,3 +7,5 @@ show * : Show
 open * : Show
 equip * : Equip
 unequip * : Unequip
+loot * : Loot
+loot all : Loot

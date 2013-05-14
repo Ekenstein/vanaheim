@@ -10,15 +10,17 @@ import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.giveandtake.NPCStateStart;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.giveandtake.NPCStateWaiting;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.quests.GoldQuest;
+import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
 
 public class Gram extends NPC {
 	
 	
 	private static final State[] states = {new NPCStateStart(), new NPCStateWaiting(), new NPCStateDone()};
+	private Quest quest;
 
 	public Gram(float x, float y) throws SlickException {
 		super(x, y, 0, 1, "Gram", states);
-		this.getQuestBook().addQuest(new GoldQuest(this));
+		this.quest = new GoldQuest();
 		this.getInventory().addItem(new Axe());
 		super.setDirection(Direction.RIGHT);
 	}
@@ -26,8 +28,11 @@ public class Gram extends NPC {
 	
 	@Override
 	protected void talkative(Human human) {
-		this.getCurrentState().process(human, this, "Hello my friend. I can see you found the promised land.",
-									   	this.getQuestBook().getQuest("Gold mining"), this.getItem("Crude axe"));
+		this.getCurrentState().process(
+				human, 
+				this, 
+				"Hello my friend. I can see you found the promised land.",
+				this.quest, this.getItem("Crude axe"));
 	}
 	
 }
