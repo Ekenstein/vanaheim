@@ -197,9 +197,9 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
 		}
 		
-		if(controller.getPlayerEquipedItem() != null){
-			context.drawImage(itemIDMap.get(controller.getPlayerEquipedItem().getItemID()), 50 , 300);
-			context.drawString(controller.getPlayerEquipedItem().getItemName(), 40, 270);
+		if(controller.getPlayerEquippedItem() != null){
+			context.drawImage(itemIDMap.get(controller.getPlayerEquippedItem().getItemID()), 50 , 300);
+			context.drawString(controller.getPlayerEquippedItem().getItemName(), 40, 270);
 		}
 		
 	}

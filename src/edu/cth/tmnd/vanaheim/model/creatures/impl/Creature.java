@@ -38,7 +38,7 @@ public abstract class Creature extends GameObject {
 		this.equipment = item;
 	}
 	
-	public Item getEquipedItem(){
+	public Item getEquippedItem(){
 		return this.equipment;
 	}
 

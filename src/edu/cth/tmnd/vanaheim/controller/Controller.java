@@ -22,9 +22,10 @@ import edu.cth.tmnd.vanaheim.model.parser.Parser;
 import edu.cth.tmnd.vanaheim.model.world.World;
 
 /**
- * Controller is the intermediary part of the game. It controls the flow 
- * and direct actions to the appropriate part of game.
- * @author Daniel Jonsson
+ * Handles all the communication between the view and
+ * the model itself.
+ * 
+ * @author Gabriel Ekblad
  *
  */
 public class Controller {
@@ -84,47 +85,61 @@ public class Controller {
 		return this.player.getQuests();
 	}
 	
-	public Item getPlayerEquipedItem(){
-		return this.player.getEquipedItem();
+	/**
+	 * Returns the player's equipped item.
+	 * @return	the player's equipped item.
+	 */
+	public Item getPlayerEquippedItem(){
+		return this.player.getEquippedItem();
 	}
 	
 	public void questAccepted(int x, int y) {
 		this.world.questAccepted(x, y);
 	}
 
-	/** Get the items from the players inventory.
+	/** 
+	 * Get the items from the players inventory.
+	 * Will not remove the items from the inventory.
 	 * @return Items in players inventory.
 	 */
 	public List<Item> getItems() {
 		return this.player.getItems();
 	}
 
-	/**Check if the inventory is toggled.
+	/**
+	 * Check if the inventory is toggled.
 	 * @return True if the inventory is toggled else false.
 	 */
 	public boolean isInventoryToggled() {
 		return this.player.isInventoryToggled();
 	}
 
-	/**Check if the questbook is toggled.
+	/**
+	 * Check if the questbook is toggled.
 	 * @return True if questbook is toggled else false.
 	 */
 	public boolean isQuestBookToggled() {
 		return this.player.isQuestBookToggled();
 	}
 
-	/**Add a listener to the message buffer.
+	/**
+	 * Add a listener to the message buffer.
 	 * @param listener Listener to add to the buffer.
 	 */
 	public void addMessageBufferListener(final PropertyChangeListener listener) {
 		this.msgBuffer.addListener(listener);
 	}
 	
+	/**
+	 * Add a listener to the state handler.
+	 * @param listener	listener to be added to the state handler.
+	 */
 	public void addStateHandlerListener(final PropertyChangeListener listener) {
 		StateHandler.getInstance().addListeners(listener);
 	}
 
-	/**Get the players location.
+	/**
+	 * Get the players location.
 	 * @return Players current position.
 	 */
 	public Point getPlayerLoc() {
@@ -133,7 +148,8 @@ public class Controller {
 		return new Point(x, y);
 	}
 
-	/**Set the players location
+	/**
+	 * Set the players location
 	 * @param p The location you want to put the player.
 	 */
 	public void setPlayerLoc(Point p) {
@@ -141,7 +157,8 @@ public class Controller {
 		this.player.setY(p.y);
 	}
 
-	/**Check if a tile is blocked
+	/**
+	 * Check if a tile is blocked
 	 * @param x Coordinate x
 	 * @param y Coordinate y
 	 * @return If location x,y is blocked return true else false
@@ -150,7 +167,8 @@ public class Controller {
 		return this.world.isBlocked(x, y);
 	}
 
-	/**Get the map for a certain location in the world
+	/**
+	 * Get the map for a certain location in the world
 	 * @param x Coordinate x
 	 * @param y Coordinate y
 	 * @return The map given by the coordinates
@@ -159,7 +177,8 @@ public class Controller {
 		return this.world.getMap(x, y);
 	}
 
-	/**Initiate the map
+	/**
+	 * Initiate the map
 	 * @param mapID Id on the map to initiate
 	 * @param map Map to initiate
 	 * @throws SlickException 
@@ -168,7 +187,8 @@ public class Controller {
 		this.world.initMap(mapID, map);
 	}
 
-	/**Initiate a house
+	/**
+	 * Initiate a house
 	 * @param x Coordinate x to initiate the house
 	 * @param y Coordinate y to initiate the house
 	 * @param mapID Map id to put the house
@@ -183,6 +203,8 @@ public class Controller {
 	}
 
 	/**
+	 * Checks if the current tile the player stands on
+	 * contains a monster or not.
 	 * @param x Position x to check if it has monster
 	 * @param y Position y to check if it has monster
 	 * @return True if the position x,y has monster on it else false
@@ -198,10 +220,20 @@ public class Controller {
 		return false;
 	}
 	
-	public void addItemToPlayerTile(List<Item> items){
+	/**
+	 * Adds a list of items to the tile the player stands on.
+	 * @param items	items to be added to the tile the player
+	 * 				stands on.
+	 */
+	public void addItemsToPlayerTile(List<Item> items){
 		this.world.addItemsToTile(this.getPlayerLoc().x, this.getPlayerLoc().y, items);
 	}
 	
+	/**
+	 * If a battle has been initiated, return the
+	 * monster's current HP.
+	 * @return	
+	 */
 	public int getBattleCurrentMonsterHP() {
 		if(this.currentBattle == null) {
 			return 0;
