@@ -24,11 +24,12 @@ public final class EquipHandler extends Handler {
 		
 		if(super.p.isEquipped()) {
 			super.msgBuffer.append("Has already equipped an item!");
-		} else if(super.p.retrieveItem(item) != null) {
-			super.p.equip(item);
-			super.msgBuffer.append("Equipped " + item.getItemName() + "!");
 		} else {
-			super.msgBuffer.append("No such item in the inventory!");
+			if(super.p.equip(item)) {
+				super.msgBuffer.append("Equipped " + item.getItemName() + "!");
+			} else {
+				super.msgBuffer.append("No such item in the inventory!");
+			}
 		}
 	}
 

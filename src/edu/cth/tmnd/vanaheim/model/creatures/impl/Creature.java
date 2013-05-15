@@ -31,20 +31,21 @@ public abstract class Creature extends GameObject {
 		return this.velocity;
 	}
 
-	public void equip(final EquipableItem item) {
+	public boolean equip(final EquipableItem item) {
 		if(item == null) {
-			return;
+			return false;
 		}
 		
 		if(this.equipment != null) {
-			return;
+			return false;
 		}
 
 		if(this.retrieveItem(item) == null) {
-			return;
+			return false;
 		}
 		
 		this.equipment = item;
+		return true;
 	}
 	
 	public Item getEquippedItem(){
