@@ -1,7 +1,5 @@
 package edu.cth.tmnd.vanaheim.model.creatures.impl;
 
-import java.util.Collection;
-import java.util.HashSet;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import java.util.List;
 
