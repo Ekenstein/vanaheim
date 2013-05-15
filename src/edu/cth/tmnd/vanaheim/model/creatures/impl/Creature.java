@@ -31,10 +31,18 @@ public abstract class Creature extends GameObject {
 	}
 
 	public void equip(final EquipableItem item) {
+		if(item == null) {
+			return;
+		}
+		
 		if(this.equipment != null) {
 			return;
 		}
 
+		if(this.retrieveItem(item) == null) {
+			return;
+		}
+		
 		this.equipment = item;
 	}
 	
@@ -137,10 +145,6 @@ public abstract class Creature extends GameObject {
 		return this.currentDirection;
 	}
 	
-	public Inventory getInventory(){
-		return inventory;
-	}
-	
 	public boolean isEquipped(EquipableItem item) {
 		if(this.equipment == null) {
 			return false;
@@ -150,5 +154,13 @@ public abstract class Creature extends GameObject {
 	
 	public boolean isEquipped() {
 		return this.equipment != null;
+	}
+	
+	public int getInventorySlotsLeft() {
+		return this.inventory.getSlotsLeft();
+	}
+	
+	public int getInventorySlots() {
+		return this.inventory.getSlots();
 	}
 }

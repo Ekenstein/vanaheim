@@ -21,7 +21,7 @@ public class Gram extends NPC {
 	public Gram(float x, float y) throws SlickException {
 		super(x, y, 0, 1, "Gram", states);
 		this.quest = new GoldQuest();
-		this.getInventory().addItem(new Axe());
+		this.addItem(new Axe());
 		super.setDirection(Direction.RIGHT);
 	}
 
