@@ -1,0 +1,8 @@
+#################################
+#   Anteckningar från möte #9   #
+#################################
+
+Detta möte skedde vi skype och vi hade varken en sekreterare eller mötesledare. Vi diskuterade lite inför kommande vecka.
+Gabriel och Daniel ska försöka ta hand om meddelanden på ett bättre sätt. Ett sätt så att man ska kunna skilja på ord och dess betydelse.
+T.ex. "hit spider with axe" där spider och axe är objekt och hit en action man kan utföra med sin axe på spider.
+Richard ska skapa ett UI för ett fight fönster.

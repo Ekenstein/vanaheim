@@ -1,0 +1,18 @@
+#################################
+#   Anteckningar från möte #10  #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: 
+- Richard Karlsson: Sekreterare 
+- Daniel Jonsson: Mötesledare
+
+§ Vad har gjorts?
+Richard har skapat 2 quest givers med name plates, quest marks osv. Han har även skapat ett UI för en fight. 
+Gabriel och Daniel har bättrat på parsning av meningar. Nu används istället en object mapper i vilken objekt registrerar sig med
+namn. Ett namn kan nu mappas till ett objekt, T.ex. "axe" som då refererar till ett yxobjekt. 
+Tyvärr har jag som sekreterar för detta möte hand om det grafiska. En mer detaljerad förklaring om hur parsning fungerar kommer
+finnas i projektets dokumentation senare.
+
+§ Till nästa möte
+Till nästa möte ska vi börja med att implementera ett quest. Man ska prata med en NPC och få ett quest som ber en att döda 6 spindlar.
