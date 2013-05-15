@@ -5,8 +5,6 @@ import java.util.Map;
 
 public final class ObjectMapper {
 
-	public static enum Type { REGISTERED, UNKNOWN };
-
 	private static ObjectMapper theInstance = null;
 	private final Map<String, Object> objects;
 
@@ -24,6 +22,8 @@ public final class ObjectMapper {
 
 	/**
 	 * Maps the given object to the given name.
+	 * If a name is already used by another object,
+	 * that name will be associated to the new object.
 	 * @param name	the name of the object
 	 * @param o		the object to map with the name.
 	 */
@@ -39,12 +39,12 @@ public final class ObjectMapper {
 	 * @return		The type of the object. If it doesn't exist it will return
 	 * 				Type.UNKNOWN, otherwise Type.{ITEM | CREATURE}
 	 */
-	public Type isRegistered(final String name) {
+	public boolean isRegistered(final String name) {
 		if(name == null) {
-			return Type.UNKNOWN;
+			return false;
 		}
 
-		return this.objects.containsKey(name.toLowerCase()) ? Type.REGISTERED : Type.UNKNOWN;
+		return this.objects.containsKey(name.toLowerCase());
 	}
 
 	public Object getObject(final String name) {
@@ -56,7 +56,11 @@ public final class ObjectMapper {
 	}
 	
 	public void removeObject(final String name) {
-		this.objects.remove(name);
+		if(name == null) {
+			return;
+		}
+		
+		this.objects.remove(name.toLowerCase());
 	}
 	
 	public boolean isEmpty() {

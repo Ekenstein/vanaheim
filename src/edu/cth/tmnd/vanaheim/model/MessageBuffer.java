@@ -31,11 +31,7 @@ public final class MessageBuffer {
 			this.listeners.firePropertyChange(NEW_MESSAGE_ADDED, null, s);
 		}
 	}
-
-	public void unknownCommand() {
-		this.append("Unknown action.");
-	}
-
+	
 	public void addListener(final PropertyChangeListener listener) {
 		this.listeners.addPropertyChangeListener(listener);
 	}

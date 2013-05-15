@@ -1,8 +1,5 @@
 package edu.cth.tmnd.vanaheim.model.items;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Monster;
 import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
@@ -10,10 +7,9 @@ import edu.cth.tmnd.vanaheim.model.items.impl.WeaponItem;
 final public class Axe implements WeaponItem {
 	private int damage;
 	private int durability;
-	private Image img;
 	private int itemID;
 	
-	public Axe() throws SlickException {
+	public Axe() {
 		this.damage = 40;
 		this.durability = this.getDurability();
 		this.itemID = 1;

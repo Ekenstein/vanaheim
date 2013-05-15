@@ -21,7 +21,7 @@ public abstract class Handler {
 			this.init();
 		}
 		if(!this.checkArgs(args)) {
-			this.msgBuffer.unknownCommand();
+			this.msgBuffer.append("I don't know what you mean.");
 		}
 
 		this.handleArgs(args);

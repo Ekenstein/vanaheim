@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.cth.tmnd.vanaheim.model.Inventory;
+import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.items.Gold;
 import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
@@ -31,6 +32,7 @@ public class InventoryTest {
 
 	@After
 	public void tearDown() throws Exception {
+		ObjectMapper.getInstance().clear();
 	}
 
 	@Test
@@ -138,5 +140,18 @@ public class InventoryTest {
 		this.inventory.retreiveItems();
 		
 		Assert.assertEquals(null, this.inventory.getItem(this.item1.getItemName()));
+	}
+	
+	@Test
+	public void addItemIsRegisteredTest() {
+		Item item1 = new Axe();
+		
+		ObjectMapper objMapper = ObjectMapper.getInstance();
+		
+		Assert.assertFalse(objMapper.isRegistered(item1.getItemName()));
+		
+		this.inventory.addItem(item1);
+		
+		Assert.assertTrue(objMapper.isRegistered(item1.getItemName()));
 	}
 }

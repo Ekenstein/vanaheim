@@ -1,14 +1,11 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import junit.framework.Assert;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
