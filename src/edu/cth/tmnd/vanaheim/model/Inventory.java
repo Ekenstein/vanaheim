@@ -6,12 +6,25 @@ import java.util.List;
 
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
+/**
+ * Inventory holds a list of items.
+ * Each item added to the inventory will
+ * be registered to the ObjectMapper.
+ * 
+ * @author Gabriel Ekblad
+ *
+ */
 final public class Inventory extends Container {
 	private final int slots;
 	private int slotsLeft;
 
 	private final List<Item> items;
 
+	/**
+	 * Instantiates the inventory with the given
+	 * amount of slots.
+	 * @param slots
+	 */
 	public Inventory(final int slots) {
 		this.slots = this.slotsLeft = slots;
 		this.items = new ArrayList<Item>(slots);
@@ -61,7 +74,7 @@ final public class Inventory extends Container {
 	/**
 	 * Will retrieve all the items from the inventory.
 	 * Will remove the items from the inventory.
-	 * @return
+	 * @return	list of the retreived items.
 	 */
 	public List<Item> retreiveItems() {
 		List<Item> items = new ArrayList<Item>();
@@ -74,7 +87,7 @@ final public class Inventory extends Container {
 
 	/**
 	 * Checks if there are any slots left in the
-	 * inventory
+	 * inventory.
 	 * @return	True if there were any slots left,
 	 * 			otherwise false.
 	 */
@@ -91,6 +104,10 @@ final public class Inventory extends Container {
 		return this.slotsLeft == this.slots;
 	}
 	
+	/**
+	 * Returns the number of slots left in the inventory.
+	 * @return	slots left in the inventory.
+	 */
 	public int getSlotsLeft() {
 		return this.slotsLeft;
 	}
@@ -101,7 +118,8 @@ final public class Inventory extends Container {
 	 * More formally, will return an item if there exist
 	 * an item i such that item.equals(i)
 	 * @param item
-	 * @return
+	 * @return	the retreived item or null if the item didn't
+	 * 			exist.
 	 */
 	public Item retrieveItem(final Item item) {
 		int index = this.getItemIndex(item);
@@ -126,6 +144,14 @@ final public class Inventory extends Container {
 		return this.items.indexOf(item);
 	}
 	
+	/**
+	 * Gets the given item from the inventory.
+	 * If the item exists the item will be returned,
+	 * otherwise null.
+	 * Will not remove the item from the inventory.
+	 * @param item	the item to get.
+	 * @return	the item to get.
+	 */
 	public Item getItem(Item item) {
 		int index = this.getItemIndex(item);
 		
@@ -136,6 +162,14 @@ final public class Inventory extends Container {
 		return this.items.get(index);
 	}
 	
+	/**
+	 * Returns the item associated to the given string.
+	 * If the item didn't exist, null will be returned,
+	 * otherwise the item object.
+	 * Will not remove the item from the inventory.
+	 * @param item	the item name
+	 * @return	the item associated to the name.
+	 */
 	public Item getItem(String item){
 		Iterator<Item> it = items.iterator();
 		while(it.hasNext())
