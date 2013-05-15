@@ -18,16 +18,16 @@ public final class MessageBuffer {
 		return theInstance;
 	}
 
-	private final ArrayList<String> cache;
+	private final ArrayList<String> buffer;
 
 	private MessageBuffer() {
-		this.cache = new ArrayList<String>();
+		this.buffer = new ArrayList<String>();
 		this.listeners = new PropertyChangeSupport(this);
 	}
 
 	public void append(final String s) {
 		if(s != null) {
-			this.cache.add(s);
+			this.buffer.add(s);
 			this.listeners.firePropertyChange(NEW_MESSAGE_ADDED, null, s);
 		}
 	}
@@ -38,5 +38,13 @@ public final class MessageBuffer {
 
 	public void addListener(final PropertyChangeListener listener) {
 		this.listeners.addPropertyChangeListener(listener);
+	}
+	
+	public void clear() {
+		this.buffer.clear();
+	}
+	
+	public int size() {
+		return this.buffer.size();
 	}
 }
