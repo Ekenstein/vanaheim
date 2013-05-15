@@ -4,6 +4,17 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
+/**
+ * MessageBuffer contains a buffer of messages
+ * produced by the model. It will push out messages
+ * to its respective listeners whenever a message is
+ * appended onto the buffer.
+ * 
+ * It's a singleton class in order to prevent the object
+ * from being instantiated all over the application.
+ * 
+ * @author Gabriel Ekblad
+ */
 public final class MessageBuffer {
 	public final static String NEW_MESSAGE_ADDED = "New message added";
 	private static MessageBuffer theInstance = null;
@@ -25,6 +36,12 @@ public final class MessageBuffer {
 		this.listeners = new PropertyChangeSupport(this);
 	}
 
+	/**
+	 * Appends the given string to the buffer. Will
+	 * push out the message to all the listeners.
+	 * @param s	the string to append on the buffer.
+	 * 			If the string is null, nothing will happen.
+	 */
 	public void append(final String s) {
 		if(s != null) {
 			this.buffer.add(s);
@@ -32,14 +49,28 @@ public final class MessageBuffer {
 		}
 	}
 	
+	/**
+	 * Adds listeners to the message buffer. These listeners
+	 * will receive new messages whenever they are appended to
+	 * the buffer.
+	 * @param listener	listener of the message buffer.
+	 */
 	public void addListener(final PropertyChangeListener listener) {
 		this.listeners.addPropertyChangeListener(listener);
 	}
 	
+	/**
+	 * Clears the buffer from all its messages.
+	 */
 	public void clear() {
 		this.buffer.clear();
 	}
 	
+	/**
+	 * Returns the size of the buffer. That is,
+	 * the amount of messages in the buffer.
+	 * @return	the amount of messages in the buffer.
+	 */
 	public int size() {
 		return this.buffer.size();
 	}

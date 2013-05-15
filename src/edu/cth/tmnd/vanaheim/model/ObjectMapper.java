@@ -3,6 +3,13 @@ package edu.cth.tmnd.vanaheim.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Handles mapping between object's and their desired name.
+ * Each method handling objects and their respective mappings
+ * are case insensitive. The names will be set to lower case.
+ * @author Gabriel Ekblad
+ *
+ */
 public final class ObjectMapper {
 
 	private static ObjectMapper theInstance = null;
@@ -36,8 +43,8 @@ public final class ObjectMapper {
 	/**
 	 * Checks if a given String is registered in the object mappings.
 	 * @param name	The name of the object.
-	 * @return		The type of the object. If it doesn't exist it will return
-	 * 				Type.UNKNOWN, otherwise Type.{ITEM | CREATURE}
+	 * @return		True if the object was registered in the object mapper,
+	 * 				otherwise false.
 	 */
 	public boolean isRegistered(final String name) {
 		if(name == null) {
@@ -47,6 +54,13 @@ public final class ObjectMapper {
 		return this.objects.containsKey(name.toLowerCase());
 	}
 
+	/**
+	 * Returns the object mapped to the given name.
+	 * @param name	the name of the object in the mapping.
+	 * @return		The object mapped to the given name.
+	 * 				If the name doesn't exist in the mapping,
+	 * 				null will be returned.
+	 */
 	public Object getObject(final String name) {
 		if(name == null) {
 			return null;
@@ -55,6 +69,11 @@ public final class ObjectMapper {
 		return this.objects.get(name.toLowerCase());
 	}
 	
+	/**
+	 * Removes an object mapped to the given name.
+	 * @param name	the name of the object that is desired to
+	 * 				be removed. If the name is null.
+	 */
 	public void removeObject(final String name) {
 		if(name == null) {
 			return;
@@ -63,14 +82,26 @@ public final class ObjectMapper {
 		this.objects.remove(name.toLowerCase());
 	}
 	
+	/**
+	 * Checks if the mapper is empty.
+	 * @return	True if the mapper is empty, otherwise false.
+	 */
 	public boolean isEmpty() {
 		return this.objects.isEmpty();
 	}
 	
+	/**
+	 * Returns the size of the mapper. That is, the amount
+	 * of objects mapped in the mapper.
+	 * @return	the size of the mapper.
+	 */
 	public int size() {
 		return this.objects.size();
 	}
 	
+	/**
+	 * Will clear the mapper from all the objects mapped.
+	 */
 	public void clear() { 
 		this.objects.clear();
 	}
