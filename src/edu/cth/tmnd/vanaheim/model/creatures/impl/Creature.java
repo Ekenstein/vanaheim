@@ -24,6 +24,7 @@ public abstract class Creature extends GameObject {
 		this.velocity = velocity;
 		this.inventory = new Inventory(Constants.DEFAULT_INVENTORY_SPACE);
 		this.maxHP = this.currentHP = maxHP;
+		this.currentDirection = Creature.Direction.UP;
 	}
 
 	public int getVelocity() {
