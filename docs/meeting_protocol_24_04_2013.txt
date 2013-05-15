@@ -1,0 +1,18 @@
+#################################
+#   Anteckningar från möte #6   #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson: 
+- Daniel Jonsson: Sekreterare
+
+§ Uppföljning
+Gabriel har kommit på ett bra sätt att parse:a meddelanden. Bör vara färdigt till nästa möte.
+
+§ Break från kodande
+Vi beslutar under detta möte att ta ett litet break från kodandet. Detta är i första hand eftersom Richard och Gabriel har deadlines i en
+annan kurs. Kodandet kommer istället tas upp igen under andra veckan av maj. 
+
+§ Till nästa möte
+Detta lämnas fritt till dem som har tid och vill koda lite. Inga krav på något som ska vara gjort tills nästa möte.
