@@ -1,3 +1,5 @@
+loot * : Loot
+loot all : Loot
 hit * with * : Attack
 eat * : Eat
 drink * : Drink
@@ -6,5 +8,3 @@ show * : Show
 open * : Show
 equip * : Equip
 unequip * : Unequip
-loot * : Loot
-loot all : Loot

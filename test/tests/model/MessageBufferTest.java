@@ -1,4 +1,4 @@
-package tests;
+package tests.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,10 +15,23 @@ import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 public class MessageBufferTest {
 	
 	private String message = "Test";
+	private TestClassPropertyChange pcl;
+	
+	private class TestClassPropertyChange implements PropertyChangeListener {
+		private boolean msgSent = false;
+		
+		@Override
+		public void propertyChange(PropertyChangeEvent arg0) {
+			this.msgSent = true;
+		}
+		
+	}
 	
 	@Before
 	public void setUp() {
 		ObjectMapper.getInstance().clear();
+		MessageBuffer.getInstance().clear();
+		this.pcl = new TestClassPropertyChange();
 	}
 	
 	@After
@@ -31,30 +44,20 @@ public class MessageBufferTest {
 	public void appendTest() {
 		MessageBuffer msgBuffer = MessageBuffer.getInstance();
 		final String message = "Test";
-		class TestPropertyChange implements PropertyChangeListener {
-			private boolean msgSent = false;
-			@Override
-			public void propertyChange(PropertyChangeEvent e) {
-				Assert.assertEquals(message, e.getNewValue());
-				this.msgSent = true;
-			}
-		}
 		
-		TestPropertyChange c = new TestPropertyChange();
+		msgBuffer.addListener(this.pcl);
 		
-		msgBuffer.addListener(c);
-		
-		Assert.assertFalse(c.msgSent);
+		Assert.assertFalse(this.pcl.msgSent);
 		msgBuffer.append(message);
-		Assert.assertTrue(c.msgSent);
+		Assert.assertTrue(this.pcl.msgSent);
 		Assert.assertEquals(1, msgBuffer.size());
 		
-		c.msgSent = false;
+		this.pcl.msgSent = false;
 		
 		msgBuffer.append(null);
 		Assert.assertEquals(1, msgBuffer.size());
 		
-		Assert.assertFalse(c.msgSent);
+		Assert.assertFalse(this.pcl.msgSent);
 	}
 	
 	@Test

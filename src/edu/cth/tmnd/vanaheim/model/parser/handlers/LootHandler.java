@@ -32,6 +32,7 @@ public final class LootHandler extends Handler {
 			}
 			
 			for(Item i : tileItems) {
+				System.out.println(i.getItemName());
 				if(i instanceof QuestItem) {
 					QuestItem qItem = (QuestItem) i;
 					this.handleQuestItem(qItem);

@@ -1,4 +1,4 @@
-package tests;
+package tests.model;
 
 import java.util.List;
 
@@ -85,7 +85,7 @@ public class BattleTest {
 	public void destructTest() {
 		Assert.assertTrue(this.objMapper.isRegistered(this.monster.getName()));
 		Assert.assertEquals(this.monster, (Monster)this.objMapper.getObject(this.monster.getName()));
-		this.battle.destruct();
+		this.battle.destruct(true);
 		Assert.assertFalse(this.objMapper.isRegistered(this.monster.getName()));
 		Assert.assertNotSame(this.monster, (Monster)this.objMapper.getObject(this.monster.getName()));
 		

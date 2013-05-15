@@ -262,10 +262,10 @@ public class Controller {
 		return this.player.getMaxHP();
 	}
 	
-	public void destroyBattle() {
+	public void destroyBattle(boolean drop) {
 		assert this.currentBattle != null;
 		
-		this.currentBattle.destruct();
+		this.currentBattle.destruct(drop);
 		
 		this.currentBattle = null;
 	}

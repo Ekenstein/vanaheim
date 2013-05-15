@@ -1,7 +1,5 @@
 package edu.cth.tmnd.vanaheim.init;
 
-import java.awt.EventQueue;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 

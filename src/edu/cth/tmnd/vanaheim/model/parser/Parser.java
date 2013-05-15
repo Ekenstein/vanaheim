@@ -162,8 +162,8 @@ final public class Parser {
 				if(!s.equals(WILDCARD)) {
 					if(!this.prefixes.contains(s)) {
 						this.prefixes.add(s);
-						path[i] = s;
 					}
+					path[i] = s;
 				} else {
 					// TODO Check if next is wildcard or not
 					path[i] = s;

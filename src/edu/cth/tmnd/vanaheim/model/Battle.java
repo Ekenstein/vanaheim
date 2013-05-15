@@ -78,14 +78,16 @@ public final class Battle {
 	 * and will drop the monster's items on the tile
 	 * the monster was generated on.
 	 */
-	public void destruct() {
+	public void destruct(boolean drop) {
 		this.monster.unregister();
 		
 		// drop items on tile
-		MessageBuffer mb = MessageBuffer.getInstance();
-		for(Item i : this.monster.dropItems()) {
-			this.tile.addItem(i);
-			mb.append(this.monster.getName() + " dropped: " + i.getItemName());
+		if(drop) {
+			MessageBuffer mb = MessageBuffer.getInstance();
+			for(Item i : this.monster.dropItems()) {
+				this.tile.addItem(i);
+				mb.append(this.monster.getName() + " dropped: " + i.getItemName());
+			}
 		}
 	}
 	
