@@ -354,9 +354,5 @@ public class Controller {
 	public void parseCommand(final String command) {
 		this.parser.parse(command);
 	}
-	
-	public String battleWinner(){
-		return this.currentBattle.getBattleWinner();
-	}
 }
 

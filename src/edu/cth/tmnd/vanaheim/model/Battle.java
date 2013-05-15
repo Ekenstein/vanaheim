@@ -12,14 +12,12 @@ public final class Battle {
 	private final Monster monster;
 	private final Player player;
 	private final Tile tile;
-	private String winner;
 	
 	public Battle(Monster m, Tile t) {
 		this.monster = m;
 		m.register();
 		this.player = (Player) ObjectMapper.getInstance().getObject(Constants.PLAYER_OBJECT_NAME);
 		this.tile = t;
-		winner = "MONSTER";
 	}
 	
 	public int getMonsterCurrentHP() {
@@ -42,7 +40,6 @@ public final class Battle {
 		this.monster.unregister();
 		
 		// drop items on tile
-		ObjectMapper om = ObjectMapper.getInstance();
 		MessageBuffer mb = MessageBuffer.getInstance();
 		for(Item i : this.monster.dropItems()) {
 			this.tile.addItem(i);
@@ -64,22 +61,22 @@ public final class Battle {
 	}
 
 	public boolean hasEnded() {
-		if(this.getPlayerCurrentHP() <= 0){
-			winner = "MONSTER";
+		if(this.getPlayerCurrentHP() <= 0 || this.getMonsterCurrentHP() <= 0){
 			return true;
 		}
-		else if(this.getMonsterCurrentHP() <= 0){
-			winner = "PLAYER";
-			return true;
-		}
+		
 		return false;
+	}
+	
+	public boolean monsterWin() {
+		return this.getPlayerCurrentHP() <= 0;
+	}
+	
+	public boolean playerWin() {
+		return this.getMonsterCurrentHP() <= 0;
 	}
 	
 	public String getMonsterName() {
 		return this.monster.getName();
-	}
-	
-	public String getBattleWinner(){
-		return this.winner;
 	}
 }
