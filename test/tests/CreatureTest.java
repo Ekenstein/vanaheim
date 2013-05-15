@@ -8,7 +8,6 @@ import org.junit.Test;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature;
 import edu.cth.tmnd.vanaheim.model.items.Axe;
-import edu.cth.tmnd.vanaheim.model.items.HealthPotion;
 import edu.cth.tmnd.vanaheim.model.items.impl.EquipableItem;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
@@ -309,5 +308,20 @@ public class CreatureTest {
 		
 		this.testClass.setDirection(Creature.Direction.RIGHT);
 		Assert.assertEquals(Creature.Direction.RIGHT, this.testClass.getDirection());
+	}
+	
+	@Test
+	public void isEquippedTest() {
+		EquipableItem item = new Axe();
+		this.testClass.addItem(item);
+		Assert.assertFalse(this.testClass.isEquipped(null));
+		
+		this.testClass.equip(null);
+		Assert.assertFalse(this.testClass.isEquipped());
+		
+		this.testClass.equip(item);
+		Assert.assertTrue(this.testClass.isEquipped(item));
+		Assert.assertTrue(this.testClass.isEquipped());
+
 	}
 }

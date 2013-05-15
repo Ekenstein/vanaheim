@@ -24,6 +24,7 @@ public class InventoryTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		ObjectMapper.getInstance().clear();
 		this.slots = 2;
 		this.inventory = new Inventory(slots);
 		this.item1 = new Axe();

@@ -23,6 +23,7 @@ public class GameObjectTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		this.objMapper.clear();
 		this.testClass = new TestClass(this.x, this.y, this.objectName, this.register);
 	}
 	

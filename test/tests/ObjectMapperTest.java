@@ -16,6 +16,7 @@ public class ObjectMapperTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ObjectMapper.getInstance().clear();
 	}
 
 	@After

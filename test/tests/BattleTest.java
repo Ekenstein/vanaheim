@@ -33,6 +33,7 @@ public class BattleTest {
 	@Before
 	public void setUp() throws Exception {
 		this.objMapper = ObjectMapper.getInstance();
+		this.objMapper.clear();
 		this.p = new Player(1.0f, 1.0f, 100, this.playerHP, "Harald");
 		this.objMapper.registerObject(Constants.PLAYER_OBJECT_NAME, this.p);
 		this.monster = new Spider(1.0f, 1.0f, 100, this.monsterHP, this.monsterDamage, false);

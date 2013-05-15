@@ -32,5 +32,4 @@ public final class EquipHandler extends Handler {
 			}
 		}
 	}
-
 }

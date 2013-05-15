@@ -6,16 +6,24 @@ import java.beans.PropertyChangeListener;
 import junit.framework.Assert;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
+import edu.cth.tmnd.vanaheim.model.ObjectMapper;
 
 public class MessageBufferTest {
 	
 	private String message = "Test";
 	
+	@Before
+	public void setUp() {
+		ObjectMapper.getInstance().clear();
+	}
+	
 	@After
 	public void tearDown() {
+		ObjectMapper.getInstance().clear();
 		MessageBuffer.getInstance().clear();
 	}
 	
