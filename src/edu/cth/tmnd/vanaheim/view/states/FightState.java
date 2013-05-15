@@ -40,7 +40,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 
 	//Background image
 	private Image fightScreenBg;
-	
+
 	private Music battleSong;
 	private Sound slashSound;
 
@@ -73,7 +73,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	//Logs
 	private String enemyLog = "";
 	private String playerLog = "";
-	
+
 	//Fonts
 	private TrueTypeFont titleFont;
 	private TrueTypeFont descriptionFont;
@@ -89,12 +89,6 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			startTime--;
 			if (startTime == 0) {
 				controller.monsterHitPlayer();
-				if (controller.hasBattleEnded()) {
-					controller.destroyBattle();
-					System.out.println("Battle ended");
-					enemyAttackTimer.stop();
-					game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-				}
 				startTime = 10;
 			}
 		}
@@ -107,10 +101,10 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		container.setTargetFrameRate(120);
-		
-		//battleSong = new Music("data/sfx/Battle_Theme.ogg");
+
+		battleSong = new Music("data/sfx/Battle_Theme.ogg");
 		//slashSound = new Sound("data/sfx/Kill_Enemy.ogg");
-		
+
 		//Init fonts
 		titleFont = new TrueTypeFont(new Font("Arial", Font.BOLD, 22), false);
 		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
@@ -131,7 +125,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		itemIDMap.put(0, new Image("data/coins.png"));
 		itemIDMap.put(1, new Image("data/axe_steel.png"));
 		itemIDMap.put(2, new Image("data/potion.png"));
-		
+
 		//Init input field
 		inputField = new TextField(container,
 				new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 32), false),
@@ -148,22 +142,22 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		inputField.setFocus(true);
 	}
 
-	
-	
+
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		
+
 		playerHealth = controller.getPlayerCurrentHP();
 		enemyHealth = controller.getBattleCurrentMonsterHP();
-		
+
 		context.setFont(descriptionFont);
-		
+
 		//Draw the background
 		context.drawImage(fightScreenBg, 0, 0);
 
 		//Draw contestants
 		context.drawImage(playerImage, 100, 200);
 		context.drawImage(spiderImage, 732, 350);
-		
+
 		//Draw enemy name
 		context.setColor(Color.red);
 		context.drawString(controller.getMonsterName(), 760, 330);
@@ -185,42 +179,51 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		//Render input field
 		context.setColor(Color.white);
 		inputField.render(container, context);
-		
-		
-		//Draw inventory
-		context.drawImage(inventory_bg, 384, 555);
-		context.drawImage(inventory_title, 320, 507);
+
+		//Draw equippeditem
 		context.drawImage(equip,40,290);
-		
+
 		List<Item> items = controller.getItems();
 		for (int i = 0; i < items.size(); i++) {
 			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
 		}
-		
+
 		if(controller.getPlayerEquippedItem() != null){
 			context.drawImage(itemIDMap.get(controller.getPlayerEquippedItem().getItemID()), 50 , 300);
 			context.drawString(controller.getPlayerEquippedItem().getItemName(), 40, 270);
 		}
-		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		/*if (!battleSong.playing()) {
+		if (controller.hasBattleEnded()) {
+			if (controller.getPlayerCurrentHP() <= 0) {
+				System.out.println("You died");
+				enemyAttackTimer.stop();
+				battleSong.stop();
+				game.enterState(MenuState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+			} else {
+				System.out.println("You won");
+				enemyAttackTimer.stop();
+				battleSong.stop();
+				controller.setLoot(0);
+				game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+			}
+		}
+		if (!battleSong.playing()) {
 			battleSong.play();
 			battleSong.setVolume(0f);
 			battleSong.fade(1000, 1f, false);
 		}
-		*/
 	}
-	
+
 	public void enter(GameContainer gc , StateBasedGame sbg)
-            throws SlickException {
+			throws SlickException {
 		inputField.setText("");
 		inputField.setFocus(true);
-    }
+	}
 
 	public void keyReleased(int key, char c) {
-		
+
 	}
 
 	@Override

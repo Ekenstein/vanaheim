@@ -3,6 +3,7 @@ package edu.cth.tmnd.vanaheim.view.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -20,6 +21,8 @@ public class MenuState extends BasicGameState {
 	private StateBasedGame game;
 	
 	private Music titleSong;
+	
+	private Image background;
 
 	public int getID() {
 		return ID;
@@ -28,20 +31,19 @@ public class MenuState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
 		
-		//titleSong = new Music("data/sfx/Title.ogg");
+		background = new Image("data/menuBg.png");
+		titleSong = new Music("data/sfx/Title.ogg");
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) {
-		g.setColor(Color.white);
-		g.drawString("Welcome to Vanaheim. The most awesome medieval game ever created!", 100, 100);
-		g.drawString("Press 1 to start a new game", 150, 300);
+		g.drawImage(background, 0, 0);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		//if (!titleSong.playing()) {
-			//titleSong.play();
-			//titleSong.setVolume(1f);
-		//}
+		if (!titleSong.playing()) {
+			titleSong.play();
+			titleSong.setVolume(1f);
+		}
 	}
 
 	public void keyReleased(int key, char c) {
@@ -58,7 +60,11 @@ public class MenuState extends BasicGameState {
 				public void init(GameState firstState, GameState secondState) {
 				}
 			};
+			titleSong.stop();
 			game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+		}
+		if (key == Input.KEY_ESCAPE) {
+			System.exit(0);
 		}
 	}
 }
