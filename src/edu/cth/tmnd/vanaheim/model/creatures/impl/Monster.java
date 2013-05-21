@@ -9,7 +9,7 @@ public abstract class Monster extends Creature {
 	
 	public Monster(final float x, final float y, final int velocity,
 			final int maxHP, final int dmg, final String creatureName, boolean register) {
-		super(x, y, velocity, maxHP, creatureName, register);
+		super(x, y, velocity, maxHP, dmg, creatureName, register);
 		this.dmg = dmg;
 	}
 	

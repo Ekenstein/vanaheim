@@ -106,4 +106,8 @@ public class QuestBook extends Container {
 		
 		return q.getDescription();
 	}
+
+	public int getItemsleftOnQuest(String questName, String itemName){
+		return this.quests.get(questName).getItemsLeft(itemName);
+	}
 }

@@ -11,7 +11,7 @@ import edu.cth.tmnd.vanaheim.model.items.impl.Item;
  * in the world. A creature can have a velocity,
  * an inventory, a hp, equipment, direction and base
  * damage.
- * @author Gabriel Ekblad
+ * 
  *
  */
 public abstract class Creature extends GameObject {
@@ -26,13 +26,14 @@ public abstract class Creature extends GameObject {
 	private Direction currentDirection;
 	private int dmg;
 
-	public Creature(final float x, final float y, final int velocity, final int maxHP,
-			final String creatureName, boolean register) {
+	public Creature(final float x, final float y, final int velocity, final int maxHP, 
+			final int dmg, final String creatureName, boolean register) {
 		super(x, y, creatureName, register);
 		this.velocity = velocity;
 		this.inventory = new Inventory(Constants.DEFAULT_INVENTORY_SPACE);
 		this.maxHP = this.currentHP = maxHP;
 		this.currentDirection = Creature.Direction.UP;
+		this.dmg = dmg;
 	}
 
 	/**

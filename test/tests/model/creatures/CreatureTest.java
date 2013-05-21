@@ -16,6 +16,7 @@ public class CreatureTest {
 	private float x, y = 1.0f;
 	private int velocity = 100;
 	private int maxHP = 100;
+	private int dmg = 10;
 	private String creatureName = "TestCreatureName";
 	private boolean register = true;
 	private Creature testClass;
@@ -24,7 +25,7 @@ public class CreatureTest {
 	private class TestClassCreature extends Creature {
 		public TestClassCreature(float x, float y, int velocity, int maxHP,
 				String creatureName, boolean register) {
-			super(x, y, velocity, maxHP, creatureName, register);
+			super(x, y, velocity, maxHP,dmg, creatureName, register);
 		}
 	}
 	
@@ -323,5 +324,9 @@ public class CreatureTest {
 		Assert.assertTrue(this.testClass.isEquipped(item));
 		Assert.assertTrue(this.testClass.isEquipped());
 
+	}
+	@Test
+	public void testGetDamage(){
+		Assert.assertEquals(dmg, this.testClass.getDamage());
 	}
 }

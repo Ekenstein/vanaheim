@@ -181,4 +181,11 @@ final public class Inventory extends Container {
 		}
 		return null;
 	}
+
+	public void clear() {
+		this.items.clear();
+		this.slotsLeft = this.slots;
+		
+	}
+
 }

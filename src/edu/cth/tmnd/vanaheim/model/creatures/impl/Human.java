@@ -10,8 +10,8 @@ public abstract class Human extends Creature {
 	
 	protected QuestBook questBook;
 	
-	public Human(final float x, final float y, final int velocity, final int maxHP, final String creatureName, boolean register) {
-		super(x, y, velocity, maxHP, creatureName, register);
+	public Human(final float x, final float y, final int velocity, final int maxHP, final int dmg, final String creatureName, boolean register) {
+		super(x, y, velocity, maxHP, dmg, creatureName, register);
 		questBook = new QuestBook();
 	}
 
@@ -43,5 +43,14 @@ public abstract class Human extends Creature {
 	
 	public void removeQuest(String questName) {
 		this.questBook.removeQuest(questName);
+	}
+	
+	public int getItemsleftOnQuest(String questName, String itemName){
+		for(String q: this.questBook.getQuests().keySet()){
+			if(q.equals(questName)){
+				return questBook.getItemsleftOnQuest(questName, itemName);
+			}
+		}
+		return 0;
 	}
 }

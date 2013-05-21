@@ -11,15 +11,19 @@ import tests.model.InventoryTest;
 import tests.model.MessageBufferTest;
 import tests.model.ObjectMapperTest;
 import tests.model.creatures.CreatureTest;
+import tests.model.creatures.HumanTest;
+import tests.model.creatures.player.TestPlayer;
 
 @RunWith(Suite.class)
 @SuiteClasses({BattleTest.class,
 	   		   MessageBufferTest.class,
 			   ContainerTest.class, 
 			   GameObjectTest.class, 
-			   InventoryTest.class,  
+			   InventoryTest.class,
+			   HumanTest.class,
 			   ObjectMapperTest.class,
-			   CreatureTest.class})
+			   CreatureTest.class,
+			   TestPlayer.class})
 public class TestSuite {
 
 }

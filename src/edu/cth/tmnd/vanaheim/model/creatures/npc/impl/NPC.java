@@ -11,7 +11,7 @@ public abstract class NPC extends Human {
 	
 	
 	public NPC(float x, float y, int velocity, int maxHp, String NPCName, State[] states){
-		super(x, y, velocity, maxHp,NPCName, true);
+		super(x, y, velocity, maxHp, 0, NPCName, true);
 		state = 0;
 		currentState = states[state];
 		this.states = states;

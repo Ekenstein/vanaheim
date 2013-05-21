@@ -15,7 +15,7 @@ public class Player extends Human {
 
 	public Player(final float x, final float y, final int velocity,
 			final int maxHP, final String creatureName) throws SlickException {
-		super(x, y, velocity, maxHP, creatureName, true);
+		super(x, y, velocity, maxHP, 10, creatureName, true);
 		
 		super.objectMapper.registerObject("inventory", super.inventory);
 		super.inventory.addItem(new Axe());
@@ -35,11 +35,21 @@ public class Player extends Human {
 	public boolean isQuestBookToggled() {
 		return super.questBook.isToggled();
 	}
+	
+	public void clearInventory(){
+		super.inventory.clear();
+	}
+	
+	public void toggleInventory(){
+		super.inventory.toggle();
+	}
+	
+	public void toggleQuestBook(){
+		super.questBook.toggle();
+	}
 
 	@Override
-	public void talk(Human human) {
-		// TODO Auto-generated method stub
-
-	}
+	public void talk(Human human) {}
+	
 
 }
