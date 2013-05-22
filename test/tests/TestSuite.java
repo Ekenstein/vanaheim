@@ -13,6 +13,7 @@ import tests.model.ObjectMapperTest;
 import tests.model.creatures.CreatureTest;
 import tests.model.creatures.HumanTest;
 import tests.model.creatures.player.TestPlayer;
+import tests.model.quests.QuestTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({BattleTest.class,
@@ -21,6 +22,7 @@ import tests.model.creatures.player.TestPlayer;
 			   GameObjectTest.class, 
 			   InventoryTest.class,
 			   HumanTest.class,
+			   QuestTest.class,
 			   ObjectMapperTest.class,
 			   CreatureTest.class,
 			   TestPlayer.class})
