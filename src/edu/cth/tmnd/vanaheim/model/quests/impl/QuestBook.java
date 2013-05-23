@@ -64,7 +64,6 @@ public class QuestBook extends Container {
 	
 	public void addQuest(Quest q){
 		if(!quests.containsKey(q.getName())){
-			System.out.println("Lägger till quest");
 			quests.put(q.getName(), q);
 		}
 	}

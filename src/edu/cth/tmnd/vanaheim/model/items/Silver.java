@@ -5,14 +5,8 @@ import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
 
 final public class Silver implements QuestItem {
 	
-	private Creature owner;
 	private int durability;
 	
-	public Silver(Creature owner) {
-		this.owner = owner;
-		//this.img = new Image("data/coin.png");
-
-	}
 
 	public String getItemName() {
 		return "Silver";
@@ -22,13 +16,6 @@ final public class Silver implements QuestItem {
 		return "Some shiny silver is never wrong";
 	}
 
-	public Creature getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Creature owner) {
-		this.owner = owner;
-	}
 
 	@Override
 	public double getItemWeight() {

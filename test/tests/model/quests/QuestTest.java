@@ -159,6 +159,6 @@ public class QuestTest {
 		
 		Assert.assertNotSame(q.hashCode(), new SilverQuest().hashCode());
 		
-		Assert.assertNotSame(q.hashCode(), new Silver(null).hashCode());
+		Assert.assertNotSame(q.hashCode(), new Silver().hashCode());
 	}
 }

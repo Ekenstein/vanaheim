@@ -36,8 +36,11 @@ public abstract class Quest {
 	}
 	
 	public int getItemsLeft(String itemName){
+		if(this.itemsCount.containsKey(itemName)){
 			return itemsCount.get(itemName);
-		
+			
+		}
+		else return 0;
 	}
 	
 	public void removeItemFromQuest(String item){
