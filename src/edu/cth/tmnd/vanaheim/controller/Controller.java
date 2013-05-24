@@ -267,7 +267,7 @@ public class Controller {
 		
 		this.currentBattle.destruct(drop);
 		
-		this.currentBattle = null;
+		//this.currentBattle = null;
 	}
 	
 	public boolean isActiveBattle() {

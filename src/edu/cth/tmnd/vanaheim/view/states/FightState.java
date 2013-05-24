@@ -200,12 +200,14 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 				System.out.println("You died");
 				enemyAttackTimer.stop();
 				battleSong.stop();
+				controller.destroyBattle(false);
 				game.enterState(MenuState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			} else {
 				System.out.println("You won");
 				enemyAttackTimer.stop();
 				battleSong.stop();
 				controller.setLoot(0);
+				controller.destroyBattle(true);
 				game.enterState(ExploreState.ID, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 			}
 		}
