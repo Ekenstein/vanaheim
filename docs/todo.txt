@@ -1,0 +1,25 @@
+Saker som enligt handledaren måste fixas innan deadline för att vi ska få så bra betyg som möjligt om än för att vi ska få
+ett betyg över huvud taget
+----------------------------------------------------------------------------------------------------
+
+Kunna gå under lyktstolpen
+Man fastnar efter att man varit hos quest gubben "Gram"
+Byta label på npc till "Gram"
+Looten ska plockas bort från mapen efter man har lootat
+Om man lootar quest item så ska det räknas upp i questloggen istället för att läggas i inventory
+Man ska kunna klara ett quest
+Rutor såsom questlog och console ska texten kunna hålla sig inom rutan, alltså börja på ny rad om det är för långt meddelande
+När något skrivs till consollen så skrivs det även ut hos Gram. Bör ej ske. Bara när man pratar med Gram ska det skrivas ut text över Gram
+Bakgrund till inventory i en fight bör fixas
+Guldet som ligger i inventory default ska plockas bort, detta är ett questitem
+
+RAD ska fixas klart
+SDD ska fixas klart
+Kommentarer av kod ska fixas
+Mötesprotokoll 2st / vecka
+
+
+
+ATT GÖRA VID TID ÖVER
+--------------------------
+Fler tester
