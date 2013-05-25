@@ -217,7 +217,17 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		context.setColor(Color.white);
 		inputField.render(container, context);
 		inputField.setFocus(true);
-
+		
+		if (controller.isConsoleToggled()) {
+			List<String> messages = controller.getLatestMessages(7);
+			context.setColor(new Color(0, 0, 0, 0.5f));
+			context.fillRoundRect(256, 256, 512, 256, 10);
+			context.setColor(Color.white);
+			for (int i = 0; i < messages.size(); i++) {
+				context.drawString(messages.get(i), 280, 280 + i*32);
+			}
+		}
+		
 		//Text in the inventory and quest log is black
 		context.setColor(Color.black);
 

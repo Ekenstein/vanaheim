@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.newdawn.slick.SlickException;
 
+import edu.cth.tmnd.vanaheim.model.items.Axe;
 import edu.cth.tmnd.vanaheim.model.items.Gold;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 
@@ -17,6 +18,7 @@ public class Spider extends Monster {
 		super(x, y, velocity, maxHP,dmg, "Spider", register);
 		this.items = new ArrayList<Item>();
 		this.items.add(new Gold());
+		this.items.add(new Axe());
 	}
 	
 	@Override
