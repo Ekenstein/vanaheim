@@ -313,6 +313,10 @@ public class Controller {
 	public void setLoot(int mapID) {
 		this.world.setLoot(getPlayerLoc().x, getPlayerLoc().y, mapID);
 	}
+	
+	public void removeLoot(int mapID) {
+		this.world.removeLoot(getPlayerLoc().x, getPlayerLoc().y, mapID);
+	}
 
 	//	public void changeTile(final int x, final int y) {
 	//		this.world.changeTile(x, y);

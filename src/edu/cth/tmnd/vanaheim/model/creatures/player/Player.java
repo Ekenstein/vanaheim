@@ -20,7 +20,6 @@ public class Player extends Human {
 		super.objectMapper.registerObject("inventory", super.inventory);
 		super.inventory.addItem(new Axe());
 		super.inventory.addItem(new HealthPotion());
-		super.inventory.addItem(new Gold());
 		ObjectMapper.getInstance().registerObject("quest log", super.questBook);
 	}
 	

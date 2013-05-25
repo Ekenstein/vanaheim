@@ -81,6 +81,13 @@ public class World {
 		map.setTileId(xPos, yPos+1, 5, LOOT);
 	}
 	
+	public void removeLoot(int x, int y, int mapID) {
+		int xPos = (int)Math.floor(x / 32);
+		int yPos = (int)Math.floor(y / 32);
+		TiledMap map = maps.get(mapID);
+		map.setTileId(xPos, yPos+1, 5, 0);
+	}
+	
 	public boolean isBlocked(int x, int y) {
 		int xPos = (int)Math.floor(x / 32);
 		int yPos = (int)Math.floor(y / 32);

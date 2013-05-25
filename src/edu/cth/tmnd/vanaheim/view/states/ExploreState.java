@@ -174,6 +174,8 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				message = inputField.getText();
 				if (message.equals("show inventory")) {
 					lastItemRendered = 0;
+				} else if (message.equals("loot all")) {
+					controller.removeLoot(0);
 				}
 				controller.parseCommand(message);
 				inputField.setText("");
@@ -193,26 +195,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		//Draw the player sprite
 		sprite.draw(x, y);
 
-		//Draw the console and its messages
-		//int maxReplyWidth = 376;
-		List<String> consoleMessages = new ArrayList<String>();
-		String replyText = "";
-		if (consoleToggled) {
-			context.drawImage(console, 320, 464);
-			String[] strArray = reply.split(" ");
-			for (int i = 0; i < strArray.length; i++) {
-				if (descriptionFont.getWidth(replyText + " " + strArray[i]) > maxReplyWidth) {
-					consoleMessages.add(replyText);
-					replyText = "";
-				}
-				replyText += strArray[i] + " ";
-			}
-			consoleMessages.add(replyText);
-			for (int i = 0; i < consoleMessages.size(); i++) {
-				context.drawString(consoleMessages.get(i), (1024-console.getWidth())/2+8, 768-console.getHeight() - 24 + 16*i);
-			}
-		}
-
 		//Render input field
 		context.setColor(Color.white);
 		inputField.render(container, context);
@@ -221,10 +203,11 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		if (controller.isConsoleToggled()) {
 			List<String> messages = controller.getLatestMessages(7);
 			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(256, 256, 512, 256, 10);
+			context.fillRoundRect(192, 256, 640, 256, 10);
 			context.setColor(Color.white);
+			context.setFont(descriptionFont);
 			for (int i = 0; i < messages.size(); i++) {
-				context.drawString(messages.get(i), 280, 280 + i*32);
+				context.drawString(messages.get(i), 208, 280 + i*32);
 			}
 		}
 		

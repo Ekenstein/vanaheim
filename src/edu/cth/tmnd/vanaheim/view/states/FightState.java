@@ -170,18 +170,15 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		attackTimerBarImage.draw(698, 490, 20*startTime, 16);
 		context.drawImage(barForegroundImage, 668, 482);
 
-		//Draw logs
-		context.drawImage(combatLogImage, 0, 564);
-		context.drawString(enemyLog, 16, 580);
-		context.drawImage(combatLogImage, 736, 564);
-		context.drawString(playerLog, 752, 580);
-
 		//Render input field
 		context.setColor(Color.white);
 		inputField.render(container, context);
 
 		//Draw equippeditem
 		context.drawImage(equip,40,290);
+		
+		context.drawImage(inventory_bg, 384, 555);
+		context.drawImage(inventory_title, 320, 523);
 
 		List<Item> items = controller.getItems();
 		for (int i = 0; i < items.size(); i++) {
