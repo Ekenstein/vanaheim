@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.ObjectMapper;
+import java.util.List;
 
 public class MessageBufferTest {
 	
@@ -68,6 +69,32 @@ public class MessageBufferTest {
 		Assert.assertEquals(1, msgBuffer.size());
 		msgBuffer.clear();
 		Assert.assertEquals(0, msgBuffer.size());
+	}
+	
+	@Test
+	public void getLatestMessagesTest() {
+		MessageBuffer msgBuffer = MessageBuffer.getInstance();
+		msgBuffer.append("Tjena");
+		msgBuffer.append("Lol");
+		
+		List<String> ss = msgBuffer.getLatestMessages(1);
+		
+		Assert.assertEquals(1, ss.size());
+		
+		for(String s : ss) {
+			s.equals("Lol");
+		}
+		
+		ss = msgBuffer.getLatestMessages(2);
+		
+		Assert.assertEquals(2, ss.size());
+		
+		Assert.assertEquals("Lol", ss.get(0));
+		Assert.assertEquals("Tjena", ss.get(1));
+		
+		ss = msgBuffer.getLatestMessages(Integer.MAX_VALUE);
+		
+		Assert.assertEquals(2, ss.size());
 	}
 
 }

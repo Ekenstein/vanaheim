@@ -29,6 +29,9 @@ public abstract class Handler {
 	
 	private void init() {
 		try {
+			// circular dependency, however, this
+			// is currently the only solution we
+			// can think of.
 			this.c = Controller.getInstance();
 		} catch (IOException e) {
 			e.printStackTrace();

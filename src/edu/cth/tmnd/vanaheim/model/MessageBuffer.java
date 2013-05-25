@@ -1,6 +1,7 @@
 package edu.cth.tmnd.vanaheim.model;
 
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
@@ -73,5 +74,20 @@ public final class MessageBuffer {
 	 */
 	public int size() {
 		return this.buffer.size();
+	}
+	
+	/**
+	 * Returns the %amount% latest messages from the
+	 * message buffer.
+	 * @param amount
+	 * @return
+	 */
+	public List<String> getLatestMessages(int amount) {
+		List<String> tmp = new ArrayList<String>();
+		for(int i = 0; i < amount && i < this.buffer.size(); i++) {
+			tmp.add(this.buffer.get(this.buffer.size() - (i+1)));
+		}
+		
+		return tmp;
 	}
 }

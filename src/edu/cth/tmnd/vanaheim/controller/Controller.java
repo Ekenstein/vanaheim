@@ -20,6 +20,7 @@ import edu.cth.tmnd.vanaheim.model.creatures.player.Player;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.parser.Parser;
 import edu.cth.tmnd.vanaheim.model.world.World;
+import edu.cth.tmnd.vanaheim.model.Console;
 
 /**
  * Handles all the communication between the view and
@@ -35,6 +36,7 @@ public class Controller {
 	private final MessageBuffer msgBuffer;
 	private Parser parser;
 	private Battle currentBattle = null;
+	private Console console = new Console();
 	
 	private static Controller theInstance = null;
 
@@ -69,6 +71,7 @@ public class Controller {
 		this.player = new Player(400f, 400f, 300, 100, "Harald");
 		this.objectMapper.registerObject("Gram", new Gram(176f, 688f));
 		this.objectMapper.registerObject(Constants.PLAYER_OBJECT_NAME, this.player);
+		this.objectMapper.registerObject("console", this.console);
 		try {
 			this.parser = Parser.getInstance(Constants.COMMAND_FILE);
 		} catch (final IOException e) {
@@ -105,6 +108,10 @@ public class Controller {
 	public List<Item> getItems() {
 		return this.player.getItems();
 	}
+	
+	public List<String> getLatestMessages(int amount) {
+		return this.msgBuffer.getLatestMessages(amount);
+	}
 
 	/**
 	 * Check if the inventory is toggled.
@@ -120,6 +127,10 @@ public class Controller {
 	 */
 	public boolean isQuestBookToggled() {
 		return this.player.isQuestBookToggled();
+	}
+	
+	public boolean isConsoleToggled() {
+		return this.console.isToggled();
 	}
 
 	/**
