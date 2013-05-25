@@ -5,7 +5,6 @@ package edu.cth.tmnd.vanaheim.model;
  * It will just toggle the container. How you
  * use the toggle is up to the programmer.
  * 
- * @author Gabriel Ekblad
  *
  */
 public abstract class Container {

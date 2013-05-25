@@ -5,7 +5,6 @@ import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
 
 final public class Gold implements QuestItem {
 	
-	private Creature owner;
 	private int durability;
 	private int itemID;
 	
@@ -22,13 +21,6 @@ final public class Gold implements QuestItem {
 		return "Catgold";
 	}
 
-	public Creature getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Creature owner) {
-		this.owner = owner;
-	}
 
 	@Override
 	public double getItemWeight() {

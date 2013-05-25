@@ -6,7 +6,12 @@ import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
 final public class Silver implements QuestItem {
 	
 	private int durability;
+	private int itemID;
 	
+	
+	public Silver(){
+		
+	}
 
 	public String getItemName() {
 		return "Silver";
@@ -41,8 +46,8 @@ final public class Silver implements QuestItem {
 
 	@Override
 	public int getItemID() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return this.itemID;
 	}
 	
 	@Override
