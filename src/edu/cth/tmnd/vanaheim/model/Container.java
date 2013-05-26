@@ -28,4 +28,8 @@ public abstract class Container {
 	public boolean isToggled() {
 		return this.toggle;
 	}
+	
+	public void setToggle(boolean flag) {
+		this.toggle = flag;
+	}
 }
