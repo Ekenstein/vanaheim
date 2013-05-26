@@ -1,9 +1,10 @@
 package edu.cth.tmnd.vanaheim.model.quests.impl;
 
-
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
-import edu.cth.tmnd.vanaheim.model.items.impl.Item;
+import edu.cth.tmnd.vanaheim.model.items.impl.QuestItem;
 
 
 /*
@@ -14,41 +15,60 @@ public abstract class Quest {
 
 	private String name;
 	private String description;
-	private boolean isComplete;
-	private Map<String,Integer> itemsCount;
 	
+	private final Map<String, QuestObjective> objectives; 
+	
+	private class QuestObjective {
+		private final int required;
+		private int current = 0;
+		
+		public QuestObjective(int required) {
+			this.required = required;
+		}
+	}
 	
 	public Quest(String name, String description, Map<String, Integer> requiredItems){
 		this.name = name;
 		this.description = description;
-		this.itemsCount = requiredItems;
+		this.objectives = new HashMap<String, QuestObjective>();
 	}
 	
 	/*
 	 * Add a value for each item that need to be reached to complete the quest
 	 */
-	public void addNeededItemCount(String itemName, Integer value) {
-		itemsCount.put(itemName, value);
+	public void addNeededItemCount(String itemName, int value) {
+		QuestObjective qo = new QuestObjective(value);
+		this.objectives.put(itemName, qo);
 	}
 	
-	public int getNumberOfDifferentItemsNeeded(){
-		return itemsCount.size();
-	}
-	
-	public int getItemsLeft(String itemName){
-		if(this.itemsCount.containsKey(itemName)){
-			return itemsCount.get(itemName);
-			
+	public int getCurrentItemCount(String itemName) {
+		QuestObjective qo = this.objectives.get(itemName);
+		
+		if(qo != null) {
+			return qo.current;
 		}
-		else return 0;
+		
+		return 0;
 	}
 	
-	public void removeItemFromQuest(String item){
-		itemsCount.remove(item);
+	public Map<String, Integer> getQuestObjectives() {
+		Map<String, Integer> questObjectives = new HashMap<String, Integer>();
+		
+		for(Entry<String, QuestObjective> s : this.objectives.entrySet()) {
+			questObjectives.put(s.getKey(), s.getValue().current);
+		}
+		
+		return questObjectives;
 	}
-
-	public Map<String, Integer> getItemsCount() {
-		return itemsCount;
+	
+	public int getRequiredItems(String itemName) {
+		QuestObjective qo = this.objectives.get(itemName);
+		
+		if(qo != null) {
+			return qo.required;
+		}
+		
+		return 0;
 	}
 
 	public String getName() {
@@ -60,7 +80,28 @@ public abstract class Quest {
 	}
 
 	public boolean isComplete() {
-		return isComplete;
+		boolean[] complete = new boolean[this.objectives.size()];
+		int i = 0;
+		for(Entry<String, QuestObjective> s : this.objectives.entrySet()) {
+			QuestObjective q = s.getValue();
+			
+			if(q.current == q.required) {
+				complete[i] = true;
+			}
+			i++;
+		}
+		
+		return and(complete);
+	}
+	
+	public static boolean and(boolean[] flags) {
+		for(boolean flag : flags) {
+			if(!flag) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	public void setDescription(String description) {
@@ -72,20 +113,16 @@ public abstract class Quest {
 		
 	}
 	
-	public boolean process(Item item) {
-		if(itemsCount.containsKey(item.getItemName())){
-			if(itemsCount.get(item.getItemName()) > 0){
-				itemsCount.put(item.getItemName(), itemsCount.get(item.getItemName()) - 1);
-				isComplete = true;
-				for(String items: itemsCount.keySet()){
-					isComplete = itemsCount.get(items) > 0 ? false : true;
-					if(!isComplete){
-						break;
-					}
-				}
+	public boolean process(QuestItem item) {
+		QuestObjective qo = this.objectives.get(item.getItemName());
+		
+		if(qo != null) {
+			if(qo.current < qo.required) {
+				qo.current++;
 				return true;
 			}
 		}
+		
 		return false;
 	}
 

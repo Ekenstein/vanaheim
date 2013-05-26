@@ -19,10 +19,20 @@ public class QuestBook extends Container {
 		Quest q = this.quests.get(quest);
 		
 		if(q != null) {
-			return q.getItemsCount();
+			return q.getQuestObjectives();
 		}
 		
 		return null;
+	}
+	
+	public int getRequiredItems(String quest, String itemName) {
+		Quest q = this.quests.get(quest);
+		
+		if(q != null) {
+			return q.getRequiredItems(itemName);
+		}
+		
+		return 0;
 	}
 	
 	public Map<String, String> showCompleteQuests() {
@@ -114,9 +124,5 @@ public class QuestBook extends Container {
 		}
 		
 		return q.getDescription();
-	}
-
-	public int getItemsleftOnQuest(String questName, String itemName){
-		return this.quests.get(questName).getItemsLeft(itemName);
 	}
 }

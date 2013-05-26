@@ -21,10 +21,6 @@ public abstract class Human extends Creature {
 		this.questBook.addQuestItem(questName, item);
 	}
 	
-	public Map<String, Integer> getQuestObjectives(String quest) {
-		return this.questBook.getQuestObjectives(quest);
-	}
-	
 	public Map<String, String> getQuests() {
 		return this.questBook.getQuests();
 	}
@@ -49,12 +45,11 @@ public abstract class Human extends Creature {
 		this.questBook.removeQuest(questName);
 	}
 	
-	public int getItemsleftOnQuest(String questName, String itemName){
-		for(String q: this.questBook.getQuests().keySet()){
-			if(q.equals(questName)){
-				return questBook.getItemsleftOnQuest(questName, itemName);
-			}
-		}
-		return 0;
+	public Map<String, Integer> getQuestObjectives(String quest) {
+		return this.questBook.getQuestObjectives(quest);
+	}
+	
+	public int getRequiredItems(String quest, String itemName) {
+		return this.questBook.getRequiredItems(quest, itemName);
 	}
 }

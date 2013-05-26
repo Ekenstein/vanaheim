@@ -152,6 +152,10 @@ public class Controller {
 	public Map<String, Integer> getPlayerQuestObjectives(String quest) {
 		return this.player.getQuestObjectives(quest);
 	}
+	
+	public int getRequiredItems(String quest, String itemName) {
+		return this.player.getRequiredItems(quest, itemName);
+	}
 
 	/**
 	 * Get the players location.
