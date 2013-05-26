@@ -36,6 +36,7 @@ import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.controller.Controller;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.StateHandler.State;
+import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
@@ -192,6 +193,16 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		controller.getMap((int)x, (int)y).render(0, 0);
 
 		//Draw the player sprite
+		Direction dir = controller.getPlayerDirection();
+		if (dir == Direction.LEFT) {
+			sprite = left;
+		} else if (dir == Direction.RIGHT) {
+			sprite = right;
+		} else if (dir == Direction.UP) {
+			sprite = up;
+		} else {
+			sprite = down;
+		}
 		sprite.draw(x, y);
 
 		//Render input field
@@ -324,7 +335,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		final Input input = container.getInput();
 		if (input.isKeyDown(Input.KEY_UP))
 		{
-			sprite = up;
 			if (!controller.isBlocked((int)x, (int)(y - delta * 0.1f)))
 			{
 				sprite.update(delta);
@@ -336,7 +346,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = down;
 			if (!controller.isBlocked((int)x, (int)(y + 32f + delta * 0.1f)))
 			{
 				sprite.update(delta);
@@ -346,7 +355,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT)) {
-			sprite = left;
 			if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
 			{
 				sprite.update(delta);
@@ -355,7 +363,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			npcInteraction = "";
 			consoleToggled = false;
 		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
-			sprite = right;
 			if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
 			{
 				sprite.update(delta);
