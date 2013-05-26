@@ -9,7 +9,7 @@ final public class GoldQuest extends Quest {
 	
 	public GoldQuest() {
 
-		super("Gold mining", "Mine three good lugs of gold and then return to me for your reward", new HashMap<String,Integer>());
+		super("Gold gathering", "Kill three spiders and gather gold from their tusks", new HashMap<String,Integer>());
 		this.addNeededItemCount("Gold", 3);
 	}
 
