@@ -8,3 +8,4 @@ show * : Show
 open * : Show
 equip * : Equip
 unequip * : Unequip
+close * : Close

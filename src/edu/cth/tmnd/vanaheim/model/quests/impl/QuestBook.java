@@ -15,6 +15,16 @@ public class QuestBook extends Container {
 		quests = new HashMap<String, Quest>();
 	}
 	
+	public Map<String, Integer> getQuestObjectives(String quest) {
+		Quest q = this.quests.get(quest);
+		
+		if(q != null) {
+			return q.getItemsCount();
+		}
+		
+		return null;
+	}
+	
 	public Map<String, String> showCompleteQuests() {
 		Map<String, String> completeQuests = new HashMap<String, String>();
 		

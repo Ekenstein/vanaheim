@@ -148,6 +148,10 @@ public class Controller {
 	public void addStateHandlerListener(final PropertyChangeListener listener) {
 		StateHandler.getInstance().addListeners(listener);
 	}
+	
+	public Map<String, Integer> getPlayerQuestObjectives(String quest) {
+		return this.player.getQuestObjectives(quest);
+	}
 
 	/**
 	 * Get the players location.

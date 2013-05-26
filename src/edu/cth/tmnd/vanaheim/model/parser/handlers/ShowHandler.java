@@ -25,7 +25,7 @@ public final class ShowHandler extends Handler {
 	@Override
 	protected void handleArgs(Object[] args) {
 		Container c = (Container) args[0];
-		c.toggle();
+		c.setToggle(true);
 	}
 
 }
