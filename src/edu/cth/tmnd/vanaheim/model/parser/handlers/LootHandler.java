@@ -53,6 +53,7 @@ public final class LootHandler extends Handler {
 	}
 	
 	private void handleQuestItem(QuestItem item) {
+		System.out.println("Handleing quest item");
 		String questName = item.questName();
 		
 		if(super.p.hasQuest(questName)) {
