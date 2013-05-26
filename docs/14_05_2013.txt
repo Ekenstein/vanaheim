@@ -1,0 +1,24 @@
+#################################
+#   Anteckningar från möte #12  #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson:  
+- Daniel Jonsson: Sekreterare
+
+§ Uppföljning från tidigare möte
+Under föregående vecka har följande gjorts:
+- Några tester har lagts till.
+- Många errors i koden har fixats
+- En del grafiska förändringar såsom ny look för inventory samt möjligheten att acceptera quest och visa dessa i quest loggen.
+- Tagit bort cirkulära beroenden
+
+§ Tankar kring projektet
+Vi känner oss rätt bra i fas både tidsmässigt och kodmässigt. Richard känner att GUIt är någolunda klart förutom tusentals mindre
+problem som bara är en tidsfråga att fixa. Det samma gäller modellen där hela spellogiken och hur allt hänger ihop känns bra och det
+är åter här bara en fråga om tid hur stort projektet i slutändan blir.
+
+§ Till nästa möte
+Denna punkt lämnas blank för denna dagen då vi planerar att ha ett möte igen redan imorgon. Det finns inget brådskande som måste vara klart
+till morgondagen.

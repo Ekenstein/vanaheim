@@ -1,0 +1,20 @@
+#################################
+#   Anteckningar från möte #13  #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: 
+- Richard Karlsson: Mötesledare
+- Daniel Jonsson: Sekreterare
+
+§ Uppföljning från tidigare möte
+Denna punkt behandlas inte under mötet då vi bestämt under gårdagen att så skulle bli fallet.
+
+§ Inför kommande slutspurtsvecka
+Vi beslutar att ha nästa möte måndag nästa vecka för att så tidigt som möjligt kunna träffas under sista veckan.
+Richard och Gabriel meddelar att de kommer ha en deadline i en annan kurs den 23:e, varför de inte kommer kunna göra mycket
+till just måndagen. 
+
+§ Till nästa möte
+Vi behöver inte koda mycket nya saker. Vi beslutar att det som behövs göras nu först och främst är att dokumentera samt skriva fler tester.
+Richard måste också ta bort hårdkodade saker från GUIt som tidigare funnits där av testningsskäl. 

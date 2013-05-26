@@ -1,0 +1,28 @@
+#################################
+#   Anteckningar från möte #14  #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson: Sekreterare
+- Daniel Jonsson: 
+
+§ Uppföljning från tidigare möte
+Följande har gjorts under föregående vecka:
+- Lagt till en massa tester för modellen
+- Lagt till massor med dokumentation
+- Finslipat GUIt mer och mer. Finns inget hårdkodat längre och menyn är helt klar.
+- Fixat småbuggar i modellen
+
+§ Vad är inte klart
+Vi vill få en bild av vad som måste göras så vi skriver ner detta för att enklare kunna fördela arbetet:
+- RAD + SDD måste skrivas. Daniel får i huvuduppgift att göra detta med oss andra som en liten hjälp.
+- Mötesprotokoll måste upp på Git. Richard får i uppgift att göra detta.
+- Questet måste fungera perfekt. Richard och Gabriel får i uppgift att göra detta.
+- Några ynka ytterligare tester. Gabriel och Daniel får i uppgift att göra detta.
+- Ändringar av banan (vatten ska blockera osv). Richards uppgift.
+- Skapa en konsoll får utskrivning av meddelanden. Richard och Gabriels uppgift.
+- Revamp av quest klassen. Gabriels uppgift.
+
+Ovanstående blir utgången inför veckan och vi kommer under nästa möte att stämma av med vad som gjorts och inte gjorts.
+Nästa möte beräknas vara på lördag, dagen innan final deadline.

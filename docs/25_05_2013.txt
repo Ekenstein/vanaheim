@@ -1,0 +1,22 @@
+#################################
+#   Anteckningar från möte #15  #
+#################################
+
+Inga mötesuppgifter denna gången. Mötet skedde genom telefonkontakt under någon timme.
+
+§ Vad som gjorts
+- RAD och SDD är nästan klara.
+- Questet funkar.
+- Alla tester klara.
+- Banan komplett
+- Konsoll ordnad
+- Quest klassen revampad
+
+§ Kvar att göra
+- Fixa resten av RAD och SDD. Hög prio!
+- Mötesprotokoll måste upp. Hög prio!
+- Kommentera kod. Låg prio!
+- Ändra quest texten. Medel prio!
+
+Detta blir vad vi arbetar med under resten av lördagen samt söndagen.
+Vi beräknar ha mini möten över telefon under tiden så vi vet att allt blir klart i tid men dessa förs det inga protokoll över.

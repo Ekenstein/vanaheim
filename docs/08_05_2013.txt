@@ -1,0 +1,17 @@
+#################################
+#   Anteckningar från möte #11  #
+#################################
+
+Närvarande:
+- Gabriel Ekblad: Mötesledare
+- Richard Karlsson: Sekreterare 
+- Daniel Jonsson: 
+
+§ Uppföljning från tidigare möte
+Då det bara gått drygt en dag sen senaste mötet så bestämde vi oss för att inte följa upp utan istället fokusera på vad som göras under
+resten av veckan.
+
+§ Vad som behövs göras
+Vi behöver fixa errors i koden, småsaker i både GUI, controller och modell. Vi behöver också börja titta på tester. 
+Denna uppgift ges till Daniel och Gabriel då det bara är modellen som testas och de 2 kan modellen innan och utantill.
+Richard får i uppgift att fortsätta utveckla GUIt så bra det går.
