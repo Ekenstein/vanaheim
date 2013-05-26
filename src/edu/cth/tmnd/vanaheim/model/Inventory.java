@@ -175,7 +175,7 @@ final public class Inventory extends Container {
 		while(it.hasNext())
 		{
 			 Item i = it.next();
-			 if(i.getItemName().toLowerCase().equals(item)){
+			 if(i.getItemName().toLowerCase().equals(item.toLowerCase())){
 				 return i;
 			 }
 		}

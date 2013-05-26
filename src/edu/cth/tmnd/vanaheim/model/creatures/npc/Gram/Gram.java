@@ -17,11 +17,13 @@ public class Gram extends NPC {
 	
 	private static final State[] states = {new NPCStateStart(), new NPCStateWaiting(), new NPCStateDone()};
 	private Quest quest;
+	private Axe reward;
 
 	public Gram(float x, float y) throws SlickException {
 		super(x, y, 0, 1, "Gram", states);
 		this.quest = new GoldQuest();
-		this.addItem(new Axe());
+		this.reward = new Axe();
+		this.addItem(this.reward);
 		super.setDirection(Direction.RIGHT);
 	}
 
@@ -32,7 +34,7 @@ public class Gram extends NPC {
 				human, 
 				this, 
 				"Hello my friend. I can see you found the promised land.",
-				this.quest, this.getItem("Crude axe"));
+				this.quest, this.reward);
 	}
 	
 }
