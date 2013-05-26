@@ -85,7 +85,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private String npcInteraction = "";
 	private Map <String, Point> npcLocations;
 	private String message = "";
-	private String reply = "";
 	private int maxReplyWidth = 224;
 	private Image console;
 	private boolean consoleToggled = false;
@@ -200,14 +199,34 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		inputField.render(container, context);
 		inputField.setFocus(true);
 		
-		if (controller.isConsoleToggled()) {
+		int maxConsoleMsgWidth = 480;
+		
+		if (controller.isConsoleToggled() || consoleToggled) {
 			List<String> messages = controller.getLatestMessages(7);
 			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(192, 256, 640, 256, 10);
+			context.fillRoundRect(256, 256, 512, 384, 10);
 			context.setColor(Color.white);
 			context.setFont(descriptionFont);
-			for (int i = 0; i < messages.size(); i++) {
-				context.drawString(messages.get(i), 208, 280 + i*32);
+			int count = 0;
+			for (String message : messages) {
+				
+				List<String> consoleMessages = new ArrayList<String>();
+				String curMessage = "";
+
+				String[] strArray = message.split(" ");
+				for (int j = 0; j < strArray.length; j++) {
+					if (descriptionFont.getWidth(curMessage + " " + strArray[j]) > maxConsoleMsgWidth - 32) {
+						consoleMessages.add(curMessage);
+						curMessage = "";
+					}
+					curMessage += strArray[j] + " ";
+				}
+				consoleMessages.add(curMessage);
+				
+				for (int i = 0; i < consoleMessages.size(); i++) {
+					context.drawString(consoleMessages.get(i), 280, 280 + count*32);
+					count++;
+				}
 			}
 		}
 		
@@ -282,29 +301,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				}
 			}
 		}
-
-		if (!reply.equals("")) {
-			List<String> replyMessages = new ArrayList<String>();
-			String curMessage = "";
-
-			String[] strArray = reply.split(" ");
-			for (int i = 0; i < strArray.length; i++) {
-				if (descriptionFont.getWidth(curMessage + " " + strArray[i]) > maxReplyWidth - 32) {
-					replyMessages.add(curMessage);
-					curMessage = "";
-				}
-				curMessage += strArray[i] + " ";
-			}
-			replyMessages.add(curMessage);
-			context.setFont(descriptionFont);
-			int rectangleHeight = replyMessages.size() * 18;
-			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(npcX - 112, npcY - 16 -rectangleHeight, 224, rectangleHeight, 16);
-			context.setColor(Color.red);
-			for (int i = 0; i < replyMessages.size(); i++) {
-				context.drawString(replyMessages.get(i), npcX - 112 + 16, npcY - 16 -rectangleHeight + i * 16);
-			}
-		}
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -336,7 +332,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				y -= delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
@@ -347,7 +343,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				y += delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT)) {
 			sprite = left;
@@ -357,7 +353,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				x -= delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
 			sprite = right;
 			if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
@@ -366,7 +362,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				x += delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		} else if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			if (controller.isInventoryToggled() && (lastItemRendered + 2) < controller.getItems().size()) {
 				lastItemRendered += 2;
@@ -409,7 +405,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		Object o = e.getNewValue();
 
 		if(name.equals(MessageBuffer.NEW_MESSAGE_ADDED)) {
-			reply = o.toString();
+			consoleToggled = true;
 		} else if(name.equals(Constants.STATE_CHANGED)) {
 			State s = (State) e.getOldValue();
 
