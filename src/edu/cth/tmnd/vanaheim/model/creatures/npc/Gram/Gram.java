@@ -33,7 +33,7 @@ public class Gram extends NPC {
 		this.getCurrentState().process(
 				human, 
 				this, 
-				"Hello my friend. I can see you found the promised land.",
+				"Gram: Hello my friend. I can see you found the promised land.",
 				this.quest, this.reward);
 	}
 	

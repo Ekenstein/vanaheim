@@ -15,7 +15,7 @@ public class NPCStateWaiting extends State {
 		if(human.hasQuest(quest.getName())){
 			if(human.isQuestCompleted(quest.getName())){
 				StateHandler.getInstance().push(StateHandler.State.TALKING, npc);
-				MessageBuffer.getInstance().append("Well done! You have finished the quest " + quest.getName() + 
+				MessageBuffer.getInstance().append("Gram: Well done! You have finished the quest " + quest.getName() + 
 								". Here is your reward. A really fine " + item.getItemName() + " if i may say so myself.");
 				human.addItem(item);
 				npc.retrieveItem(item);

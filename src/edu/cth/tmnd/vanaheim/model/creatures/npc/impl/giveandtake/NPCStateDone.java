@@ -13,7 +13,7 @@ public class NPCStateDone extends State {
 	@Override
 	public void process(Human human, NPC npc, String s, Quest q, Item item) {
 		StateHandler.getInstance().push(StateHandler.State.TALKING, npc);
-		MessageBuffer.getInstance().append("Hello " + human.getName() + ". Are you lost?");
+		MessageBuffer.getInstance().append("Gram: Hello " + human.getName() + ". Are you lost?");
 		
 	}
 
