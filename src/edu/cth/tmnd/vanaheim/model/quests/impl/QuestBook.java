@@ -15,6 +15,15 @@ public class QuestBook extends Container {
 		quests = new HashMap<String, Quest>();
 	}
 	
+	/**
+	 * Returns the quest objectives of the given quest name.
+	 * The map will contain the item name as the key and
+	 * how many of that certain kind that has been collected.
+	 * @param quest	the quest name
+	 * @return	a map of quest objectives where the key is the
+	 * 			name of the item and the value is how many
+	 * 			of kinds of that item that has been collected.
+	 */
 	public Map<String, Integer> getQuestObjectives(String quest) {
 		Quest q = this.quests.get(quest);
 		
@@ -25,6 +34,14 @@ public class QuestBook extends Container {
 		return null;
 	}
 	
+	/**
+	 * Returns the amount of collections of a certain item
+	 * that needs to be collected for the quest to be finished.
+	 * @param quest	the quest name
+	 * @param itemName	the item name
+	 * @return	the required amount of the given item that needs
+	 * 			to be collected.
+	 */
 	public int getRequiredItems(String quest, String itemName) {
 		Quest q = this.quests.get(quest);
 		
