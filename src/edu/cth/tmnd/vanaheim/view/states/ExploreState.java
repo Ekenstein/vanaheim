@@ -36,6 +36,7 @@ import edu.cth.tmnd.vanaheim.constants.Constants;
 import edu.cth.tmnd.vanaheim.controller.Controller;
 import edu.cth.tmnd.vanaheim.model.MessageBuffer;
 import edu.cth.tmnd.vanaheim.model.StateHandler.State;
+import edu.cth.tmnd.vanaheim.model.creatures.impl.Creature.Direction;
 import edu.cth.tmnd.vanaheim.model.creatures.npc.impl.NPC;
 import edu.cth.tmnd.vanaheim.model.items.impl.Item;
 import edu.cth.tmnd.vanaheim.model.quests.impl.Quest;
@@ -71,7 +72,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private List<Item> items = new ArrayList<Item>();
 	private int lastItemRendered = 0;
 	private boolean isInventoryToggled = false;
-	
+
 	private boolean isLootToggled = false;
 
 	//Quests
@@ -85,7 +86,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private String npcInteraction = "";
 	private Map <String, Point> npcLocations;
 	private String message = "";
-	private String reply = "";
 	private int maxReplyWidth = 224;
 	private Image console;
 	private boolean consoleToggled = false;
@@ -193,43 +193,74 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		controller.getMap((int)x, (int)y).render(0, 0);
 
 		//Draw the player sprite
+		Direction dir = controller.getPlayerDirection();
+		if (dir == Direction.LEFT) {
+			sprite = left;
+		} else if (dir == Direction.RIGHT) {
+			sprite = right;
+		} else if (dir == Direction.UP) {
+			sprite = up;
+		} else {
+			sprite = down;
+		}
 		sprite.draw(x, y);
 
 		//Render input field
 		context.setColor(Color.white);
 		inputField.render(container, context);
 		inputField.setFocus(true);
-		
-		if (controller.isConsoleToggled()) {
+
+		int maxConsoleMsgWidth = 480;
+
+		if (controller.isConsoleToggled() || consoleToggled) {
 			List<String> messages = controller.getLatestMessages(7);
 			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(192, 256, 640, 256, 10);
+			context.fillRoundRect(256, 256, 512, 384, 10);
 			context.setColor(Color.white);
 			context.setFont(descriptionFont);
-			for (int i = 0; i < messages.size(); i++) {
-				context.drawString(messages.get(i), 208, 280 + i*32);
+			int count = 0;
+			for (String message : messages) {
+
+				List<String> consoleMessages = new ArrayList<String>();
+				String curMessage = "";
+
+				String[] strArray = message.split(" ");
+				for (int j = 0; j < strArray.length; j++) {
+					if (descriptionFont.getWidth(curMessage + " " + strArray[j]) > maxConsoleMsgWidth - 32) {
+						consoleMessages.add(curMessage);
+						curMessage = "";
+					}
+					curMessage += strArray[j] + " ";
+				}
+				consoleMessages.add(curMessage);
+
+				for (int i = 0; i < consoleMessages.size(); i++) {
+					context.drawString(consoleMessages.get(i), 280, 280 + count*32);
+					count++;
+				}
 			}
 		}
-		
+
 		//Text in the inventory and quest log is black
 		context.setColor(Color.black);
 
 		//Draw inventory
 		if (controller.isInventoryToggled()) {
 			List<Item> items = controller.getItems();
-			System.out.println("Storlek: " + items.size());
 			context.drawImage(inventory_bg, (1024-inventory_bg.getWidth()) / 2, (768-inventory_bg.getHeight()) / 2);
 			context.setColor(new Color(0.5f, 0f, 0.5f));
-			if (lastItemRendered + 1 != items.size()) {
-				Item item = items.get(lastItemRendered + 1);
-				context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72 + 80);
+			if (items.size() > 0) {
+				if (lastItemRendered + 1 != items.size()) {
+					Item item = items.get(lastItemRendered + 1);
+					context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72 + 80);
+					String itemName = item.getItemName();
+					context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8 + 72);
+				}
+				Item item = items.get(lastItemRendered);
+				context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72);
 				String itemName = item.getItemName();
-				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8 + 72);
+				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8);
 			}
-			Item item = items.get(lastItemRendered);
-			context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72);
-			String itemName = item.getItemName();
-			context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8);
 		}
 		//context.drawImage(inventory_title, 1024-inventory_bg.getWidth()-64, 768-inventory_bg.getHeight() - inventory_title.getHeight()/2);
 
@@ -262,9 +293,9 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 					curText += strArray[i] + " ";
 				}
 				description.add(curText);
-				
+
 				String questName = quest.getKey();
-				
+
 				int titleLength = titleFont.getWidth(questName);
 				context.setFont(titleFont);
 				context.drawString(questName, (256 - titleLength) / 2, 768 - quest_bg.getHeight() + 32);
@@ -272,7 +303,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				for (int i = 0; i < description.size(); i++) {
 					context.drawString(description.get(i), 8, 768 - quest_bg.getHeight() + 64 + i * 16);
 				}
-				
+
 				Map<String, Integer> questObjects = controller.getPlayerQuestObjectives(questName);
 				for (String itemName : questObjects.keySet()) {
 					int reqItems = controller.getRequiredItems(questName, itemName);
@@ -280,29 +311,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 					int strWidth = descriptionFont.getWidth(strToPrint);
 					context.drawString(strToPrint, (256 - strWidth) / 2, 740);
 				}
-			}
-		}
-
-		if (!reply.equals("")) {
-			List<String> replyMessages = new ArrayList<String>();
-			String curMessage = "";
-
-			String[] strArray = reply.split(" ");
-			for (int i = 0; i < strArray.length; i++) {
-				if (descriptionFont.getWidth(curMessage + " " + strArray[i]) > maxReplyWidth - 32) {
-					replyMessages.add(curMessage);
-					curMessage = "";
-				}
-				curMessage += strArray[i] + " ";
-			}
-			replyMessages.add(curMessage);
-			context.setFont(descriptionFont);
-			int rectangleHeight = replyMessages.size() * 18;
-			context.setColor(new Color(0, 0, 0, 0.5f));
-			context.fillRoundRect(npcX - 112, npcY - 16 -rectangleHeight, 224, rectangleHeight, 16);
-			context.setColor(Color.red);
-			for (int i = 0; i < replyMessages.size(); i++) {
-				context.drawString(replyMessages.get(i), npcX - 112 + 16, npcY - 16 -rectangleHeight + i * 16);
 			}
 		}
 	}
@@ -328,7 +336,6 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		final Input input = container.getInput();
 		if (input.isKeyDown(Input.KEY_UP))
 		{
-			sprite = up;
 			if (!controller.isBlocked((int)x, (int)(y - delta * 0.1f)))
 			{
 				sprite.update(delta);
@@ -336,37 +343,34 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				y -= delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = down;
 			if (!controller.isBlocked((int)x, (int)(y + 32f + delta * 0.1f)))
 			{
 				sprite.update(delta);
 				y += delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		}
 		else if (input.isKeyDown(Input.KEY_LEFT)) {
-			sprite = left;
 			if (!controller.isBlocked((int)(x - delta * 0.1f), (int)(y + 32f)))
 			{
 				sprite.update(delta);
 				x -= delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
-			sprite = right;
 			if (!controller.isBlocked((int)(x + 32f + delta * 0.1f), (int)(y + 32f)))
 			{
 				sprite.update(delta);
 				x += delta * 0.1f;
 			}
 			npcInteraction = "";
-			reply = "";
+			consoleToggled = false;
 		} else if (input.isKeyPressed(Input.KEY_RIGHT)) {
 			if (controller.isInventoryToggled() && (lastItemRendered + 2) < controller.getItems().size()) {
 				lastItemRendered += 2;
@@ -376,7 +380,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				lastItemRendered -= 2;
 			}
 		}
-		
+
 		currX = (int)Math.floor(x / 32);
 		currY = (int)Math.floor(y / 32);
 		controller.setPlayerLoc(new Point((int)x, (int)y));
@@ -409,7 +413,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		Object o = e.getNewValue();
 
 		if(name.equals(MessageBuffer.NEW_MESSAGE_ADDED)) {
-			reply = o.toString();
+			consoleToggled = true;
 		} else if(name.equals(Constants.STATE_CHANGED)) {
 			State s = (State) e.getOldValue();
 
