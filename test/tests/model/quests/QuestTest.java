@@ -25,71 +25,6 @@ public class QuestTest {
 	@After
 	public void tearDown() {
 	}
-
-	@Test
-	public void testGetNumberOfDifferentItemsNeeded(){
-		Quest q = new GoldQuest();
-		Assert.assertEquals(1, q.getNumberOfDifferentItemsNeeded());
-	}
-	
-	@Test
-	public void testGetItemsLeft(){
-		Assert.assertEquals(3, q.getItemsLeft("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(2, q.getItemsLeft("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, q.getItemsLeft("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(0, q.getItemsLeft("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(0, q.getItemsLeft("Gold"));
-	}
-	
-	@Test
-	public void testRemoveItemFromQuest(){
-		Quest q1 = new SilverQuest();
-		q.removeItemFromQuest("Silver");
-		q.addNeededItemCount("Silver", 1);
-		Assert.assertEquals(2, q.getNumberOfDifferentItemsNeeded());
-		
-		q.removeItemFromQuest("Silver");
-		Assert.assertEquals(1, q.getNumberOfDifferentItemsNeeded());
-		
-		q.removeItemFromQuest("Gold");
-		Assert.assertEquals(0, q.getNumberOfDifferentItemsNeeded());
-		
-		q.removeItemFromQuest("Gold");
-		Assert.assertEquals(0, q.getNumberOfDifferentItemsNeeded());
-	}
-	
-	@Test
-	public void testGetItemsCount(){
-		Map<String, Integer> things = q.getItemsCount();
-		
-		Assert.assertEquals(1, things.size());
-		Assert.assertTrue(3 == things.get("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, things.size());
-		Assert.assertTrue(2 == things.get("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, things.size());
-		Assert.assertTrue(1 == things.get("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, things.size());
-		Assert.assertTrue(0 == things.get("Gold"));
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, things.size());
-		Assert.assertTrue(0 == things.get("Gold"));
-		
-	}
 	
 	@Test
 	public void testSetAndGetName(){
@@ -102,24 +37,13 @@ public class QuestTest {
 	
 	@Test
 	public void testIsComplete(){
-		Assert.assertEquals(3, q.getItemsLeft("Gold"));
-		Assert.assertEquals(false, q.isComplete());
-		
-		q.process(new Gold());
-		Assert.assertEquals(2, q.getItemsLeft("Gold"));
-		Assert.assertEquals(false, q.isComplete());
-		
-		q.process(new Gold());
-		Assert.assertEquals(1, q.getItemsLeft("Gold"));
-		Assert.assertEquals(false, q.isComplete());
-		
-		q.process(new Gold());
-		Assert.assertEquals(0, q.getItemsLeft("Gold"));
-		Assert.assertEquals(true, q.isComplete());
-		
-		q.process(new Gold());
-		Assert.assertEquals(0, q.getItemsLeft("Gold"));
-		Assert.assertEquals(true, q.isComplete());
+		Assert.assertEquals(3, this.q.getRequiredItems("Gold"));
+		this.q.process(new Gold());
+		Assert.assertFalse(this.q.isComplete());
+		this.q.process(new Gold());
+		Assert.assertFalse(this.q.isComplete());
+		this.q.process(new Gold());
+		Assert.assertTrue(this.q.isComplete());
 	}
 	
 	@Test

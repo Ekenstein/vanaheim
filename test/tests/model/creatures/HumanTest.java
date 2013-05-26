@@ -1,6 +1,7 @@
 package tests.model.creatures;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -62,19 +63,28 @@ public class HumanTest {
 		Assert.assertFalse(this.testClass.hasQuest("Noquest"));
 		
 		this.testClass.addQuest(quest);
-		Assert.assertEquals(3,this.testClass.getItemsleftOnQuest(quest.getName(), "Gold"));
+		
+		Assert.assertTrue(this.testClass.hasQuest(quest.getName()));
 		
 		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(2,this.testClass.getItemsleftOnQuest(quest.getName(), "Gold"));
+		Assert.assertEquals(3, this.testClass.getRequiredItems(quest.getName(), "Gold"));
+		Map<String, Integer> current = this.testClass.getQuestObjectives(quest.getName());
+		for(Entry<String, Integer> e : current.entrySet()) {
+			String itemName = e.getKey();
+			Assert.assertEquals(item.getItemName(), itemName);
+			Assert.assertTrue(1 == e.getValue());
+		}
+		
+		Assert.assertFalse(this.testClass.isQuestCompleted(quest.getName()));
 		
 		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(1,this.testClass.getItemsleftOnQuest(quest.getName(), "Gold"));
-		
 		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(0,this.testClass.getItemsleftOnQuest(quest.getName(), "Gold"));
-		
-		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(0,this.testClass.getItemsleftOnQuest(quest.getName(), "Gold"));
+		current = this.testClass.getQuestObjectives(quest.getName());
+		for(Entry<String, Integer> e : current.entrySet()) {
+			String itemName = e.getKey();
+			Assert.assertEquals(item.getItemName(), itemName);
+			Assert.assertTrue(3 == e.getValue());
+		}
 		
 		Assert.assertTrue(this.testClass.isQuestCompleted(quest.getName()));
 	}
@@ -126,27 +136,5 @@ public class HumanTest {
 		
 		this.testClass.removeQuest(quest.getName());
 		Assert.assertNull(this.testClass.getQuestDescription(quest.getName()));
-	}
-	
-	@Test
-	public void testgetItemsleftOnQuest(){
-		Assert.assertEquals(0,this.testClass.getItemsleftOnQuest("Gold minings", "Gold"));
-		
-		Quest quest = new GoldQuest();
-		QuestItem item = new Gold();
-		this.testClass.addQuest(quest);
-		Assert.assertEquals(3,this.testClass.getItemsleftOnQuest("Gold mining", "Gold"));
-		
-		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(2,this.testClass.getItemsleftOnQuest("Gold mining", "Gold"));
-		
-		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(1,this.testClass.getItemsleftOnQuest("Gold mining", "Gold"));
-		
-		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(0,this.testClass.getItemsleftOnQuest("Gold mining", "Gold"));
-		
-		this.testClass.addQuestItem(quest.getName(), item);
-		Assert.assertEquals(0,this.testClass.getItemsleftOnQuest("Gold mining", "Gold"));
 	}
 }

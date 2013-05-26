@@ -76,16 +76,34 @@ public class QuestbookTest {
 
 	@Test
 	public void addQuestItemTest() {
-		this.questBook.addQuestItem(this.quest1.getName(), this.item1);
-		Assert.assertEquals(3, this.quest1.getItemsLeft(this.item1.getItemName()));
 		this.questBook.addQuest(this.quest1);
 		this.questBook.addQuestItem(this.quest1.getName(), this.item1);
-		Assert.assertEquals(2, this.quest1.getItemsLeft(this.item1.getItemName()));
-		this.questBook.addQuestItem(this.quest1.getName(), this.item2);
-		Assert.assertEquals(0, this.quest1.getItemsLeft(this.item2.getItemName()));
-		quest1.addNeededItemCount("Silver", 3);
-		Assert.assertEquals(2, this.quest1.getNumberOfDifferentItemsNeeded());
+		java.util.Map<String, Integer> current = this.questBook.getQuestObjectives(this.quest1.getName());
 		
+		for(java.util.Map.Entry<String, Integer> e : current.entrySet()) {
+			Assert.assertTrue(1 == e.getValue());
+		}
+		
+		this.questBook.addQuestItem(this.quest1.getName(), this.item1);
+		current = this.questBook.getQuestObjectives(this.quest1.getName());
+		
+		for(java.util.Map.Entry<String, Integer> e : current.entrySet()) {
+			Assert.assertTrue(2 == e.getValue());
+		}
+		
+		this.questBook.addQuestItem(this.quest1.getName(), this.item1);
+		current = this.questBook.getQuestObjectives(this.quest1.getName());
+		
+		for(java.util.Map.Entry<String, Integer> e : current.entrySet()) {
+			Assert.assertTrue(3 == e.getValue());
+		}
+		
+		this.questBook.addQuestItem(this.quest1.getName(), this.item1);
+		current = this.questBook.getQuestObjectives(this.quest1.getName());
+		
+		for(java.util.Map.Entry<String, Integer> e : current.entrySet()) {
+			Assert.assertTrue(3 == e.getValue());
+		}
 	}
 	
 	@Test
@@ -94,26 +112,13 @@ public class QuestbookTest {
 		this.questBook.addQuest(this.quest1);
 		Assert.assertFalse(this.questBook.isComplete(this.quest1.getName()));
 		
-		int limit = this.quest1.getItemsLeft(this.item1.getItemName());
+		int limit = this.questBook.getRequiredItems(this.quest1.getName(), this.item1.getItemName());
 		
 		for(int i = 0; i < limit; i++) {
 			this.questBook.addQuestItem(this.quest1.getName(), this.item1);
 		}
 		
 		Assert.assertTrue(this.questBook.isComplete(this.quest1.getName()));
-	}
-	
-	@Test
-	public void getItemsLeftOnQuestTest(){
-		this.questBook.addQuest(this.quest1);
-		Assert.assertEquals(3, this.questBook.getItemsleftOnQuest(this.quest1.getName(), this.item1.getItemName()));
-		this.questBook.addQuestItem(quest1.getName(), item1);
-		Assert.assertEquals(2, this.questBook.getItemsleftOnQuest(this.quest1.getName(), this.item1.getItemName()));
-		this.questBook.addQuestItem(quest1.getName(), item1);
-		Assert.assertEquals(1, this.questBook.getItemsleftOnQuest(this.quest1.getName(), this.item1.getItemName()));
-		this.questBook.addQuestItem(quest1.getName(), item1);
-		Assert.assertEquals(0, this.questBook.getItemsleftOnQuest(this.quest1.getName(), this.item1.getItemName()));
-		Assert.assertEquals(0, this.questBook.getItemsleftOnQuest(this.quest1.getName(), this.item1.getItemName()));
 	}
 	
 	@Test
@@ -124,7 +129,7 @@ public class QuestbookTest {
 		Assert.assertEquals(1, this.questBook.showIncompleteQuests().size());
 		Assert.assertTrue(this.questBook.showIncompleteQuests().containsKey(this.quest1.getName()));
 		
-		int limit = this.quest1.getItemsLeft(this.item1.getItemName());
+		int limit = this.quest1.getRequiredItems(this.item1.getItemName());
 		
 		for(int i = 0; i < limit; i++) {
 			this.questBook.addQuestItem(this.quest1.getName(), this.item1);
@@ -142,7 +147,7 @@ public class QuestbookTest {
 		Assert.assertEquals(0, this.questBook.showCompleteQuests().size());
 		Assert.assertFalse(this.questBook.showCompleteQuests().containsKey(this.quest1.getName()));
 		
-		int limit = this.quest1.getItemsLeft(this.item1.getItemName());
+		int limit = this.quest1.getRequiredItems(this.item1.getItemName());
 		
 		for(int i = 0; i < limit; i++) {
 			this.questBook.addQuestItem(this.quest1.getName(), this.item1);
