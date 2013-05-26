@@ -272,6 +272,14 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				for (int i = 0; i < description.size(); i++) {
 					context.drawString(description.get(i), 8, 768 - quest_bg.getHeight() + 64 + i * 16);
 				}
+				
+				Map<String, Integer> questObjects = controller.getPlayerQuestObjectives(questName);
+				for (String itemName : questObjects.keySet()) {
+					int reqItems = controller.getRequiredItems(questName, itemName);
+					String strToPrint = "" + itemName + ": " + questObjects.get(itemName) + "/" + reqItems;
+					int strWidth = descriptionFont.getWidth(strToPrint);
+					context.drawString(strToPrint, (256 - strWidth) / 2, 740);
+				}
 			}
 		}
 
