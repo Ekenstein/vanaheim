@@ -1,0 +1,23 @@
+loot * : Loot
+loot all : Loot
+hit * with * : Attack
+eat * : Eat
+drink * : Drink
+talk to * : Talk
+show * : Show
+open * : Show
+equip * : Equip
+unequip * : Unequip
+close * : Close
+
+
+Where * can be (depending on command):
+
+spider
+inventory
+console
+quest log
+crude axe
+healing potion
+(An item, for the loot command, easier to use "loot all")
+gram
