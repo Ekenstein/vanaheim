@@ -72,7 +72,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 	private List<Item> items = new ArrayList<Item>();
 	private int lastItemRendered = 0;
 	private boolean isInventoryToggled = false;
-	
+
 	private boolean isLootToggled = false;
 
 	//Quests
@@ -209,9 +209,9 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 		context.setColor(Color.white);
 		inputField.render(container, context);
 		inputField.setFocus(true);
-		
+
 		int maxConsoleMsgWidth = 480;
-		
+
 		if (controller.isConsoleToggled() || consoleToggled) {
 			List<String> messages = controller.getLatestMessages(7);
 			context.setColor(new Color(0, 0, 0, 0.5f));
@@ -220,7 +220,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 			context.setFont(descriptionFont);
 			int count = 0;
 			for (String message : messages) {
-				
+
 				List<String> consoleMessages = new ArrayList<String>();
 				String curMessage = "";
 
@@ -233,33 +233,34 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 					curMessage += strArray[j] + " ";
 				}
 				consoleMessages.add(curMessage);
-				
+
 				for (int i = 0; i < consoleMessages.size(); i++) {
 					context.drawString(consoleMessages.get(i), 280, 280 + count*32);
 					count++;
 				}
 			}
 		}
-		
+
 		//Text in the inventory and quest log is black
 		context.setColor(Color.black);
 
 		//Draw inventory
 		if (controller.isInventoryToggled()) {
 			List<Item> items = controller.getItems();
-			System.out.println("Storlek: " + items.size());
 			context.drawImage(inventory_bg, (1024-inventory_bg.getWidth()) / 2, (768-inventory_bg.getHeight()) / 2);
 			context.setColor(new Color(0.5f, 0f, 0.5f));
-			if (lastItemRendered + 1 != items.size()) {
-				Item item = items.get(lastItemRendered + 1);
-				context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72 + 80);
+			if (items.size() > 0) {
+				if (lastItemRendered + 1 != items.size()) {
+					Item item = items.get(lastItemRendered + 1);
+					context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72 + 80);
+					String itemName = item.getItemName();
+					context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8 + 72);
+				}
+				Item item = items.get(lastItemRendered);
+				context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72);
 				String itemName = item.getItemName();
-				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8 + 72);
+				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8);
 			}
-			Item item = items.get(lastItemRendered);
-			context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, (768-32) / 2 - 72);
-			String itemName = item.getItemName();
-			context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, (768-32) / 2 - 8);
 		}
 		//context.drawImage(inventory_title, 1024-inventory_bg.getWidth()-64, 768-inventory_bg.getHeight() - inventory_title.getHeight()/2);
 
@@ -292,9 +293,9 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 					curText += strArray[i] + " ";
 				}
 				description.add(curText);
-				
+
 				String questName = quest.getKey();
-				
+
 				int titleLength = titleFont.getWidth(questName);
 				context.setFont(titleFont);
 				context.drawString(questName, (256 - titleLength) / 2, 768 - quest_bg.getHeight() + 32);
@@ -302,7 +303,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				for (int i = 0; i < description.size(); i++) {
 					context.drawString(description.get(i), 8, 768 - quest_bg.getHeight() + 64 + i * 16);
 				}
-				
+
 				Map<String, Integer> questObjects = controller.getPlayerQuestObjectives(questName);
 				for (String itemName : questObjects.keySet()) {
 					int reqItems = controller.getRequiredItems(questName, itemName);
@@ -379,7 +380,7 @@ public class ExploreState extends BasicGameState implements PropertyChangeListen
 				lastItemRendered -= 2;
 			}
 		}
-		
+
 		currX = (int)Math.floor(x / 32);
 		currY = (int)Math.floor(y / 32);
 		controller.setPlayerLoc(new Point((int)x, (int)y));

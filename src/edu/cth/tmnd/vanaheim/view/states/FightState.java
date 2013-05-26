@@ -15,6 +15,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -48,6 +49,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 	private Image inventory_bg;
 	private Image inventory_title;
 	private final Map<Integer, Image> itemIDMap = new HashMap<Integer, Image>();
+	private int lastItemRendered = 0;
 
 	//Fight related images
 	private Image barForegroundImage;
@@ -110,7 +112,7 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 		descriptionFont = new TrueTypeFont(new Font("Arial", Font.PLAIN, 18), false);
 
 		//Init images
-		inventory_bg = new Image("data/inventory_paper2.png");
+		inventory_bg = new Image("data/inventory2.png");
 		inventory_title = new Image("data/inventory_title.png");
 		fightScreenBg = new Image("data/fightScreenBg.png");
 		barForegroundImage = new Image("data/barForeground.png");
@@ -176,13 +178,21 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 
 		//Draw equippeditem
 		context.drawImage(equip,40,290);
-		
-		context.drawImage(inventory_bg, 384, 555);
-		context.drawImage(inventory_title, 320, 523);
 
 		List<Item> items = controller.getItems();
-		for (int i = 0; i < items.size(); i++) {
-			context.drawImage(itemIDMap.get(items.get(i).getItemID()), 400 + i * 64, 571 + i / 4 * 64);
+		context.drawImage(inventory_bg, (1024-inventory_bg.getWidth()) / 2, 768-inventory_bg.getHeight() - 32);
+		context.setColor(new Color(0.5f, 0f, 0.5f));
+		if (items.size() > 0) {
+			if (lastItemRendered + 1 != items.size()) {
+				Item item = items.get(lastItemRendered + 1);
+				context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, 768-32 - 204);
+				String itemName = item.getItemName();
+				context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, 768-32 - 140);
+			}
+			Item item = items.get(lastItemRendered);
+			context.drawImage(itemIDMap.get(item.getItemID()), (1024-64) / 2, 768-32 - 288);
+			String itemName = item.getItemName();
+			context.drawString(itemName, (1024-descriptionFont.getWidth(itemName)) / 2, 768-32 - 224);
 		}
 
 		if(controller.getPlayerEquippedItem() != null){
@@ -222,6 +232,17 @@ public class FightState extends BasicGameState implements PropertyChangeListener
 			battleSong.play();
 			battleSong.setVolume(0f);
 			battleSong.fade(1000, 1f, false);
+		}
+		
+		final Input input = container.getInput();
+		if (input.isKeyPressed(Input.KEY_RIGHT)) {
+			if (controller.isInventoryToggled() && (lastItemRendered + 2) < controller.getItems().size()) {
+				lastItemRendered += 2;
+			}
+		} else if (input.isKeyPressed(Input.KEY_LEFT)) {
+			if (controller.isInventoryToggled() && lastItemRendered > 1) {
+				lastItemRendered -= 2;
+			}
 		}
 	}
 
