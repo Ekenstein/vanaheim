@@ -1,0 +1,1 @@
+Fight with raw strength and magic against mighty foes, the only difference is that you fight with your wit and keyboard. Learn mighty spells and strong attacks and combine them wisely with your keyboard.
